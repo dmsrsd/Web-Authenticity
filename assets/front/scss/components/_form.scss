@@ -1,0 +1,29 @@
+.form-control{
+    color: #333;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    padding: 13px 10px;
+    border: 1px solid #848484;
+    height: unset;
+}
+
+select{
+    background-image: url('../../../assets/front/img/store/triangle.svg') !important;
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 11px 7px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding-right: 25px;
+}
+
+label{
+    color: #848484;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}

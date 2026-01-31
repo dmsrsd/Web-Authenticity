@@ -1,0 +1,526 @@
+.pagination {
+    display: flex;
+    justify-content: center;
+    list-style: none; /* remove list bullets */
+    padding: 0px;
+  }
+  .caption2 {
+    font-family: "Bruno Ace", sans-serif;
+    color: #fff;
+    font-size: 2rem;
+    font-weight: normal;
+    padding: 0 1.54rem;
+    width: 100%;
+    text-align: center;
+}
+.caption2 p{
+    margin: 0 auto;
+width: 80%;
+display: block;
+position: relative;
+margin-bottom: 50px;
+}
+.pagination li a {
+    display: block; /* let links fill the list item */
+    padding: 8px 12px;
+    text-decoration: none;
+    border: 1px solid gray;
+    color: black;
+    margin: 0 4px;
+    border-radius: 5px; /* add rounded borders */
+  }
+  .img-temp{
+    width: 100%;
+    float: right;
+    max-width: 300px;
+  }
+  .form-block{
+    padding-left: 30px!important;
+    margin-top: 11%!important;
+    text-align: left!important;
+}
+  .pagination li a.active {
+    background-color: #4CAF50;
+    color: white;
+  }
+.bruno-ace-regular {
+    font-family: "Bruno Ace", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  .text-pe{
+    display: block!important;
+    position: relative ;
+    width: 100%;
+    min-height: 127px;
+}
+.poto-text{
+    display: block;
+    position: relative;
+    width: 100%;
+   
+}
+.footerbg {
+    display: block;
+    background-size: 100%;
+    background-position: top;
+    position: relative;
+    z-index: 99;
+}
+.footerbg1{
+    display: none;;
+}
+footer {
+    background-color: #0d549c;
+    padding: 40px 0;
+        padding-right: 0px;
+        padding-left: 0px;
+        z-index: 99;
+        position: relative;
+}
+footer {
+    color: #FFFFFF;
+}
+.bg-gradien{
+    background: #01284C;
+background: linear-gradient(180deg,rgba(1, 40, 76, 1) 0%, rgba(3, 2, 1, 1) 100%);
+z-index: -999;
+}
+.bg-gradien2{
+background: #01284C;
+background: linear-gradient(0deg,rgba(1, 40, 76, 1) 0%, rgba(3, 2, 1, 1) 100%);
+}
+.new-bs{
+    position: relative;
+}
+.new-bs .order-md-2 {
+    order: 2 !important;
+}
+.new-bs .text-md-start {
+    text-align: left !important;
+}
+
+.new-bs .row > * {
+    box-sizing: border-box;
+    flex-shrink: 0;
+    max-width: 100%;
+    padding-right: calc(var(--bs-gutter-x)*.5);
+    padding-left: calc(var(--bs-gutter-x)*.5);
+    margin-top: var(--bs-gutter-y);
+}
+.main{
+    text-align: center;
+}
+body {
+    background-image: none!important;
+    background-color: #000!important;
+    background-position: center;
+}
+.mput{
+    width: 285px;
+    z-index: 9999;
+    position: relative;
+    height: 53px;
+    padding: 10px;
+}
+.pd30{
+    padding: 30px 0;
+}
+.pd50{
+    padding: 50px 0;
+}
+.board-center{
+    width: 90%;
+    margin: 0 auto;
+}
+.section01{
+    position: relative;
+   
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    min-height: 400px;
+}
+.logo{
+    padding-top: 5%;
+    position: relative;
+    text-align: left;
+}
+.logo2{
+    padding-top: 2%;
+    position: relative;
+    text-align: center;
+    margin: 0 auto;
+}
+.logo2 img{ max-width: 80%;}
+.hadiah {
+    position: absolute;
+    margin-top: 10%;
+    right: 0%;
+}
+.caption{
+    font-family: "Bruno Ace", sans-serif;
+    color: #fff;
+    font-size: 2.5rem;
+    font-weight: normal;
+}
+h3{
+    font-size: 16px;
+    font-weight: bold;
+    color: #3DC3FD;
+}
+
+.frame-berry{
+    position: relative;
+    left: 0px;
+}
+.berry{
+    position: absolute;
+    width: 400px;
+    left: -100px;
+    top: -300px;
+}
+.frame-daun{
+    position: relative;
+    right: 0px;
+}
+.daun{
+    position: absolute;
+    width: 400px;
+    right: 0px;
+    top: -300px;
+}
+.table{
+    display: inline-table;
+    width: 100%;
+}
+.tablecell{
+    display: table-cell;
+    vertical-align: middle;
+    float: none;
+}
+.text-board{
+    color: #fff; margin-top: 30px;
+    text-align: center;
+font-size: 20px;
+}
+.circle{
+    position: absolute;
+    right: 0px;
+    z-index: 9;
+    width: 500px;
+    top: -160px;
+}
+.bg-fire{
+    background-image: url("../images/bg_sec01.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+}
+.bg-fire2{
+    background-image: url("../images/bg_sec02.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: auto;
+}
+.frame-foto{
+    width: 75px;
+    height: 75px;
+    overflow: hidden;
+    border-radius: 60px;
+    margin: 0 auto;
+    border: 2px solid #3DC3FD;
+}
+.section02{
+    position: relative;
+    min-height: 300px;
+    padding: 50px 0;
+}
+.section03{
+    position: relative;
+    padding-top: 40px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.but-download{
+    text-align: right;
+  }
+.name {
+    display: none;
+}
+.name {
+    display: block;
+}
+.consect2{
+    position: relative;
+    z-index: 999;
+    margin-top: 0px;
+    display: block;
+}
+.panel{
+    background-image: url("../images/bg-panel.png");
+    background-repeat: repeat;
+    padding: 20px;
+    color: #FFFFFF;
+}
+.bg_mains{
+    background-image: url("../images/bg_kerrtas.png");
+background-repeat: no-repeat;
+min-height: 55px;
+padding: 53px 0 30px 45px;
+background-size: cover;
+}
+.paper_up{width: 100%; position: relative; bottom: 85px; margin: 0px; padding: 0px;}
+h1 {
+    color: #fff;
+    font-family: "Bruno Ace", sans-serif;
+    font-size: 46px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    margin-bottom: 20px;
+}
+h2{
+    font-family: "Bruno Ace", sans-serif;
+    font-size: 36px;
+    color: #fff;
+}
+.btn.btn-outline-primary {
+    padding: 9px 30px;
+    border: 3px solid #1c4e95;
+    border-radius: 0px !important;
+    color: #1c4e95;
+    text-transform: uppercase;
+    background-color: transparent;
+    text-align: center;
+    font-family: "Bruno Ace", sans-serif !important;
+    font-weight: 900;
+    font-size: 30px;
+    line-height: 36px;
+    margin-top: 20px;
+}.btn.focus, .btn:focus, .btn:hover {
+    color: #333;
+    text-decoration: none;
+}
+.bg_alur{
+    background-color: #032C52;
+    border-radius: 20px;
+    padding: 30px;
+    text-align: left;
+    color: #FFFFFF;
+    width: 90%;
+    left: 40px;
+    position: relative;
+    top: -25;
+    z-index: -9;
+    min-height: 215px;
+    display: table;
+}
+.bg_alur p{
+    display: table-cell;
+    vertical-align: middle;
+    font-size: 15px;
+}
+.number_alur{
+    border-radius: 50px;
+color: #FFFFFF;
+background-color: #85CDFD;
+padding: 13px;
+text-align: center;
+font-size: 30px;
+font-weight: bold;
+position: relative;
+width: 70px;
+display: block;
+}
+.title_alur{
+    display: table;
+}
+.title_alur h1{
+color: #fff;
+vertical-align: middle;
+display: table-cell;
+height: auto;
+}
+.section03 .container {
+    position: relative;
+    margin-bottom: 50px;
+}
+.paper_down{
+    width: 100%;
+    position: relative;
+    bottom: 180px;
+    margin: 0px;
+    padding: 0px;
+    z-index: -99;
+}
+.img-fluid{width: 100%;}
+.p30{
+    padding: 30px;
+}
+.text-kiri{
+    text-align: left;
+}
+
+@media only screen and (max-width: 460px) {
+    .new-bs .col-sm-12 {
+        flex: 0 0 auto;
+        width: 100%;
+    }
+    .button-join{width: 100%;}
+    .caption{
+        font-family: "Bruno Ace", sans-serif;
+        color: #fff;
+        font-size: 2rem;
+        font-weight: normal;
+        padding: 0 1.54rem;
+    }
+    .caption2{
+        font-family: "Bruno Ace", sans-serif;
+        color: #fff;
+        font-size: 1.5rem;
+        font-weight: normal;
+        padding: 0 1.54rem;
+    }
+    .form-block{
+        padding-left: 0px!important;
+        margin-top: 11%!important;
+        text-align: center!important;
+    }
+    .mput{
+        width: 100%;
+        z-index: 9999;
+        position: relative;
+        height: 53px;
+        padding: 10px;
+    }
+    .img-temp{
+        width: 60%;
+        margin-bottom: 10px;
+        float: none;
+      }
+    .pagination li a {
+        display: block; /* let links fill the list item */
+        padding: 5px 5px;
+        text-decoration: none;
+        border: 1px solid gray;
+        color: black;
+        margin: 0 4px;
+        border-radius: 5px; /* add rounded borders */
+      }
+    .text-board{
+        color: #fff; margin-top: 30px;
+        text-align: center;
+    }
+    .logo{
+        padding-top: 5%;
+        padding-left: 8%!important;
+        position: relative;
+        text-align: left;
+    }
+    .berry {
+        position: absolute;
+        width: 250px;
+        left: -59px;
+        top: -200px;
+      }
+      .but-download{
+        text-align: left;
+      }
+    .footerbg {
+        display: none;
+        background-size: 100%;
+        background-position: top;
+        position: relative;
+        z-index: 99;
+    }
+    .footerbg1{
+        display: block;
+        background-size: 100%;
+        background-position: top;
+        position: relative;
+        z-index: 99;
+    }
+    .circle {
+        position: absolute;
+        right: 0px;
+        z-index: 9;
+        width: 400px;
+        top: -70px;
+      }
+    .frame-foto {
+        width: 120px;
+        height: 120px;
+        overflow: hidden;
+        border-radius: 60px;
+        margin: 0 auto;
+          margin-bottom: 0px;
+        border: 2px solid #3DC3FD;
+        margin-bottom: 5px;
+      }
+    .table{
+        display: flex;
+        width: 100%;
+    }
+    .tablecell{
+        display: block;
+        vertical-align: middle;
+        text-align: center;
+    }
+    .text-p{
+        display: block!important;
+        position: relative ;
+        width: 100%;
+    }
+    .poto-text{
+        display: block;
+        position: relative;
+        width: 100%;
+
+    }
+.name {
+    display: none;
+}
+
+.bg_alur{
+      width: 85%;
+      min-height: 180px;
+    }
+    .consect2 {
+        position: static;
+        z-index: 999;
+        margin-top: -30px;
+        display: block;
+    }
+    .paper_up {
+        width: 100%;
+        position: relative;
+        bottom: 20px;
+        margin: 0px;
+        padding: 0px;
+    }
+    .section03 .container {
+        margin-top: 0px;
+        position: relative;
+        margin-bottom: 20px;
+    }
+    .paper_down{
+        width: 100%;
+        position: relative;
+        bottom: 0px;
+        margin: 0px;
+        padding: 0px;
+        z-index: -99;
+    }
+    .title_alur h1{
+        margin-top: 20px;
+        display: block;
+    }
+    .section01 {
+        position: relative;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        min-height: 270px;
+      }
+  }

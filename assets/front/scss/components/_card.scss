@@ -1,0 +1,153 @@
+.card{
+    display: block;
+    position: relative;
+    &--section{
+        padding: 35px;
+        background-color: #FFF;
+        box-shadow: 25px 25px 40px 0px rgba(0, 0, 0, 0.25);
+
+        @include below(lg){
+            padding: 12px;
+        }
+    }
+
+    &--video{
+        border-bottom: 1px solid #858588;
+        margin-bottom: 28px;
+
+        &::after{
+            height: 1px;
+            width: 100%;
+            left: 60px;
+            background-color: #858588;
+            position: absolute;
+            bottom: -1px;
+            content: "";
+
+            @include below(lg){
+                left: 0;
+            }
+        }
+
+        p{
+            color: #000;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+            margin: 0;
+            height: 64.5px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            line-clamp: 3;
+
+            @include below(md){
+                font-size: 12px;
+                height: 49.5px;
+            }
+        }
+    }
+
+    &--store{
+        margin-bottom: 60px;
+        text-align: center;
+        background-color: #fff;
+
+        @include below(md){
+            margin-bottom: 40px;
+        }
+    }
+
+    &--shadow{
+        background-color: #fff;
+        box-shadow: 7px 7px 20px 5px rgba(0, 0, 0, 0.25);
+    }
+
+    &-img{
+        position: relative;
+        .card--video & {
+            position: relative;
+            height: 0;
+            padding-bottom: 56.25%;
+            overflow: hidden;
+            margin-bottom: 11px;
+
+            img{
+                @include img-cover;
+            }
+        }
+
+        .card--store & {
+            position: relative;
+            height: 0;
+            padding-bottom: 100%;
+            overflow: hidden;
+            border-bottom: 2px solid $primary;
+
+            img{
+                @include img-cover;
+            }
+        }
+    }
+
+    &-body{
+        .card--video & {
+            padding-bottom: 28px;
+            padding-top: 0;
+        }
+
+        .card--store & {
+            padding: 16px;
+
+            h3{
+                color: #000;
+                font-family: $font-rubik;
+                font-size: 18px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+                text-transform: uppercase;
+                margin-bottom: 10px;
+                margin-top: 0;
+
+                &:hover{
+                    color: $primary;
+                }
+            }
+
+            h4{
+                color: #000;
+                font-family: $font-rubik;
+                font-size: 20px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: normal;
+                text-transform: uppercase;
+                margin-bottom: 10px;
+            }
+
+            p{
+                color: #333;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+                margin-bottom: 15px;
+                display: none;
+            }
+
+            .btn{
+                &.btn-primary{
+                    font-size: 20px;
+                    font-style: normal;
+                    font-weight: 900;
+                    line-height: normal;
+                    text-transform: uppercase;
+                    color: #fff;
+                }
+            }
+        }
+    }
+}

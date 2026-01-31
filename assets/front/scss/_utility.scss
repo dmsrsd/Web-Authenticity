@@ -1,0 +1,29 @@
+.font{
+    &-noto{
+        font-family: $font-noto !important;
+    }
+    &-rubik{
+        font-family: $font-rubik !important;
+    }
+}
+
+.text{
+    &-warning{
+        color: $warning !important;
+    }
+
+    &-red{
+        color: $danger !important;
+    }
+}
+
+.img-full{
+    width: 100%;
+    height: auto;
+    display: block;
+}
+.new-bs{
+    .gx-5{
+        --bs-gutter-x: 60px !important;
+    }
+}

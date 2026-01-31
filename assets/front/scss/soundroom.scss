@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&family=Rubik:wght@400;600;700;900&display=swap');
+@import "./variables";
+@import "./mixins/mixins";
+@import "./components/navbar";
+@import "./components/button";
+@import "./components/modal";
+@import "./components/accordion";
+@import "./components/card";
+@import "./components/form";
+@import "./components/footer";
+@import "./components/pagination";
+@import "./components/step-wizard";
+@import "./plugins/fancyapps";
+@import "./global";
+@import "./utility";
+.new-bs{
+    @import "./bootstrap/grid";
+    @import "./bootstrap/utilities";
+}
+
+@import "./pages/home";
+@import "./pages/soundroom";
+@import "./pages/store";
+@import "./pages/login";
+@import "./pages/profile";

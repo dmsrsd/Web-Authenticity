@@ -1,0 +1,28 @@
+footer{
+    background-color: #0D549C;
+    padding: 40px 0;
+
+    p{
+        @media (max-width: 767px) {
+            font-size: 17px;
+            white-space: nowrap;
+        }
+    }
+
+    .text-left{
+        @media (max-width: 767px) {
+            text-align: left !important;
+        }
+    }
+}
+
+.footerbg{
+    background-image: url('../../../assets/front/img/soundroom/bg-footer.png');
+    background-size: 100%;
+    background-position: top;
+    height: 145px;
+
+    @media (max-width: 767px) {
+        height: 80px;
+    }
+}

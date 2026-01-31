@@ -1,0 +1,110 @@
+.modal{
+    &-dialog{
+        &--alert{
+            .modal{
+                &-content{
+                    background-color: $primary;
+                    text-align: center;
+                    color: #fff;
+                    position: relative;
+                    box-shadow: 7px 10px 0px rgba(16, 44, 85, 0.75);
+
+                    h3{
+                        font-weight: 700;
+                        font-size: 48px;
+                        line-height: 57px;
+                        font-family: $font-rubik;
+                        margin: 0;
+                        text-transform: uppercase;
+
+                        @media (max-width: 767px) {
+                            font-size: 36px;
+                            line-height: 42px;
+                        }
+                    }
+
+                    img.separator{
+                        height: 10px;
+                        width: auto;
+                        margin-bottom: 25px;
+
+                        @media (max-width: 767px) {
+                            margin-bottom: 10px;
+                            height: 7px;
+                        }
+                    }
+                    p{
+                        font-weight: 700;
+                        font-size: 16px;
+                        line-height: 22px;
+                        text-transform: uppercase;
+                        margin-bottom: 35px;
+                        font-family: $font-noto;
+                        @media (max-width: 767px) {
+                            font-size: 14px;
+                            line-height: 19px;
+                            margin-bottom: 15px;
+                        }
+
+                        a{
+                            text-decoration: underline;
+                            color: #fff;
+                        }
+                    }
+                    a{
+                        color: #fff;
+                    }
+                    .btn{
+                        &-outline-light{
+                            padding: 10px 30px;
+                            border: 3px solid #fff;
+                            border-radius: 0px !important;
+                            color: #fff;
+                            text-transform: uppercase;
+                            background-color: transparent;
+                            text-align: center;
+                            font-family: $font-rubik !important;
+                            font-weight: 700;
+                            font-size: 24px;
+                            line-height: 28px;
+
+                            @media (max-width: 767px) {
+                                font-size: 16px;
+                                line-height: 19px;
+                                padding: 9px 11px;
+                                border-width: 1px;
+                            }
+                        }
+                    }
+                }
+                &-body{
+                    padding-top: 26px;
+                    padding-bottom: 26px;
+                }
+            }
+        }
+
+        &--gwh{
+            width: 90%;
+            img{
+                width: 100%;
+                height: auto;
+            }
+        }
+    }
+
+    &--gwh{
+        &.in{
+            display: flex !important;
+            align-items: center;
+        }
+    }
+
+    &.in{
+        .modal-dialog{
+            @media (max-width: 767px) {
+                transform: translate(0%, 50%);
+            }
+        }
+    }
+}

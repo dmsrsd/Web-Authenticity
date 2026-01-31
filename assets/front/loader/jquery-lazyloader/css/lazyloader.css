@@ -1,0 +1,92 @@
+.lazy-wrapper {
+    clear: both;
+    padding: 20px 0;
+    position: relative!important;
+    box-sizing: content-box!important;
+    -moz-box-sizing: content-box!important;
+    -webkit-box-sizing: content-box!important;
+    -ms-box-sizing: content-box!important;
+    -o-box-sizing: content-box!important;
+}
+.lazy-wrapper.hasmore {
+    padding-bottom: 104px!important;
+}
+.lazy-more-wrapper {
+    position: absolute;
+    bottom: 0;
+    padding: 20px 0;
+    display: none;
+    height: 104px;
+    width: 100%;
+    text-align: center;
+    clear: both;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+}
+a.lazy-more-btn {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    background-colors: #777;
+    borders: 1px solid #777;
+    colors: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.4;
+    padding: 6px 12px;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+}
+a.lazy-more-btn:active, a.lazy-more-btn:focus, a.lazy-more-btn:hover {
+    background-colors: #e6e6e6;
+    border-colors: #777;
+    colors: #333;
+    text-decoration: none;
+}
+.lazy-wrapper .lazyItem {
+    margin-bottom: 20px;
+}
+.lazy-wrapper .lazyItem:not(.loaded) {
+    visibility: hidden;
+}
+.lazy-wrapper.loaded {
+    padding: 20px 0;
+    background: none;
+}
+.lazy-wrapper.loading {
+    background: url("../img/loading.gif") no-repeat center bottom;
+}
+.lazy-wrapper.loading-first {
+    background: url("../img/loading.gif") no-repeat center 50px;
+}
+.lazy-wrapper.loaded .lazyItem {
+    visibility: visible;
+}
+.lazyContent {
+    padding: 10px;
+    border: 1px solid #ccc;
+    background: #fff;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+}
+.lazy-blog .lazyContent img {
+    float: left;
+    margin-right: 20px;
+}
+.lazy-blog .lazyContent .label {
+    margin-right: 10px;
+    font-weight: normal;
+}
+

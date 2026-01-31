@@ -1,0 +1,583 @@
+.page-soundroom{
+    background-image: url('../../../assets/front/img/soundroom/bg-paper.png');
+    background-size: cover;
+    background-position: bottom center;
+    overflow: hidden;
+    &__banner{
+        @media (max-width: 767px) {
+            display: block;
+			margin-top: 63px;
+        }
+        img{
+            width: 100%;
+            height: auto;
+        }
+    }
+
+    &__playlist{
+        padding: 45px 22px;
+        padding-top: 120px;
+        background-color: $primary;
+        color: #fff;
+
+        @media (max-width: 767px) {
+            padding: 45px 20px;
+            padding-top: 44px;
+        }
+
+        table{
+            border: none;
+            &.thead{
+                background-color: transparent;
+                border-bottom: 1px solid #fff;
+                th{
+                    color: #fff;
+
+                    &:first-child{
+                        width: 80px;
+                    }
+                    &:last-child{
+                        width: 80px;
+                    }
+                }
+            }
+            &.tbody{
+                background-color: transparent;
+                color: #fff;
+
+                td{
+                    color: #fff;
+
+                    &:first-child{
+                        width: 80px;
+                    }
+                    &:last-child{
+                        width: 80px;
+                    }
+                }
+
+                .active{
+                    td{
+                        color: $primary;
+                    }
+                }
+
+                .curractive{
+                    td{
+                        background-color: transparent;
+                        color: #fff;
+
+                        .playno{
+                            a{
+                                color: #FD1C3B;
+                            }
+                        }
+                    }
+
+                    &.active{
+                        td{
+                            background-color: transparent;
+                            color: #fff;
+                        }
+                    }
+                }
+
+                .trbody{
+                    &:hover{
+                        background-color: transparent;
+                    }
+                }
+            }
+        }
+
+        .divtbody{
+            border: none;
+        }
+
+        .playlist{
+            &-filter{
+                margin-bottom: 32px;
+
+                a{
+                    color: #fff;
+
+                    &:hover, &:focus{
+                        color: #fff;
+                        text-decoration: none;
+                    }
+                }
+
+                i{
+                    position: absolute;
+                    left: 20px;
+                    top: 10px;
+                }
+                .form-control{
+                    border: none;
+                    background-color: #0F3375;
+                    color: #fff;
+                    padding-left: 35px;
+
+                    &::-webkit-input-placeholder { /* Edge */
+                        color: #fff;
+                    }
+
+                    &:-ms-input-placeholder { /* Internet Explorer 10-11 */
+                        color: #fff;
+                    }
+
+                    &::placeholder {
+                        color: #fff;
+                    }
+                }
+
+                .form-select{
+                    border: none;
+                    background-color: transparent;
+                }
+            }
+
+            &-artist{
+                display: flex;
+                align-items: center;
+
+                img{
+                    width: 40px;
+                    height: auto;
+                    margin-right: 10px;
+                }
+
+                &__caption{
+                    h6{
+                        font-size: 14px;
+                        font-weight: 700;
+                        margin-bottom: 0;
+                    }
+                    p{
+                        font-size: 12px;
+                        margin-bottom: 0;
+                    }
+                }
+            }
+        }
+    }
+
+    &__cta{
+        color: #fff;
+        text-align: center;
+        padding: 80px 30px;
+        padding-bottom: 30px;
+        position: relative;
+        margin-top: -40px;
+
+        @media (max-width: 767px) {
+            margin-top: 0;
+            padding: 36px 24px;
+            padding-top: 120px;
+        }
+
+        &::before{
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            background-color: #506783;
+            top: 15px;
+            left: 15px;
+            content: "";
+
+            @media (max-width: 767px) {
+                display: none;
+            }
+        }
+
+        &::after{
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            background-image: url('../../../assets/front/img/soundroom/bg-cta.png');
+            background-size: cover;
+            background-position: center;
+            top: 0;
+            left: 0;
+            content: "";
+            z-index: 1;
+        }
+
+        h2{
+            font-weight: 700;
+            font-size: 24px;
+            line-height: 30px;
+            font-family: $font-rubik;
+            margin-bottom: 30px;
+            margin-top: 0;
+            position: relative;
+            z-index: 2;
+
+            @media (max-width: 767px) {
+                font-weight: 600;
+                font-size: 14px;
+                line-height: 18px;
+            }
+        }
+
+        a{
+            position: relative;
+            z-index: 2;
+            img{
+                height: 87px;
+                width: auto;
+
+                @media (max-width: 767px) {
+                    height: 44px;
+                }
+            }
+        }
+    }
+
+    .section-participants{
+        padding-top: 74px;
+
+        .head-blue{
+            background-color: $primary;
+            color: #fff;
+            position: relative;
+            font-size: 14px;
+            padding: 12px 20px;
+
+            @media (max-width: 767px) {
+                padding: 20px 0px;
+
+                b{
+                    display: flex;
+                    margin-top: 10px;
+                }
+            }
+
+            select{
+                font-size: 14px;
+                color: $primary;
+                border: none;
+                line-height: 21px;
+                padding: 4px 7px;
+            }
+
+            &.filter{
+                b{
+                    select{
+                        @media (max-width: 767px) {
+                            width: 40%;
+                            margin: 0 5px;
+                            &:first-child{
+                                width: 20%;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        &__title{
+            position: absolute;
+            right: 20px;
+            bottom: 20px;
+            height: 70px;
+
+            @media (max-width: 767px) {
+                height: 52px;
+                bottom: unset;
+                top: -40px;
+                left: 50%;
+                transform: translateX(-50%);
+                right: unset;
+            }
+        }
+
+        .participant-list{
+            .box-soundroom{
+                position: relative;
+                .soundroom-data{
+                    color: $primary;
+                    font-family: $font-noto;
+                    @media (max-width: 767px) {
+                        min-height: unset;
+                        margin-bottom: 30px;
+                    }
+                    h1{
+                        font-weight: 700;
+                        font-size: 14px;
+                        margin-bottom: 0;
+                        font-family: $font-noto;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        a{
+                            color: $primary;
+                        }
+
+                        @media (max-width: 767px) {
+                            font-size: 24px;
+                        }
+                    }
+
+                    h2{
+                        color: $primary;
+                        font-family: $font-noto;
+                        font-size: 12px;
+                        line-height: 15px;
+                        font-weight: 400;
+                        margin-top: 0;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+
+                        @media (max-width: 767px) {
+                            font-size: 16px;
+                        }
+                    }
+
+                    .dropdown{
+                        &-toggle{
+                            font-size: 18px;
+                            color: $primary;
+                        }
+
+                        &-menu{
+                            padding: 5px;
+                            border-radius: 5px;
+                            background-color: transparent;
+                            border: none;
+                            min-width: unset;
+                            box-shadow: none !important;
+                        }
+                    }
+
+                    &__socmed{
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+
+                        a{
+                            display: block;
+                            margin: 0 3.5px;
+                            background-color: transparent !important;
+
+                            img{
+                                height: 25px;
+                                width: auto;
+                                transition: all 0.3s ease-in-out;
+                            }
+
+                            &:hover{
+                                background-color: transparent !important;
+                                img{
+                                    transform: scale(1.1);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .soundbar{
+        z-index: 4;
+    }
+
+
+
+    .panel{
+        &-banner{
+            color: #fff;
+            background-image: url('../../../assets/front/img/soundroom/bg-panel.png');
+            background-size: cover;
+            background-position: center;
+            padding: 35px;
+            position: relative;
+            text-align: center;
+
+            @media (max-width: 767px) {
+                padding: 20px;
+                margin: 0 -15px;
+            }
+
+            &__img{
+                img{
+                    height: 194px;
+                    width: auto;
+
+                    @media (max-width: 767px) {
+                        height: 115px;
+                    }
+                }
+            }
+
+            &__title{
+                margin-bottom: -65px;
+                padding-top: 15px;
+                @media (max-width: 767px) {
+                    margin-bottom: -40px;
+                    padding-top: 0px;
+                }
+                img{
+                    height: 70px;
+                    width: auto;
+                    @media (max-width: 767px) {
+                        height: 45px;
+                    }
+                }
+            }
+
+            h1{
+                margin-bottom: 24px;
+                font-weight: 700;
+                font-size: 24px;
+                line-height: 30px;
+                font-family: $font-rubik;
+                margin-top: 20px;
+
+                @media (max-width: 767px) {
+                    margin-bottom: 20px;
+                }
+
+                @media (max-width: 767px) {
+                    font-size: 16px;
+                    line-height: 20px;
+                }
+            }
+        }
+    }
+
+    .min-height{
+        @media (max-width: 767px) {
+            padding-top: 0;
+        }
+    }
+
+    &--winner{
+        padding-top: 200px;
+
+        .section-winner{
+            background-color: #1C4E95;
+            text-align: center;
+            overflow: visible;
+            padding: 0 50px;
+            padding-bottom: 30px;
+            color: #fff;
+
+            @media (max-width: 767px) {
+                padding: 0 30px;
+            }
+
+            &__title{
+                margin-bottom: 60px;
+                margin-top: -29px;
+                height: 58px;
+                width: auto;
+
+                @media (max-width: 767px) {
+                    margin-bottom: 30px;
+                }
+            }
+
+            .gx-5{
+                --bs-gutter-x: 60px;
+            }
+
+            .card{
+                display: block;
+                margin-bottom: 30px;
+                &-img{
+                    width: 100%;
+                    position: relative;
+                    padding-bottom: 100%;
+                    height: 0;
+                    margin-bottom: 13px;
+                    img{
+                        width: 100%;
+                        height: 100%;
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        object-fit: cover;
+                        object-position: center;
+                    }
+                }
+
+                &-title{
+                    h5{
+                        font-size: 16px;
+                        font-style: normal;
+                        font-weight: 700;
+                        margin: 0;
+                    }
+                    p{
+                        font-size: 12px;
+                        font-style: normal;
+                        font-weight: 600;
+                        margin: 0;
+                    }
+                }
+            }
+        }
+    }
+
+    .container{
+        &--winner{
+            overflow: visible;
+        }
+    }
+}
+
+.badge-winner{
+    position: absolute;
+    top: 5px;
+    right: 8px;
+    z-index: 3;
+
+    img{
+        height: 35px;
+        width: auto;
+
+        @media (max-width: 767px) {
+            height: 47px;
+        }
+
+        &.golden{
+            height: 30px;
+            width: auto;
+
+            @media (max-width: 767px) {
+                height: 30px;
+            }
+        }
+    }
+
+    &--table{
+        position: relative;
+        top: unset;
+        right: unset;
+        margin-left: 10px;
+
+        img{
+            @media (max-width: 767px) {
+                height: 28px;
+            }
+
+            &.golden{
+                height: 25px;
+                width: auto;
+            }
+        }
+
+    }
+
+    &-text{
+        color: #D20911;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 700;
+        margin: 0;
+        margin-top: -5px;
+    }
+}

@@ -1,0 +1,263 @@
+body{
+  background-color: black;
+  background-image: url(../images/bg_main.jpg);
+  background-size: cover;
+  font-size: 18px;
+  font-weight: bold;
+  height: 100vh;
+}
+h1, h2, h3 {
+    color: #993399;
+}
+button{
+    background-color: #aa60a6;
+    border-radius: 25px;
+    padding: 2px 15px;
+    font-weight: bold;
+    min-width: 150px;
+    border: none;
+}
+button img {
+    width: 30px;
+    height: auto;
+}
+.outer{
+  width: inherit; 
+  margin: 0 auto;
+}
+.frame-input{
+  padding: 6px 6px!important;
+  background-color: white;
+  border-radius: 28px;
+}
+.t-black{
+  color: #fff;
+}
+.img-main{
+    width: 85%;
+}
+.img-logo-main{
+    width: auto;
+    margin-top: 15%;
+}
+.img-bl{
+    width: 40%;
+    margin-top: 1rem;
+}
+.left-cont{
+    text-align: left;
+}
+.right-cont{
+    text-align: right;
+}
+.bt-pos{
+    text-align: left ;
+    padding-top: 0px;
+  }
+.logo_main{
+    margin-left: 2rem;
+    width: 200px;
+    margin: 2rem;
+}
+.logo_pd_main{
+    width: 250px;
+    margin: 2rem;
+  }
+.frame-regis{
+  width: 90%;
+  display: block;
+  position: relative;
+  margin: 0 auto;
+  margin-top: 7%;
+}
+.frame-card{
+  display: flex;
+  width: 90%;
+  position: relative;
+  margin: 0 auto;
+  background-color: rgba(0, 0, 0, 0.7);
+border-radius: 2rem;
+}
+.frame-quis{
+    width: 90%;
+    display: flex;
+    position: relative;
+    margin: 0 auto;
+    min-height: 60vh;
+    height: auto;
+    background-color:rgba(0, 0, 0, 0.7);
+    border-radius: 2rem;
+    padding: 3rem;
+}
+.form-control{
+  border-radius: 2.25rem;
+  font-weight: bold;
+  color: #000;
+  font-size: 18px;
+}
+.form-control::placeholder{
+  color: #000;
+  font-size: 18px;
+}
+.btn{
+  width: 200px;
+  padding: 10px;
+  border-radius: 2.25rem ;
+  font-weight: bold;
+  color: #fff;
+  background: linear-gradient(
+    150deg,
+    rgba(5, 102, 247, 1) 0%,
+    rgba(247, 5, 150, 1) 35%,
+    rgba(38, 4, 209, 1) 97%
+  );
+  background-blend-mode: normal;
+  box-shadow:
+    3px 0px 7px 0px rgba(246, 12, 250, 0.6),
+    -3px 0px 7px 0px rgba(246, 12, 250, 0.6);
+}
+.btn-frame{
+    position: absolute!important;
+    bottom: -21px;
+}
+.radiocontainer {
+display: block;
+position: relative;
+padding: 10px 10px 10px 50px;
+margin-bottom: 1px;
+cursor: pointer;
+font-size: ;
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+word-wrap: break-word;
+}
+.radiocontainer .checkmark::after {
+top: 6px;
+left: 6px;
+width: 7px;
+height: 7px;
+border-radius: 50%;
+background: white;
+}
+.checkmark::after {
+content: "";
+position: absolute;
+display: none;
+}
+.checkmark {
+position: absolute;
+top: 15px;
+left: 15px;
+height: 19px;
+width: 19px;
+background-color: #fff;
+border-radius: 50%;
+}
+.radiocontainer input {
+position: absolute;
+opacity: 0;
+cursor: pointer;
+}
+.radiocontainer input:checked ~ .checkmark {
+background-color: #2196F3;
+}
+.element_glow {
+  box-shadow:
+      3px 0px 7px 0px rgba(246, 12, 250, 0.6),
+      -3px 0px 7px 0px rgba(246, 12, 250, 0.6);
+  }
+  .bg-purple{
+    background-color: #810aac;
+    border-radius: 25px;
+    padding: 7px;
+  }
+  .card{
+    border: #fff 4px solid;
+    margin: 0 auto;
+    width: 75%;
+  }
+  .pos{
+    text-align: left;
+  }
+@media (max-width: 460px) {
+    body{
+        background-color: black;
+        background-image: url(../images/bg_main-m.jpg);
+        background-size: cover;
+      }
+      h1{
+        font-size: 1.5rem;
+      }
+      .frame-input{
+        padding: 4px 4px!important;
+        background-color: white;
+        border-radius: 28px;
+      }
+      .outer{
+        width: auto;
+        margin: 0 auto;
+      }
+    .left-cont{
+        text-align: center;
+    }
+    .right-cont{
+        text-align: center;
+    }
+    .logo_main{
+        margin-left: 2rem;
+        width: 75%;
+        margin-bottom: 0rem;
+    }
+    .frame-regis{
+        width: 100%;
+        display: block;
+        position: relative;
+        margin: 0 auto;
+      }
+      .frame-card{
+        width: 100%;
+        position: relative;
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+      }
+      .bt-pos{
+        text-align: center;
+        padding-top: 0px;
+      }
+    .frame-quis{
+      display: flex;
+      flex-wrap: wrap;
+        height: auto;
+        padding: 1rem;
+        margin: 15px;
+    }
+    .t-black{
+        color: #fff;
+        height: 0vh;
+      }
+      .form-control{
+        border-radius: 2.25rem;
+        font-weight: bold;
+        color: #000;
+        font-size: 16px;
+      }
+      .form-control::placeholder{
+        color: #000;
+        font-size: 16px;
+      }
+    .logo_pd_main {
+        width: 250px;
+        margin: 0rem;
+    }
+    .card{
+      border: #fff 4px solid;
+      margin: 0 auto;
+      width: 60%;
+    }
+    .pos{
+      text-align: center;
+    }
+}

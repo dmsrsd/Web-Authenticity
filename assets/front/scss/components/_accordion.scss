@@ -1,0 +1,171 @@
+.panel-group{
+    margin-bottom: 0;
+
+    .panel{
+        box-shadow: none;
+        &-heading{
+            border-radius: 0;
+            background-image: url('../../../assets/front/img/home/bg-panel.png');
+            background-size: cover;
+            padding: 0px;
+
+            img{
+                height: 65px;
+                width: auto;
+                max-width: 260px;
+                object-fit: contain;
+                object-position: center;
+
+                @include below(lg){
+                    height: 40px;
+                    max-width: 160px;
+                }
+            }
+        }
+        &-title{
+            a{
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                color: #fff;
+                padding: 30px;
+
+                @include below(lg){
+                    padding: 15px 18px;
+                }
+
+                &::after{
+                    width: 48px;
+                    height: 48px;
+                    background-image: url('../../../assets/front/img/home/chevron-down.png');
+                    background-size: 48px 48px;
+                    content: "";
+                    transform: rotate(180deg);
+                    transition: all 0.3s ease-in-out;
+
+                    @include below(lg){
+                        width: 36px;
+                        height: 36px;
+                        background-size: 36px 36px;
+                    }
+                }
+
+                &.collapsed{
+                    &::after{
+                        transform: rotate(0);
+                    }
+                }
+            }
+        }
+
+        &-body{
+            padding: 50px 30px;
+
+            @include below(lg){
+                padding: 26px 0;
+            }
+
+            &__title{
+                margin-bottom: 55px;
+                @include below(lg){
+                    margin-bottom: 28px;
+                }
+                img{
+                    height: 100px;
+                    width: auto;
+                    margin-bottom: 9px;
+
+                    @include below(lg){
+                        height: 40px;
+                    }
+                }
+                &-desc{
+                    display: flex;
+                    align-items: center;
+                    gap: 15px;
+
+                    p{
+                        font-size: 16px;
+                        font-style: normal;
+                        font-weight: 600;
+                        margin-bottom: 0;
+                        color: $primary;
+                    }
+
+                    img{
+                        height: 26px;
+                        margin-bottom: 0;
+
+                        @include below(lg){
+                            height: 18px;
+                        }
+                    }
+
+                    h4{
+                        text-align: center;
+                        font-family: $font-rubik;
+                        font-size: 24px;
+                        font-style: normal;
+                        font-weight: 700;
+                        line-height: normal;
+                        text-transform: uppercase;
+                        margin: 0;
+                        color: $primary;
+
+                        @include below(lg){
+                            font-size: 16px;
+                        }
+                    }
+                }
+                h5{
+                    color: #000;
+                    font-family: $font-noto;
+                    font-size: 16px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: normal;
+                    margin-bottom: 0;
+                    margin-top: 16px;
+                }
+            }
+
+            .gx-4{
+                --bs-gutter-x: 44px;
+
+                @include below(lg){
+                    --bs-gutter-x: 26px;
+                }
+            }
+
+            .col-md-4{
+                &:nth-child(3n){
+                    .card--video{
+                        &::after{
+                            display: none;
+                        }
+                    }
+                }
+            }
+        }
+
+        &-cta{
+            text-align: center;
+            background-color: #fff;
+            padding-top: 28px;
+            margin-top: -30px;
+            position: relative;
+            z-index: 2;
+
+            @include below(lg){
+                padding-top: 15px;
+            }
+
+            .btn{
+                @include below(lg){
+                    margin-top: 0;
+                }
+            }
+        }
+    }
+}

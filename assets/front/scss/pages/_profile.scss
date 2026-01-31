@@ -1,0 +1,73 @@
+.page-profile{
+    .container{
+        overflow: visible;
+    }
+    .card{
+        padding-top: 60px;
+
+        h3{
+            color: $primary;
+            font-family: $font-rubik;
+            font-size: 32px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+            margin: 0;
+            margin-bottom: 24px;
+        }
+
+        form{
+            padding: 0 40px;
+        }
+    }
+
+    .upload-avatar{
+        position: relative;
+        &__preview{
+            width: 239px;
+            height: 239px;
+            position: relative;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 5px solid $primary;
+
+            @include below(lg){
+                margin: 0 auto;
+            }
+
+            img{
+                @include img-cover;
+            }
+        }
+
+        &__action{
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            border-radius: 50% !important;
+            background-color: $primary;
+            font-size: 21px;
+            color: #fff;
+            position: absolute;
+            z-index: 4;
+            right: 15px;
+            bottom: 20px;
+        }
+
+    }
+    &__edit{
+        color: #848484;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+        text-align: center;
+        margin-top: 24px;
+        @include below(lg){
+            margin-bottom: 30px;
+        }
+    }
+}

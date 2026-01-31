@@ -1,0 +1,306 @@
+/*style-se.css*/
+@import "sourcesanspro.css";
+@font-face {
+	font-family: oswaldm;
+	src: url('../fonts/oswald/Oswald-Medium.ttf');
+}
+@font-face {
+	font-family: druk;
+	src: url('../fonts/Druk-Medium.otf');
+}
+@font-face {
+	font-family: drukwide;
+	src: url('../fonts/DrukWide-Medium.otf');
+}
+@font-face {
+	font-family: myriad;
+	src: url('../fonts/MyriadPro-Cond.otf');
+}
+@font-face {
+	font-family: auth;
+	src: url('../fonts/AuthenticSans-Regular.otf');
+}
+@font-face {
+	font-family: auth;
+	src: url('../fonts/AuthenticSans-Regular.otf');
+}
+@font-face {
+	font-family: dinl;
+	src: url('../fonts/din/DINPro-Light.otf');
+}
+@font-face {
+	font-family: din;
+	src: url('../fonts/din/DINPro.otf');
+}
+@font-face {
+	font-family: dinbold;
+	src: url('../fonts/din/DINPro-Black.otf');
+}
+.din.menu a{
+	font-family:din !important;
+	font-size:18px !important;
+}
+.din{
+	font-family:din;
+}
+.big-text{
+	font-family: Arial, Helvetica, sans-serif; 
+    font-size: 20px;
+    height: 50px;
+    padding: 10px;	
+}
+*{
+	padding:0;
+	margin:0;
+}
+body{
+	font-family:dinl; 
+	color:#FFFFFF;
+	background:url('../img/bgse-desktop.png') no-repeat center top fixed #202020;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+} 
+html, body {
+    height: 100%;
+}
+.navbar{
+	min-height:100px;
+}
+.navbar .navbar-se img{
+	margin:0 auto;
+	display:block;
+}
+.navbar .navbar-se{
+	font-size:15px;
+	text-align:center;
+	font-family:auth;
+	color:#FFFFFF;
+	font-weight:normal;
+}
+.cl{clear:both;}
+.no-gutter > [class*='col-'] {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+
+.puretaste img{
+	width:150px;
+}
+.puretaste{
+	margin:30px 0px;
+}
+.redborder{
+	margin:0 auto;
+	background:#C33631;
+	width:100px;
+	height:2px;
+}
+
+.btn-login:focus,.btn-login:hover,.btn-login:active{
+	text-decoration:none;
+	color:#FFFFFF;
+	background:#003E95;
+	
+}
+.btn-login{
+	text-decoration:none;
+	color:#FFFFFF;
+	font-size:20px;
+	-webkit-border-radius:20px;
+	-moz-border-radius:20px;
+	border-radius:20px;
+	background:#235395;
+	cursor:pointer;
+	display:block;
+	padding:7px;
+	margin:0 auto;
+	width:80%;
+	font-family:Arial;
+	font-weight:bold;
+}
+.btn-signup:focus,.btn-signup:hover,.btn-signup:active{
+	text-decoration:none;
+	color:#FFFFFF;
+	background:#960000;
+	
+}
+.btn-signup{
+	text-decoration:none;
+	color:#FFFFFF;
+	font-size:20px;
+	-webkit-border-radius:20px;
+	-moz-border-radius:20px;
+	border-radius:20px;
+	background:#FF0000;
+	cursor:pointer;
+	display:block;
+	padding:7px;
+	margin:0 auto;
+	width:80%;
+	font-family:Arial;
+	font-weight:bold;
+}
+.btn-point:focus,.btn-point:hover,.btn-point:active{
+	text-decoration:none;
+	color:#FFFFFF;
+	background:#960000;
+	
+}
+.btn-point{
+	text-decoration:none;
+	color:#FFFFFF;
+	font-size:15px;
+	-webkit-border-radius:20px;
+	-moz-border-radius:20px;
+	border-radius:20px;
+	background:#FF0000;
+	cursor:pointer;
+	display:block;
+	padding:7px;
+	margin:0 auto;
+	width:80%;
+	font-family:Arial;
+	font-weight:bold;
+	text-align:center;
+}
+.modal .modal-content{
+	-webkit-border-radius:0px;
+	-moz-border-radius:0px;
+	border-radius:0px;	
+}
+.modal .modal-body{
+	color:#0053A0;
+	font-size:17px;
+	font-family:Arial;
+	text-align:center;
+}
+.modal .modal-header .auth{
+	margin:0px;
+	color:#0053A0;
+}
+.auth{
+	font-family:auth;
+}
+
+.modal {
+  text-align: center;
+  padding: 0!important;
+}
+
+.modal:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -4px;
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.mobile{
+	display:none;
+}
+.desktop{
+	display:inherit;
+}
+.druk1{
+	font-family:drukwide;
+	color:#FFFFFF;
+	text-transform:uppercase;
+	margin:0px;
+	font-size:47px;
+}
+.druk2{
+	font-family:druk;
+	color:#FFFFFF;
+	text-transform:uppercase;
+	font-size:64px;
+	margin:0px;
+}
+@media screen and (min-width:501px){
+	.btn-login{
+		font-size:15px;
+	}
+	.btn-signup{
+		font-size:15px;
+	}
+}
+@media screen and (max-width:500px){
+	body{
+		font-family:dinl; 
+		color:#FFFFFF;
+		background:url('../img/bgse.png') no-repeat center center fixed #202020;
+		-webkit-background-size: cover;
+		-moz-background-size: cover;
+		-o-background-size: cover;
+		background-size: cover;
+	} 	
+	.mobile{
+		display:inherit;
+	}
+	.desktop{
+		display:none;
+	}
+	.druk1{
+		font-family:drukwide;
+		color:#FFFFFF;
+		text-transform:uppercase;
+		margin:0px;
+		font-size:28px;
+	}
+	.druk2{
+		font-family:druk;
+		color:#FFFFFF;
+		text-transform:uppercase;
+		font-size:40px;
+		margin:0px;
+	}	
+}
+
+.copy{
+	color:#FFFFFF;
+	font-size:13px;
+}
+
+
+footer h3{
+	margin: 0px;
+	font-size:20px;
+}
+footer{
+	background:#000000;
+	padding:10px;
+	color:#FFFFFF;  
+	font-size:12px;
+	positions:absolute;
+	widths:100%;
+	bottoms:0px;
+}
+footer .plus18{
+	border:1px solid #FFFFFF;
+	color:#FFFFFF;
+	padding:5px;
+	font-size:15px;
+	-webkit-border-radius: 16px; 
+	-moz-border-radius: 16px; 
+	border-radius: 16px;
+    width: 35px;
+    margin-top: 11px;
+    display: block;
+    position: absolute;
+    right: 0px;
+    text-align: center;
+}
+footer .img{
+	margin-top:8px;
+}
+footer .foot-small{
+	font-size:10px;
+}

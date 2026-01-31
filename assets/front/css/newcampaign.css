@@ -1,0 +1,148 @@
+.navbar{
+	margin-bottom:0px;
+}
+body{
+	font-size: 15px;
+}
+.body-text{
+	font-weight : bold;
+}
+.navbar-default ~ .min-height, .navbar-default ~ .container {
+	top: 0px;
+}		
+.min-height{
+	padding-top:0px;
+	padding-bottom:0px;
+}
+.affix ~ .min-height, .affix ~ .container{
+	top:0px;
+} 
+.img-mobile{
+	height:0px;
+}
+@media screen and (max-width:991px){ 
+	.tnc{
+		position: relative;
+		z-index: 2;		
+	}
+	.bgtnc{
+		z-index: 4;
+		position: relative;
+		height: 100px;		
+	}
+	.sticky{
+		z-index:5;
+	}
+
+}
+	.page-newcampaign{
+		padding-top:90px;
+	}
+@media screen and (max-width:767px){ 
+	.img-mobile{
+		height:auto;
+	}
+	.page-newcampaign{
+		margin-top:71px;
+		padding-bottom: 0px;
+	}
+	.affix ~ .min-height, .affix ~ .container { 
+		padding-bottom: 0px;
+	}
+	.page-newcampaign{
+		padding-top:0px;
+	}
+}
+@media screen and (min-width: 768px){
+	.affix ~ .min-height, .affix ~ .container { 
+		padding-bottom: 0px;
+	}
+}
+
+.bgbanner{
+	background:url('../../../assets/front/img/bg_new.jpg') center top no-repeat;
+	z-index:1;
+	position:relative;
+	background-size: cover;
+}
+ 
+.gallery{
+	background:#EBEBEC;
+	min-height:200px;
+	
+}
+.tnc .b{
+	font-size:20px;
+	font-weight:bold;
+}
+.tnc ul{
+	margin-left: 15px;	
+}
+.tnc{
+	background:#fff;
+	min-height:400px;
+	color:#000;
+	padding-top:50px;
+}
+.bgtnc{
+	background: rgb(255,255,255);
+	background: linear-gradient(0deg, rgb(255, 255, 255) 0%, rgb(255, 255, 255) 0%, rgba(255,255,255,0) 100%);
+	margin-top:-100px;
+	z-index:1;
+	position:relative; 
+}
+.head h1{
+	color:#FFFFFF;
+	margin:0px;
+	font-family: oswaldm;
+	font-size:60px;
+	line-height:50px;
+}
+.head h2{
+	margin:0px;
+	color:#D72027;
+}
+.head h3{
+	margin:0px;
+	color:#005096;
+	font-family: oswaldm;
+	font-size:60px;
+}
+.bgperiode{
+	background:#D72027;
+	color:#FFFFFF;
+	font-size:30px;
+	font-family:dinbold;
+	display:inline-block;
+	padding:2px 10px;
+	letter-spacing:-1px;
+	margin:10px 0px;
+}
+.headgallery{
+	font-family: oswaldm;
+	font-size:40px;
+	line-height:35px;
+	color:#005096;
+}
+.boxgallery{
+	margin-bottom:20px;
+	background:#FFFFFF;
+	text-align:center;
+	padding:15px 0px;
+}
+.namagallery{
+	color:#000000;
+	font-weight:bold;
+	font-size:18px;
+}
+.tglgallery{
+	color:#000000;
+	font-weight:bold;
+	font-size:14px;
+}
+.mhform{
+	height:300px;
+}
+.overlay-all{
+	z-index:2000;
+}

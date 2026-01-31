@@ -1,0 +1,30 @@
+.pagination{
+    display: flex;
+
+    li{
+        a{
+            width: 43px;
+            height: 43px;
+            padding: 0;
+            color: $primary;
+            text-align: center;
+            font-family: $font-rubik;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0 !important;
+            border: none !important;
+            background-color: transparent;
+
+            &.active{
+                color: #fff;
+                background-color: $primary;
+            }
+        }
+    }
+}

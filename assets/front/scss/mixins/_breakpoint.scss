@@ -1,0 +1,50 @@
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1201px,
+  xxl: 1400px
+);
+
+// Up mixin
+@mixin up($breakpoint) {
+  $breakpoint-value: map-get($grid-breakpoints, $breakpoint);
+  @media (min-width: $breakpoint-value) {
+    @content;
+  }
+}
+
+// Between mixin
+@mixin between($min-breakpoint, $max-breakpoint) {
+  $min-value: map-get($grid-breakpoints, $min-breakpoint);
+  $max-value: map-get($grid-breakpoints, $max-breakpoint);
+  @media (min-width: $min-value) and (max-width: $max-value) {
+    @content;
+  }
+}
+
+// Below mixin
+@mixin below($breakpoint) {
+  $breakpoint-value: map-get($grid-breakpoints, $breakpoint);
+  @media (max-width: ($breakpoint-value - 1px)) {
+    @content;
+  }
+}
+
+// Example
+// .element {
+//     // Default styles
+
+//     @include up(md) {
+//       // Styles for medium devices and up
+//     }
+
+//     @include between(sm, lg) {
+//       // Styles for small to large devices
+//     }
+
+//     @include below(xl) {
+//       // Styles for devices below XL
+//     }
+// }

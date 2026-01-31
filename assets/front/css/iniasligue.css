@@ -1,0 +1,136 @@
+.navbar{
+	margin-bottom:0px;
+}
+
+.navbar-default ~ .min-height, .navbar-default ~ .container {
+	top: 0px;
+}		
+.min-height{
+	padding-top:0px;
+	padding-bottom:0px;
+}
+.affix ~ .min-height, .affix ~ .container{
+	top:0px;
+} 
+.bg-darbotz{
+	background:url('../../../uploads/iniasligue/darbotz-darbotz-iag.jpg') left center no-repeat;
+	background-size:cover;
+	min-height:500px;
+	padding:50px 0px;
+}
+.iag-darbotz h3{
+	color:#0355A1;
+	margin:0px;
+	text-align:center;
+	font-size:60px;
+	line-height:50px;
+	padding:0px 50px ;
+}
+.iag-darbotz{
+	min-height:800px;
+}
+
+.topmenugue .link:hover,.topmenugue .link:visited,.topmenugue .link:active,.topmenugue .link:focus{
+	text-decoration:none;
+}
+.topmenugue .link{
+	background:#E32121;
+	color:#FFFFFF;
+	margin: 2px;
+	display:block;
+	text-align:center;
+	padding:10px 0px;
+	font-size:24px;
+	font-family:myriad;
+	font-weight:bold;
+}
+.topmenugue{
+	position: absolute;
+	width: 99.2%;
+	left: 0;
+	height: 55px;
+	margin-top: -30px;
+}
+@media screen and (max-width:480px){
+.bg-darbotz{
+	background:url('../../../assets/front/img/back_m.jpg') left center no-repeat;
+	background-size:cover;
+	min-height:500px;
+	padding:50px 0px;
+}
+}
+@media screen and (max-width:767px){
+	.topmenugue{
+		position:inherit;
+		height:auto;
+		margin-top:0px;
+	}
+	.page-iniasligue{
+		margin-top:71px;
+		padding-bottom: 0px;
+	}
+	.affix ~ .min-height, .affix ~ .container { 
+		padding-bottom: 0px;
+	}	
+}
+@media screen and (min-width: 768px){
+	.affix ~ .min-height, .affix ~ .container { 
+		padding-bottom: 0px;
+	}
+}
+#article{
+	padding:50px 0px;
+}
+.headiniasligue span{
+	color:#E40001;
+}
+.headiniasligue{
+	font-family:oswaldm;
+	color:#03459D;
+	font-size:30px;
+}
+.contributor {
+    border-top: none;
+    background: #93161A !important; 
+    color: #FFFFFF;
+    padding: 10px 0px;
+}
+.contributor h1 {
+    color: #FFFFFF;
+    font-size: 40px;
+    font-family: broken;
+    font-weight: bold;
+	letter-spacing:2px;
+	margin:45px 0px;
+}
+.articleimage {
+    position:relative;
+}
+
+.inarticletext {
+	padding:20px;
+	background:url('../img/trans.png');
+}
+.articletext:hover{  
+}
+.articletext a{ 
+	width:170px;
+	font-weight:bold;
+	margin-top:50px;
+}
+.articletext { 
+	transition: all .5s;
+    positions:absolute;
+    text-align:center; 
+	height:500px;
+	background-position:center !important;
+	background-size:cover !important;
+	background-repeat: no-repeat  !important;
+	margin-bottom:20px;
+}
+.articlejudul{
+	color:#FFFFFF;
+	font-weight:bold;
+	padding:0px;
+	font-size:18px;
+}

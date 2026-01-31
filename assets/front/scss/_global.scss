@@ -1,0 +1,27 @@
+html{
+    font-size: 16px;
+}
+.page-soundroom{
+    font-family: 'Noto Sans', sans-serif;
+    font-weight: 400;
+}
+
+a{
+    cursor: pointer;
+    &:hover, &:focus{
+        text-decoration: none;
+    }
+}
+
+.main{
+    padding-top: 95px;
+    overflow: hidden;
+
+    @include below(xl){
+        padding-top: 66px;
+    }
+}
+
+section{
+    position: relative;
+}

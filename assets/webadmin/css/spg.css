@@ -1,0 +1,68 @@
+/*style.css*/
+ 
+@font-face {
+	font-family: oswaldm;
+	src: url('../fonts/oswald/Oswald-Medium.ttf');
+}
+@font-face {
+	font-family: myriad;
+	src: url('../fonts/MyriadPro-Cond.otf');
+}
+@font-face {
+	font-family: auth;
+	src: url('../fonts/AuthenticSans-Regular.otf');
+}
+@font-face {
+	font-family: dinl;
+	src: url('../fonts/din/DINPro-Light.otf');
+}
+@font-face {
+	font-family: din;
+	src: url('../fonts/din/DINPro.otf');
+}
+@font-face {
+	font-family: dinbold;
+	src: url('../fonts/din/DINPro-Black.otf');
+}
+
+@media screen and (min-width:768px){
+    .navbar-brand-centered {
+        position: absolute;
+        left: 50%;
+        display: block;
+        width: 160px;
+        text-align: center; 
+    }
+    .navbar>.container .navbar-brand-centered, 
+    .navbar>.container-fluid .navbar-brand-centered {
+        margin-left: -80px;
+    }
+	.navbar-nav > li > a{
+		font-size:20px;
+		
+	}
+}
+.navbar-inverse .navbar-nav > li > a{
+	color:#FFFFFF;
+}
+.navbar-nav > li > a{
+	font-size:15px;
+}
+.navbar{
+	min-height:80px;
+	-webkit-border-radius: 0px; 
+	-moz-border-radius: 0px; 
+	border-radius: 0px;
+	
+}
+.navbar-header{
+	min-height:80px;	
+}
+.page-header{
+	margin:0px;
+}
+a.list-group-item {
+    color: #555;
+    padding: 15px;
+    font-size: 15px;
+}

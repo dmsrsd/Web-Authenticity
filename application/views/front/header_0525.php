@@ -134,6 +134,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </script>
 
 
+<?php if (!is_localhost()): ?>
 <!-- Facebook Pixel Code -->
 <script>
 !function(f,b,e,v,n,t,s)
@@ -153,6 +154,7 @@ src="https://www.facebook.com/tr?id=2808783446063669&ev=PageView
 &noscript=1"/>
 </noscript>
 <!-- End Facebook Pixel Code -->
+<?php endif; ?>
 
 <meta name="facebook-domain-verification" content="oasvsakpotut3wap2b4gn331lq8pzk" />
 

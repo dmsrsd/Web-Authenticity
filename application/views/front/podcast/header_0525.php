@@ -188,8 +188,9 @@ if (empty($this->datamember)) {
 		gtag('config', 'AW-400197189');
 	</script>
 
-	<!-- Facebook Pixel Code -->
-	<script>
+<?php if (!is_localhost()): ?>
+<!-- Facebook Pixel Code -->
+<script>
 		! function(f, b, e, v, n, t, s) {
 			if (f.fbq) return;
 			n = f.fbq = function() {
@@ -215,9 +216,10 @@ if (empty($this->datamember)) {
 		<img height="1" width="1" src="https://www.facebook.com/tr?id=2808783446063669&ev=PageView
 &noscript=1" />
 	</noscript>
-	<!-- End Facebook Pixel Code -->
+<!-- End Facebook Pixel Code -->
+<?php endif; ?>
 
-	<meta name="facebook-domain-verification" content="oasvsakpotut3wap2b4gn331lq8pzk" />
+<meta name="facebook-domain-verification" content="oasvsakpotut3wap2b4gn331lq8pzk" />
 
 	<!-- Event snippet for Page view conversion page -->
 	<script>

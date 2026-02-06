@@ -196,6 +196,7 @@
 		gtag('config', 'AW-400197189');
 	</script>
 
+	<?php if (!is_localhost()): ?>
 	<!-- Facebook Pixel Code -->
 	<script>
 		! function(f, b, e, v, n, t, s) {
@@ -224,6 +225,7 @@
 &noscript=1" />
 	</noscript>
 	<!-- End Facebook Pixel Code -->
+	<?php endif; ?>
 
 	<meta name="facebook-domain-verification" content="oasvsakpotut3wap2b4gn331lq8pzk" />
 

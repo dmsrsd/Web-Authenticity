@@ -34,7 +34,13 @@ $config["upload_path"] = "uploads/";
 | path to your installation.
 |
 */
-$config['base_url']	= 'https://www.authenticity.id/';
+// Development: pakai host yang sama dengan yang dibuka (localhost atau 127.0.0.1) agar font/asset tidak kena CORS
+if (isset($_SERVER['HTTP_HOST']) && (strpos($_SERVER['HTTP_HOST'], '127.0.0.1') !== false || strpos($_SERVER['HTTP_HOST'], 'localhost') !== false)) {
+	$config['base_url'] = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/';
+} else {
+	$config['base_url'] = 'https://www.authenticity.id/';
+}
+// $config['base_url']	= 'http://127.0.0.1:8003/';
 
 /*
 |--------------------------------------------------------------------------

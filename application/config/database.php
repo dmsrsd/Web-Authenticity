@@ -53,7 +53,7 @@ $active_record = TRUE;
 
 $db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'root';
-$db['default']['password'] = 'Nojoron0123)(';
+$db['default']['password'] = 'admin123';
 
 $db['default']['database'] = 'gridsf';
 $db['default']['dbdriver'] = 'mysqli';

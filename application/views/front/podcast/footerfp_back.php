@@ -74,7 +74,7 @@
 		<a href="https://www.authenticity.id/elite/" target="_blank" class="warning-desktop">
 			<img class="image-ads" src='<?php echo base_url() ?>assets/front/img/profile/banner-ads.gif'>
 		</a>
-		<a href="https://www.authenticity.id/elite/" target="_blank" class="warning-mobile">
+		<a href="<?php echo base_url('elite/') ?>" target="_blank" class="warning-mobile">
 			<img class="image-ads" src='<?php echo base_url() ?>assets/front/img/profile/banner-ads-m.gif'>
 		</a>
 	</div>
@@ -154,7 +154,7 @@ if (empty($this->datamember)) {
 	if ($page != "login" && $page != "register") { ?>
 		<div class='sticky hide'>
 			<div class=''>
-				<!--<a href="https://www.authenticity.id/authentic-store" target="_self">--><img src='<?= base_url() ?>assets/front/img/login-sticky.gif' width='280'>
+				<!--<a href="<?php echo base_url('authentic-store') ?>" target="_self">--><img src='<?= base_url() ?>assets/front/img/login-sticky.gif' width='280'>
 				<!--</a>-->
 				<!--
 				<div class='left-sticky'><i class='fa fa-chevron-right'></i> Login for More Benefit</div>
@@ -708,7 +708,7 @@ if(($this->uri->segment(1)==="profile") and ($this->uri->segment(2)=="")){ ?>
 		Moengage.add_birthday("<?php echo $dobDateJs; ?>");
 	</script>
 
-<?php	if($_SERVER['HTTP_REFERER'] =="https://www.authenticity.id/login"){ ?>
+<?php	if(!empty($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'], base_url('login')) === 0){ ?>
 	<script>
 		Moengage.track_event("Successful Login", {
 			"login_type": "normal",

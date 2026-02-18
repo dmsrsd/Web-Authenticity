@@ -1,6 +1,6 @@
 <?php
 header("HTTP/1.1 301 Moved Permanently");
-header("Location: https://www.authenticity.id");
+header("Location: " . base_url());
 exit();
 ?>
 

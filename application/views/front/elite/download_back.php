@@ -18,7 +18,7 @@
   <meta property="og:title" content="<?php echo $kartu; ?>">
   <meta property="og:description" content="Siapkan dirimu, dan dengerin apa kata semesta di balik noise harian lo.">
   <meta property="og:image" content="<?php echo $url; ?>">
-  <meta property="og:url" content="https://www.authenticity.id/elite/download/<?php echo $this->uri->segment(3) ?>">
+  <meta property="og:url" content="<?php echo base_url('elite/download/'.$this->uri->segment(3)) ?>">
   <meta property="og:type" content="website">
 
   <!-- Untuk Twitter -->

@@ -50,7 +50,7 @@
 
     $conn->close();
     $start = $start + $limit;
-    header("Refresh: 0.5; url=https://authenticity.id/loop.php?start=".$start);
+    header("Refresh: 0.5; url=http://localhost:8003/loop.php?start=".$start);
     die();
 
 

@@ -8,12 +8,12 @@
 						<p class="isian">SABTU, 5 JULI 2025</p>
 						<p class="isian">LAPANGAN PUSSENIF BANDUNG</p>
 						<p class="isian"><strong>HTM : Rp 100,000 - Rp 225,000</strong></p>
-						<a href="https://www.instagram.com/pestipalin?utm_source=ig_web_button_share_sheet&igsh=OWtlYmZ4czNtcmZq" target="_blank"><p class="sosmed">Cek IG Promotor <img src="https://www.authenticity.id/assets/front/img/event/ig-new.png"></p></a>
+						<a href="https://www.instagram.com/pestipalin?utm_source=ig_web_button_share_sheet&igsh=OWtlYmZ4czNtcmZq" target="_blank"><p class="sosmed">Cek IG Promotor <img src="<?php echo base_url('assets/front/img/event/') ?>ig-new.png"></p></a>
 						<a href="#" target="_blank"><p class="btn btn-primary">Sold Out</p></a>
 						
 					</div>
 					<div class="col-md-6 text-right">
-						<img class="img-full" src="https://www.authenticity.id/assets/front/img/event/pestipalin.jpg" style="">
+						<img class="img-full" src="<?php echo base_url('assets/front/img/event/') ?>pestipalin.jpg" style="">
 					</div>
 				</div>
 			</div>

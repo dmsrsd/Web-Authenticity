@@ -203,7 +203,7 @@
                         <div class="col-sm text-center" style="display: table;">
 <!--                             
                             <div style="display: table-cell;vertical-align: middle;"><p><strong>Mau ikutan main,</br> login/sign up di sini</strong> </p>
-                            <span><a href="https://www.authenticity.id/login" class="btn btn-outline-primary" style="font-size: 20px; margin-top: 10px;">login/sign up</a></span>
+                            <span><a href="<?php echo base_url('login') ?>" class="btn btn-outline-primary" style="font-size: 20px; margin-top: 10px;">login/sign up</a></span>
                             </div> -->
                         </div>
                         <div class="col-sm text-left"></div>

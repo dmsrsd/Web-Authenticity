@@ -33,7 +33,7 @@
         <meta property="og:title" content="<?php echo $kartu;  ?>"/>
         <meta property="og:description" content="<?php echo $desk;  ?>"/>
         <meta property="og:type" content="article"/>
-        <meta property="og:url" content="https://www.authenticity.id/tarotunes/share/<?php echo $this->uri->segment(3) ?>?type=<?php echo $_GET['type'] ?>"/>
+        <meta property="og:url" content="<?php echo base_url('tarotunes/share/'.$this->uri->segment(3).'?type='.$_GET['type']) ?>"/>
         <meta property="og:image" content="<?php echo $gambar;  ?>"> 
         <meta property="og:site_name" content="Authenticity">
         <meta name="twitter:card" content="summary_large_image">

@@ -1172,9 +1172,9 @@ class Profile extends MY_Controller {
 						Selamat, karya lo sudah masuk ke Soundroom.<br />
 						Semoga lo berkesempatan manggung di Pestapora ya.<br />
 						Biar banyak yang dukung, 
-						<a href='https://www.authenticity.id/soundroom/share/".$insert_id."?year=2025&utm_source=sroom25&utm_medium=sroom25submitter&utm_campaign=sr25".$_POST['judul']."&utm_id=sroom25visitor&utm_term=sroom25visitor' target='blank'> download dan share konten ini </a> ke story lo ya. 
+						<a href='".base_url('soundroom/share/'.$insert_id.'?year=2025&utm_source=sroom25&utm_medium=sroom25submitter&utm_campaign=sr25'.urlencode($_POST['judul']).'&utm_id=sroom25visitor&utm_term=sroom25visitor')."' target='blank'> download dan share konten ini </a> ke story lo ya. 
 						<br /><br />
-						https://www.authenticity.id/soundroom/share/".$insert_id."?year=2025&utm_source=sroom25&utm_medium=sroom25submitter&utm_campaign=sr25".$_POST['judul']."&utm_id=sroom25visitor&utm_term=sroom25visitor";
+						".base_url('soundroom/share/'.$insert_id.'?year=2025&utm_source=sroom25&utm_medium=sroom25submitter&utm_campaign=sr25'.urlencode($_POST['judul']).'&utm_id=sroom25visitor&utm_term=sroom25visitor')."";
 						//echo $em['data']; exit;
 						$pesan = $this->load->view('front/email-template-rejected',$em,TRUE);
 						$this->email->message($pesan);

@@ -8,12 +8,12 @@
 						<p class="isian">SABTU, 18 JULI 2025</p>
 						<p class="isian">KOPIKINA KEMANG JAKARTA</p>
 						<p class="isian"><strong>HTM : Rp 55.000 (INCL. KOPI)</strong></p>
-						<a href="https://www.instagram.com/pestapora/" target="_blank"><p class="sosmed">Cek IG Promotor <img src="https://www.authenticity.id/assets/front/img/event/ig-new.png"></p></a>
+						<a href="https://www.instagram.com/pestapora/" target="_blank"><p class="sosmed">Cek IG Promotor <img src="<?php echo base_url('assets/front/img/event/') ?>ig-new.png"></p></a>
 						<a href="#" target="_blank"><p class="btn btn-primary">Sold Out</p></a>
 						
 					</div>
 					<div class="col-md-6 text-right">
-						<img class="img-full" src="https://www.authenticity.id/assets/front/img/event/mainkantop6.jpg" style="">
+						<img class="img-full" src="<?php echo base_url('assets/front/img/event/') ?>mainkantop6.jpg" style="">
 					</div>
 				</div>
 				<div class="row event">
@@ -25,12 +25,12 @@
 						<p class="isian">19-20 JULI 2025</p>
 						<p class="isian">LAPANGAN UDARA WIRIADINATA TASIKMALAYA</p>
 						<p class="isian"><strong>HTM : Rp 80,000 - Rp 100,000</strong></p>
-						<a href="https://www.instagram.com/ruang_bermusik?utm_source=ig_web_button_share_sheet&igsh=MXh6dHlnZ2JyYXZtcw==" target="_blank"><p class="sosmed">Cek IG Promotor <img src="https://www.authenticity.id/assets/front/img/event/ig-new.png"></p></a>
+						<a href="https://www.instagram.com/ruang_bermusik?utm_source=ig_web_button_share_sheet&igsh=MXh6dHlnZ2JyYXZtcw==" target="_blank"><p class="sosmed">Cek IG Promotor <img src="<?php echo base_url('assets/front/img/event/') ?>ig-new.png"></p></a>
 						<a href="#" target="_blank"><p class="btn btn-primary">Sold Out</p></a>
 						
 					</div>
 					<div class="col-md-6 text-right">
-						<img class="img-full" src="https://www.authenticity.id/assets/front/img/event/ruang-bermusik.jpg" style="">
+						<img class="img-full" src="<?php echo base_url('assets/front/img/event/') ?>ruang-bermusik.jpg" style="">
 					</div>
 				</div>
 				

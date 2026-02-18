@@ -3,7 +3,7 @@
 	header("Content-Security-Policy: font-src 'self' data: https://fonts.gstatic.com https://fonts.googleapis.com;");
 	
 header("HTTP/1.1 301 Moved Permanently");
-header("Location: https://authenticity.id/");
+header("Location: " . (function_exists('base_url') ? base_url() : (isset($_SERVER['HTTP_HOST']) && preg_match('/^(localhost|127\.0\.0\.1)(:\d+)?$/i', $_SERVER['HTTP_HOST']) ? 'http://' . $_SERVER['HTTP_HOST'] . '/' : 'https://www.authenticity.id/'));
 exit();
 
 ?>
@@ -158,7 +158,7 @@ exit();
 	<link rel="stylesheet" href="<?php echo base_url('assets/elite-html/css/animate.css') ?>"> 
 	<link rel="stylesheet" href="<?php echo base_url('assets/elite-html/css/style.css') ?>"> 
 	<link rel="stylesheet" href="<?php echo base_url('assets/elite-html/css/global.css') ?>"> 
-	<link href="https://www.authenticity.id/assets/front/css/font-awesome.css" rel="stylesheet">
+	<link href="<?php echo base_url('assets/front/css/font-awesome.css') ?>" rel="stylesheet">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Electrolize&family=Goldman&display=swap" rel="stylesheet">

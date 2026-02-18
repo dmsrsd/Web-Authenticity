@@ -14,7 +14,7 @@
 
                 <h2>2. MEKANISME PARTISIPASI</h2>
                 <ul>
-                    <li>Peserta wajib menggunakan template <b>Key Visual (KV)</b> dan link referral resmi yang disediakan di situs web <a href="https://authenticity.id" target="_blank">authenticity.id</a> untuk berpartisipasi dalam Program.</li>
+                    <li>Peserta wajib menggunakan template <b>Key Visual (KV)</b> dan link referral resmi yang disediakan di situs web <a href="<?php echo base_url() ?>" target="_blank">authenticity.id</a> untuk berpartisipasi dalam Program.</li>
                     <li>Peserta wajib membagikan konten menggunakan template KV tersebut di akun media sosial pribadi (Instagram atau TikTok) dan menandai akun resmi <b>@authenticity_id</b>.</li>
                     <li>Setiap Peserta Baru yang melakukan sign up atau login melalui link referral akan memperoleh <b>10 (sepuluh) poin</b>.</li>
                     <li>Peserta yang link referral-nya digunakan oleh user baru yang bergabung ke Duoverse Circle akan memperoleh <b>20 (dua puluh) poin tambahan</b>.</li>

@@ -347,7 +347,7 @@ class Api extends RestController {
 					$this->email->subject('Reset your password');
 
 					$em['data'] ="Dear <b>".$cek['fullname']."</b>, <br><br>
-					Please change your password immediately.<br><br><a href='https://authenticity.id/reset-password?ver=".md5($acak)."'>Click here to <b>RESET</b> your Password</a>.
+					Please change your password immediately.<br><br><a href='".base_url('reset-password?ver='.md5($acak))."'>Click here to <b>RESET</b> your Password</a>.
 					Thank you.";
 
 

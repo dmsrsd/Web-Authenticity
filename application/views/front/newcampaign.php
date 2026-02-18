@@ -85,7 +85,7 @@ footer .text-left {
 						<li>Peserta diwajibkan membuat kreasi atas cover art  single lagu Matraman.</li>
 						<li>Peserta wajib memuat logo Authenticity X The Upstairs sesuai dengan logo yang dapat diberikan.</li>
 						<li>Peserta wajib melakukan posting Instagram dengan template yang telah ditentukan menggunakan hastag #IniAsliGue #MemoriRasaMatraman disertai tagging ke @Authenticity_id.</li>
-						<li>Pemenang wajib follow IG @Authenticity_id & sudah melakukan registrasi di <a href="https://www.authenticity.id/">www.authenticity.id.</a></li>
+						<li>Pemenang wajib follow IG @Authenticity_id & sudah melakukan registrasi di <a href="<?php echo base_url() ?>">www.authenticity.id.</a></li>
 						<li>Informasi pemenang melalui story & feed IG @authenticity_id.</li>
 						<li>3 Design terbaik akan diimplementasikan menjadi kebutuhan komersil merchandise di Authenticity Lab.</li>
 						<li>Pemenang desain terbaik, harus bersedia melakukan desain untuk kebutuhan produksi merchandise. Apabila tidak dapat terpenuhi, maka Juri berhak mengganti pemenang.</li>

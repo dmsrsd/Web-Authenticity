@@ -17,14 +17,14 @@
                             </a>
                         </div>
                         <div class="foter-left__nav">
-                            <a href='https://www.authenticity.id/'><img src='<?=base_url('assets/duoverse-html')?>/images/logow.png' style='width:120px;'></a>
+                            <a href='<?php echo base_url() ?>'><img src='<?=base_url('assets/duoverse-html')?>/images/logow.png' style='width:120px;'></a>
                             <div class='text-left2'>
                                 2025 Authenticity. All Rights Reserved.
                                 <br>
-                                <a href='https://www.authenticity.id/tentang' style="color:white;">About</a> |
-                                <a href='https://www.authenticity.id/tnc' style="color:white;">Terms &amp; Condition</a> |
-                                <a href='https://www.authenticity.id/privacy' style="color:white;">Privacy Policy</a> |
-                                <a href='https://www.authenticity.id/article' style="color:white;">Article</a>
+                                <a href='<?php echo base_url("tentang") ?>' style="color:white;">About</a> |
+                                <a href='<?php echo base_url("tnc") ?>' style="color:white;">Terms &amp; Condition</a> |
+                                <a href='<?php echo base_url("privacy") ?>' style="color:white;">Privacy Policy</a> |
+                                <a href='<?php echo base_url("article") ?>' style="color:white;">Article</a>
                             </div>
                         </div>
                     </div>
@@ -47,10 +47,10 @@
     <footer class='footer2 banner-ads' id="BannerAds">
         <div class='container content-ads'>
             <button class="btn-close-red close-ads" id="CloseAds"  title="Close"><i class='fa fa-times'></i></button>
-            <a href="https://www.authenticity.id/duoverse/" target="_blank" class="warning-desktop">
+            <a href="<?php echo base_url('duoverse/') ?>" target="_blank" class="warning-desktop">
                 <img class="image-ads" src='<?php echo base_url() ?>assets/front/img/profile/banner-ads-duoverse.gif'>
             </a>
-            <a href="https://www.authenticity.id/duoverse/" target="_blank" class="warning-mobile">
+            <a href="<?php echo base_url('duoverse/') ?>" target="_blank" class="warning-mobile">
                 <img class="image-ads" src='<?php echo base_url() ?>assets/front/img/profile/banner-ads-duoverse-m.gif'>
             </a>
         </div>

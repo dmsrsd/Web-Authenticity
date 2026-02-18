@@ -1,5 +1,5 @@
 <title>HANGOUT</title>
-<link href="https://www.authenticity.id/assets/front/css/podcast.css?rand=342070184" rel="stylesheet" />
+<link href="<?php echo base_url('assets/front/css/podcast.css?rand=342070184') ?>" rel="stylesheet" />
 <style>
             :root {
             --bg:#faf7f3;

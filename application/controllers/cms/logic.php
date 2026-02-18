@@ -892,9 +892,9 @@ class Logic extends AdminController {
 					Selamat, karya lo sudah masuk ke Soundroom.<br />
 					Semoga lo berkesempatan manggung di Pestapora ya.<br />
 					Biar banyak yang dukung, 
-					<a href='https://www.authenticity.id/soundroom/share/".$id."?year=".$year."&utm_source=sroom24&utm_medium=sroom24submitter&utm_campaign=sr24".$_POST['judul']."&utm_id=sroom24visitor&utm_term=sroom24visitor' target='blank'> download dan share konten ini </a> ke story lo ya. 
+					<a href='".base_url('soundroom/share/'.$id.'?year='.$year.'&utm_source=sroom24&utm_medium=sroom24submitter&utm_campaign=sr24'.urlencode($_POST['judul']).'&utm_id=sroom24visitor&utm_term=sroom24visitor')."' target='blank'> download dan share konten ini </a> ke story lo ya. 
 					<br /><br />
-					https://www.authenticity.id/soundroom/share/".$id."?year=".$year."&utm_source=sroom24&utm_medium=sroom24submitter&utm_campaign=sr24".$_POST['judul']."&utm_id=sroom24visitor&utm_term=sroom24visitor";
+					".base_url('soundroom/share/'.$id.'?year='.$year.'&utm_source=sroom24&utm_medium=sroom24submitter&utm_campaign=sr24'.urlencode($_POST['judul']).'&utm_id=sroom24visitor&utm_term=sroom24visitor')."";
 					//echo $em['data']; exit;
 					$pesan = $this->load->view('front/email-template-rejected',$em,TRUE);
 					$this->email->message($pesan);

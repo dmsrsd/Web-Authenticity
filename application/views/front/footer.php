@@ -74,7 +74,7 @@ if (empty($this->datamember)) {
 	if ($page != "login" && $page != "register") { ?>
 		<div class='sticky hide'>
 			<div class=''>
-				<!--<a href="https://www.authenticity.id/authentic-store" target="_self">--><img src='<?= base_url() ?>assets/front/img/login-sticky.gif' width='280'>
+				<!--<a href="<?php echo base_url('authentic-store') ?>" target="_self">--><img src='<?= base_url() ?>assets/front/img/login-sticky.gif' width='280'>
 				<!--</a>-->
 				<!--
 				<div class='left-sticky'><i class='fa fa-chevron-right'></i> Login for More Benefit</div>

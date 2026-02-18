@@ -1,3 +1,4 @@
 User-agent: *
 Disallow: /tag/
-Sitemap: https://www.authenticity.id/sitemap.xml
+Sitemap: http://localhost:8003/sitemap.xml
+#Sitemap: https://www.authenticity.id/sitemap.xml

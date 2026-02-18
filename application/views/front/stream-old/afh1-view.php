@@ -1,5 +1,5 @@
 <div class="container">
-	<img src="https://www.authenticity.id/uploads/head_endah.jpg" width="100%">
+	<img src="<?php echo base_url('uploads/') ?>head_endah.jpg" width="100%">
 	<div class="row" style="margin-top: 30px">
 		<div class="col-md-8" align="center">
 			<div class="video-container">
@@ -40,7 +40,7 @@
 			</div>
 		</div>
 
-			<!-- <img src="https://www.authenticity.id/uploads/chat.jpg" width="100%">
+			<!-- <img src="<?php echo base_url('uploads/') ?>chat.jpg" width="100%">
 			<iframe width="100%" height="500" src="https://www.youtube.com/live_chat?v=JQkui4LeQPI&embed_domain=www.authenticity.id" frameborder="0"></iframe>
 			</iframe>-->
 

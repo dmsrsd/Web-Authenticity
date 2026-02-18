@@ -36,7 +36,7 @@
 	}
 
 ?>
-<!--<img src="https://www.authenticity.id/assets/front/img/bg_landing.jpg" style="width: 100%; ">-->
+<!--<img src="<?php echo base_url('assets/front/img/bg_landing.jpg') ?>" style="width: 100%; ">-->
 <div class='min-height ticket-box bg-tiket-pamit' style='min-height:844px; position: relative; top: -20px; padding-bottom: 0px'>
 	<div class='container'>
 		<div class="row text-center"><img src='<?php echo base_url()?>assets/front/img/kamipun_teks.png' style="width: 70%; margin-top: 30px"></div>

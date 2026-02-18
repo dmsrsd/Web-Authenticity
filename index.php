@@ -1,9 +1,19 @@
 <?php
 date_default_timezone_set('Asia/Jakarta');
 
+<<<<<<< Updated upstream
 header('Access-Control-Allow-Origin: https://www.authenticity.id,https://authenticity.id,103.10.128.14,127.0.0.1,103.58.103.188,103.58.103.189,104.17.3.81,104.17.188.24,43.231.128.193');
 // Jangan kirim CSP ketat di localhost agar gambar/CSS/JS tidak diblokir saat development
 $is_local = (isset($_SERVER['HTTP_HOST']) && (strpos($_SERVER['HTTP_HOST'], '127.0.0.1') !== false || strpos($_SERVER['HTTP_HOST'], 'localhost') !== false));
+=======
+// Origin dinamis: localhost atau production
+$origin = (isset($_SERVER['HTTP_HOST']) && preg_match('/^(localhost|127\.0\.0\.1)(:\d+)?$/i', $_SERVER['HTTP_HOST']))
+	? 'http://' . $_SERVER['HTTP_HOST'] : 'https://www.authenticity.id';
+header('Access-Control-Allow-Origin: ' . $origin . ',https://www.authenticity.id,https://authenticity.id,103.10.128.14,127.0.0.1,103.58.103.188,103.58.103.189,104.17.3.81,104.17.188.24,43.231.128.193');
+
+// Development (localhost): skip CSP agar script/style/img dari CDN tidak diblokir
+$is_local = (isset($_SERVER['HTTP_HOST']) && preg_match('/^(localhost|127\.0\.0\.1)(:\d+)?$/i', $_SERVER['HTTP_HOST']));
+>>>>>>> Stashed changes
 if (!$is_local) {
 //CSP only works in modern browsers Chrome 25+, Firefox 23+, Safari 7+
 $headerCSP = "Content-Security-Policy:".

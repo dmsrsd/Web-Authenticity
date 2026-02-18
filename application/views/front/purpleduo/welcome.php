@@ -96,7 +96,7 @@
 </div>
 
 <!-- kusus soundroom -->
-<script src="https://www.authenticity.id/assets/front/js/jquery.js" type="text/javascript"></script>
+<script src="<?php echo base_url('assets/front/js/jquery.js') ?>" type="text/javascript"></script>
 <script>
 	$(document).on('ready', function() {
 		$('#id_provinsi').change(function() {

@@ -51,11 +51,19 @@ $dbs = "db_".$ex[0];
 $active_group = 'default';
 $active_record = TRUE;
 
+<<<<<<< Updated upstream
 $db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'root';
 $db['default']['password'] = 'admin123';
+=======
+// Support env vars untuk Docker (database di host/WSL)
+$db['default']['hostname'] = getenv('DB_HOST') ?: 'localhost';
+$db['default']['username'] = getenv('DB_USERNAME') ?: 'root';
+$db['default']['password'] = getenv('DB_PASSWORD') ?: 'admin123';
+// $db['default']['password'] = 'Nojoron0123)(';
+>>>>>>> Stashed changes
 
-$db['default']['database'] = 'gridsf';
+$db['default']['database'] = getenv('DB_DATABASE') ?: 'gridsf';
 $db['default']['dbdriver'] = 'mysqli';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;

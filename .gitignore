@@ -24,3 +24,4 @@ uploads
 database/*.sql
 database/*.sql.gz
 .env
+*.ps1

@@ -14,13 +14,9 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) \
     pdo_mysql mysqli mbstring xml zip bcmath opcache gd
 
-# Apache document root = project root (index.php)
-ENV APACHE_DOCUMENT_ROOT /var/www/html
-RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf \
-    && sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
-
-# AllowOverride All untuk .htaccess
-RUN sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
+# Apache: ServerName + DirectoryIndex (index.php) untuk CodeIgniter
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+COPY apache-default.conf /etc/apache2/sites-available/000-default.conf
 
 WORKDIR /var/www/html
 

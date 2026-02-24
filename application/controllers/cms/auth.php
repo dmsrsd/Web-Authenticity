@@ -7,11 +7,10 @@ class Auth extends MY_Controller {
 
     }
 
-    function index(){
+	function index(){
 		//echo $this->encrypt->decode("je8SrHJtBN2imtp7X5lZT5l7z6vsMv2uqpBmNOU/NbrvCQ8mjmjZKbdg2ixUEN5sTd6RvWjzWet7fOPdSrdI3g==");
 		//echo $this->encrypt->encode("admin123#");
 		//die();
-		@session_start();
 		$this->template['active'] = 'home';
 		if ($this->session->userdata('userinfo')) {
 			$c = $this->session->all_userdata(); 
@@ -22,11 +21,10 @@ class Auth extends MY_Controller {
 	}
 
 	function in() {
-		session_start();
 		$user = $this->input->post('user');
 		$pass = $this->input->post('pass');
 		// $redirect = isset($_GET["redirect"]) ? $_GET["redirect"] : '';
-		if ($this->configApp["superUsers"][$user] && $pass == $this->encrypt->decode($this->configApp["superUsers"][$user])) {
+		if (isset($this->configApp['superUsers'][$user]) && $pass == $this->encrypt->decode($this->configApp['superUsers'][$user])) {
 			$array = array(
 					"_id" => $user,
 					"idUser" => $user,
@@ -62,7 +60,6 @@ class Auth extends MY_Controller {
 	}
 	
 	function out() {
-		session_start();
 		$this->session->set_userdata('userinfo', array());
 //		session_destroy();
 		unset($_SESSION['verifytnmc']);			

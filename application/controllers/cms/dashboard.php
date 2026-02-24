@@ -1,6 +1,5 @@
-
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-@session_start();
+
 class Dashboard extends AdminController {
 	function __construct() {
         parent::__construct();
@@ -1002,46 +1001,51 @@ class Dashboard extends AdminController {
 		$this->render('order');
 	}
 	public function historypointajax(){
-		$search = strtolower($_POST['search']['value']);
-		$limit = $_POST['length'];
-		$start = $_POST['start'];
-		$sql = $this->db->query("SELECT * from member  where status!='-1'")->result_array();
-		$sql_count = count($sql);
-		$order_field = $_POST['order'][0]['column'];
-		$order_ascdesc = $_POST['order'][0]['dir'];
-		$order = " ORDER BY a.".$_POST['columns'][$order_field]['data']." ".$order_ascdesc;
-		$sqlquery = "SELECT  @NUM:=@NUM + 1 AS no,a.*,b.fullname as member,b.email,b.hp,c.nama_point,c.pts FROM point a
-		left join member b on b.id_member = a.id_member
-		left join jenis_point c on c.id_jenis_point = a.id_jenis_point
-		, (SELECT @NUM:=0)A where  
-			 (b.fullname LIKE '%".$search."%' or b.email LIKE '%".$search."%' or b.hp LIKE '%".$search."%' or c.nama_point LIKE '%".$search."%' or a.created_date LIKE '%".$search."%')";
+		$search = isset($_POST['search']['value']) ? $this->db->escape_like_str($_POST['search']['value']) : '';
+		$limit = (int) (isset($_POST['length']) ? $_POST['length'] : 10);
+		$start = (int) (isset($_POST['start']) ? $_POST['start'] : 0);
+		$order_field = isset($_POST['order'][0]['column']) ? (int) $_POST['order'][0]['column'] : 0;
+		$order_ascdesc = (isset($_POST['order'][0]['dir']) && strtoupper($_POST['order'][0]['dir']) === 'ASC') ? 'ASC' : 'DESC';
+		$order_col = isset($_POST['columns'][$order_field]['data']) ? $_POST['columns'][$order_field]['data'] : 'id_point';
+		$order_col = in_array($order_col, array('no','id_point','member','email','hp','nama_point','pts','created_date'), true) ? $order_col : 'id_point';
+		$order = " ORDER BY a." . $order_col . " " . $order_ascdesc;
 
-		$embel = $order." LIMIT ".$limit." OFFSET ".$start;
-		$query = $this->db->query($sqlquery)->result_array();
-		$querydata = $this->db->query($sqlquery.$embel)->result_array();
-		$sql_filter_count = count($query);
-		$data = $querydata;
+		$where_like = "(b.fullname LIKE '%" . $search . "%' OR b.email LIKE '%" . $search . "%' OR b.hp LIKE '%" . $search . "%' OR c.nama_point LIKE '%" . $search . "%' OR a.created_date LIKE '%" . $search . "%')";
+
+		// recordsTotal: total row point (tanpa load semua ke memori)
+		$r = $this->db->query("SELECT COUNT(*) as n FROM point a")->row_array();
+		$sql_count = (int) $r['n'];
+
+		// recordsFiltered: count dengan filter search (tanpa load semua ke memori)
+		$r2 = $this->db->query("SELECT COUNT(*) as n FROM point a
+			LEFT JOIN member b ON b.id_member = a.id_member
+			LEFT JOIN jenis_point c ON c.id_jenis_point = a.id_jenis_point
+			WHERE " . $where_like)->row_array();
+		$sql_filter_count = (int) $r2['n'];
+
+		// Hanya ambil satu halaman data
+		$sqlquery = "SELECT @NUM:=@NUM + 1 AS no, a.*, b.fullname AS member, b.email, b.hp, c.nama_point, c.pts
+			FROM point a
+			LEFT JOIN member b ON b.id_member = a.id_member
+			LEFT JOIN jenis_point c ON c.id_jenis_point = a.id_jenis_point
+			, (SELECT @NUM:=0) A
+			WHERE " . $where_like . $order . " LIMIT " . $limit . " OFFSET " . $start;
+		$data = $this->db->query($sqlquery)->result_array();
+
 		$callback = array(
-			'draw'=>$_POST['draw'],
-			'recordsTotal'=>$sql_count,
-			'recordsFiltered'=>$sql_filter_count,
-			'data'=>$data
+			'draw' => isset($_POST['draw']) ? (int) $_POST['draw'] : 0,
+			'recordsTotal' => $sql_count,
+			'recordsFiltered' => $sql_filter_count,
+			'data' => $data
 		);
 		header('Content-Type: application/json');
 		echo json_encode($callback);
-
 	}
 	public function historypoint(){
 		$this->template["judul"] = "History Point";
 		$this->template['website'] = $this->model_global->get_data(array('data' => 'row','table' => 'website', 'where' => array('id_website' => 1)));
-		$this->template['data'] = $this->model_global->get_data(array(
-			'select' => 'a.*,b.fullname as member,b.email,b.hp,c.nama_point,c.pts',
-			'table' => 'point a',
-			'join' => array('member b','b.id_member = a.id_member'),
-			'join2' => array('jenis_point c','c.id_jenis_point = a.id_jenis_point'),
-			//'where' => array('a.status !='=>-1,'a.created_by !='=>"1"),
-			'order_by' => 'a.id_point desc'
-		));
+		// Data di-load via DataTables AJAX (historypointajax), jangan load semua row ke memori
+		$this->template['data'] = array();
 		$this->render('historypoint');
 	}
 

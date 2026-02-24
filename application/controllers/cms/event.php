@@ -1,6 +1,5 @@
-
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-@session_start();
+
 class Event extends AdminController {
 	function __construct() {
         parent::__construct();
@@ -348,5 +347,18 @@ class Event extends AdminController {
 	public function hangoutdeletesoft($id){
 		$delete = $this->model_global->delete('outlet_hangout', array( 'id_outlet' => $id));
 		redirect('cms/event/hangout?s=true&m=Data Berhasil Dihapus');
+	}
+
+	/**
+	 * Soft delete event (status = 2). Tombol delete di list event memanggil cms/event/deletesoft/{id}
+	 */
+	public function deletesoft($id){
+		$id = (int) $id;
+		if ($id <= 0) {
+			redirect('cms/event?s=false&m=Invalid ID');
+			return;
+		}
+		$this->model_global->update(array('status' => 2), 'event', array('id_event' => $id));
+		redirect('cms/event?s=true&m=Data Berhasil Dihapus');
 	}
 }

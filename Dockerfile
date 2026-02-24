@@ -18,6 +18,11 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 COPY apache-default.conf /etc/apache2/sites-available/000-default.conf
 
+# Entrypoint: atur permission saat volume mount agar Apache bisa baca .htaccess
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
+
 WORKDIR /var/www/html
 
 # Copy project

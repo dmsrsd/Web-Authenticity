@@ -209,7 +209,7 @@
     <script src="<?php echo base_url('assets/tarotunes-html/js/jquery.js') ?>"></script> 
     <script src="<?php echo base_url('assets/tarotunes-html/js/bootstrap.js') ?>"></script> 
     <script src="<?php echo base_url('assets/front/soundroom/capture.min.js') ?>"></script>
-    <script src="https://www.authenticity.id/assets/front/js/jquery.js" type="text/javascript"></script>
+    <script src="<?php echo base_url('assets/front/js/jquery.js') ?>" type="text/javascript"></script>
    
     <script type="text/javascript">
         // function downloadimage() {

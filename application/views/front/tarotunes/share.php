@@ -33,7 +33,7 @@
         <meta property="og:title" content="<?php echo $kartu;  ?>"/>
         <meta property="og:description" content="<?php echo $desk;  ?>"/>
         <meta property="og:type" content="article"/>
-        <meta property="og:url" content="https://www.authenticity.id/tarotunes/share/<?php echo $this->uri->segment(3) ?>?type=<?php echo $_GET['type'] ?>"/>
+        <meta property="og:url" content="<?php echo base_url('tarotunes/share/'.$this->uri->segment(3).'?type='.$_GET['type']) ?>"/>
         <meta property="og:image" content="<?php echo $gambar;  ?>"> 
         <meta property="og:site_name" content="Authenticity">
         <meta name="twitter:card" content="summary_large_image">
@@ -196,6 +196,7 @@
 		gtag('config', 'AW-400197189');
 	</script>
 
+	<?php if (!is_localhost()): ?>
 	<!-- Facebook Pixel Code -->
 	<script>
 		! function(f, b, e, v, n, t, s) {
@@ -224,6 +225,7 @@
 &noscript=1" />
 	</noscript>
 	<!-- End Facebook Pixel Code -->
+	<?php endif; ?>
 
 	<meta name="facebook-domain-verification" content="oasvsakpotut3wap2b4gn331lq8pzk" />
 

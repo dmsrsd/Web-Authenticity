@@ -1,12 +1,12 @@
-<meta http-equiv="Refresh" content="0; url=https://www.authenticity.id/social-distancing-experience" />
+<meta http-equiv="Refresh" content="0; url=<?php echo base_url('social-distancing-experience') ?>" />
 <div class='min-height'>
 	<div class='container'>
 		<div class='row'>
 			<div class='col-sm-12'>
 				<h2 class='head'>Profile</h2>
 				<!--<h3>Semua terekam tak pernah mati</h3>-->
-				<h3><a href="https://www.authenticity.id/social-distancing-experience" style="text-decoration:underline;">
-				<img src="https://www.authenticity.id/uploads/head22.jpg" width=100% />
+				<h3><a href="<?php echo base_url('social-distancing-experience') ?>" style="text-decoration:underline;">
+				<img src="<?php echo base_url('uploads/head22.jpg') ?>" width=100% />
 
 				</a></h3>
 			</div>

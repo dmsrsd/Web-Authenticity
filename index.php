@@ -1,7 +1,14 @@
 <?php
 date_default_timezone_set('Asia/Jakarta');
 
-header('Access-Control-Allow-Origin: https://www.authenticity.id,https://authenticity.id,103.10.128.14,127.0.0.1,103.58.103.188,103.58.103.189,104.17.3.81,104.17.188.24,43.231.128.193');
+// Origin dinamis: localhost atau production
+$origin = (isset($_SERVER['HTTP_HOST']) && preg_match('/^(localhost|127\.0\.0\.1)(:\d+)?$/i', $_SERVER['HTTP_HOST']))
+	? 'http://' . $_SERVER['HTTP_HOST'] : 'https://www.authenticity.id';
+header('Access-Control-Allow-Origin: ' . $origin . ',https://www.authenticity.id,https://authenticity.id,103.10.128.14,127.0.0.1,103.58.103.188,103.58.103.189,104.17.3.81,104.17.188.24,43.231.128.193');
+
+// Development (localhost): skip CSP agar script/style/img dari CDN tidak diblokir
+$is_local = (isset($_SERVER['HTTP_HOST']) && preg_match('/^(localhost|127\.0\.0\.1)(:\d+)?$/i', $_SERVER['HTTP_HOST']));
+if (!$is_local) {
 //CSP only works in modern browsers Chrome 25+, Firefox 23+, Safari 7+
 $headerCSP = "Content-Security-Policy:".
         //"connect-src 'self' https://sdk-06.moengage.com/ 'unsafe-inline' ;". // XMLHttpRequest (AJAX request), WebSocket or EventSource.
@@ -20,6 +27,7 @@ $headerCSP = "Content-Security-Policy:".
 //Sends the Header in the HTTP response to instruct the Browser how it should handle content and what is whitelisted
 //Its up to the browser to follow the policy which each browser has varying support
 header($headerCSP);
+}
 //X-Frame-Options is not a standard (note the X- which stands for extension not a standard)
 //This was never officially created but is supported by a lot of the current browsers in use in 2015 and will block iframing of your website
 header('X-Frame-Options: SAMEORIGIN');
@@ -78,7 +86,7 @@ header('X-Frame-Options: SAMEORIGIN');
  * NOTE: If you change these, also change the error_reporting() code below
  */
 	//define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
-define('ENVIRONMENT', 'production');
+define('ENVIRONMENT', 'development'); // ubah ke 'production' untuk live
 
 /*
  *---------------------------------------------------------------
@@ -116,7 +124,7 @@ switch (ENVIRONMENT)
 		exit(1); // EXIT_ERROR
 }
 #ini_set('display_errors', 1);
-ini_set('display_errors', 0);
+if (ENVIRONMENT === 'development') { ini_set('display_errors', 1); } else { ini_set('display_errors', 0); }
 /*
  *---------------------------------------------------------------
  * SYSTEM DIRECTORY NAME

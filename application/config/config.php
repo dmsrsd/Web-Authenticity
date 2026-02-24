@@ -34,7 +34,9 @@ $config["upload_path"] = "uploads/";
 | path to your installation.
 |
 */
-$config['base_url']	= 'https://www.authenticity.id/';
+// Otomatis: localhost → http://localhost:port/, production → https://www.authenticity.id/
+$is_local = (isset($_SERVER['HTTP_HOST']) && preg_match('/^(localhost|127\.0\.0\.1)(:\d+)?$/i', $_SERVER['HTTP_HOST']));
+$config['base_url'] = $is_local ? ('http://' . $_SERVER['HTTP_HOST'] . '/') : 'https://www.authenticity.id/';
 
 /*
 |--------------------------------------------------------------------------

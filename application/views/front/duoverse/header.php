@@ -1,3 +1,3 @@
 <!-- GRID!! -->
-<meta http-equiv="refresh" content="0; url=https://authenticity.id">
+<meta http-equiv="refresh" content="0; url=<?php echo base_url() ?>">
 

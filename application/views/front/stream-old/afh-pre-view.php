@@ -29,7 +29,7 @@
 	<!--<p align="center"><a href="afh">skip</a></p>-->
 
 	<?php // include "counter.php"; ?>
-	<meta http-equiv="Refresh" content="65; url=https://www.authenticity.id/afh" />
+	<meta http-equiv="Refresh" content="65; url=<?php echo base_url('afh') ?>" />
 </center>
 </div>
 <?php $this->load->view('front/podcast/footerfp');?>

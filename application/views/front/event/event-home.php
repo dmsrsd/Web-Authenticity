@@ -6,7 +6,7 @@
 				<div class="row">
 				<?php foreach($event_aktif as $row){ ?>
 					<div class="col-md-6 pb-3">
-						<a href="<?php echo base_url('event-detail/'.$row['id_event']);?>" target="_self"><img class="img-full" src="https://www.authenticity.id/uploads/events/<?php echo $row['image'];?>"></a>
+						<a href="<?php echo base_url('event-detail/'.$row['id_event']);?>" target="_self"><img class="img-full" src="<?php echo base_url('uploads/events/'.$row['image']) ?>"></a>
 						<a href="<?php echo base_url('event-detail/'.$row['id_event']);?>" target="_self"><h2 class="tittle-thumb"><?php echo $row['judul'];?></h2></a>
 						<?php 
 								// Ubah string ke timestamp
@@ -37,7 +37,7 @@
 				</div>
 				<?php foreach($event_setelahnya as $row){ ?>
 					<div class="col-md-4 mt-5">
-						<a href="<?php echo base_url('event-detail/'.$row['id_event']);?>" target="_self"><img class="img-full" src="https://www.authenticity.id/uploads/events/<?php echo $row['image'];?>"></a>
+						<a href="<?php echo base_url('event-detail/'.$row['id_event']);?>" target="_self"><img class="img-full" src="<?php echo base_url('uploads/events/'.$row['image']) ?>"></a>
 						<a href="<?php echo base_url('event-detail/'.$row['id_event']);?>" target="_self"><h2 class="tittle-thumb"><?php echo $row['judul'];?></h2></a>
 						<?php 
 								// Ubah string ke timestamp

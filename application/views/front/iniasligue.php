@@ -111,7 +111,7 @@
 			<div class='container'>
 				<div class='row'>
 					<div class="col-sm-12">
-						<a href='https://www.authenticity.id/authentic-store/' target='_self'><img src='https://www.authenticity.id/uploads/store/store_7521_auth_lab.jpg' style='width:100%'></a>
+						<a href='<?php echo base_url("authentic-store/") ?>' target='_self'><img src='<?php echo base_url("uploads/store/store_7521_auth_lab.jpg") ?>' style='width:100%'></a>
 					</div>
 				</div>
 			</div>

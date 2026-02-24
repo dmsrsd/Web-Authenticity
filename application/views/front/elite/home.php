@@ -3,8 +3,8 @@
     <?php $this->load->view("front/elite/head.php");?>
 <body class="circle"> 
 	<script>
-		window.location.href = "https://www.authenticity.id/elite/main?tnc=<?php echo $_GET['tnc'] ?>";
-	</script>script>
+		window.location.href = "<?php echo base_url('elite/main?tnc='.$_GET['tnc']) ?>";
+	</script>
 	<div class="container-full"> 
 			<div class="container">
 				<div class="row row-card">

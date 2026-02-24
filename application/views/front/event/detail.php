@@ -23,12 +23,12 @@
 						?>
 						<p class="isian"><?php echo $event['lokasi'];?></p>
 						<p class="isian"><strong>HTM : <?php  echo "Rp " . number_format($event['htm_start'], 0, ',', '.');  ?> -  <?php  echo "Rp " . number_format($event['htm_end'], 0, ',', '.'); ?> </strong></p>
-						<a href="<?php echo $event['link_ig'];?>" target="_blank"><p class="sosmed">Cek IG Promotor <img src="https://www.authenticity.id/assets/front/img/event/ig-new.png"></p></a>
+						<a href="<?php echo $event['link_ig'];?>" target="_blank"><p class="sosmed">Cek IG Promotor <img src="<?php echo base_url('assets/front/img/event/ig-new.png') ?>"></p></a>
 						<a href="<?php echo $event['url_tiket'];?>" target="_self"><p class="btn btn-primary"><?php echo $event['status'];?></p></a>
 						
 					</div>
 					<div class="col-md-6 text-right">
-						<img class="img-full" src="https://www.authenticity.id/uploads/events/<?php echo $event['image'];?>" style="">
+						<img class="img-full" src="<?php echo base_url('uploads/events/'.$event['image']) ?>" style="">
 					</div>
 				</div>
 				
@@ -38,7 +38,7 @@
 					</div>
 					<?php foreach($event_setelahnya as $row){ ?>
 						<div class="col-md-4 mt-5">
-							<a href="<?php echo base_url('event-detail/'.$row['id_event']);?>" target="_self"><img class="img-full" src="https://www.authenticity.id/uploads/events/<?php echo $row['image'];?>"></a>
+							<a href="<?php echo base_url('event-detail/'.$row['id_event']);?>" target="_self"><img class="img-full" src="<?php echo base_url('uploads/events/'.$row['image']) ?>"></a>
 							<a href="<?php echo base_url('event-detail/'.$row['id_event']);?>" target="_self"><h2 class="tittle-thumb"><?php echo $row['judul'];?></h2></a>
 							<?php 
 								// Ubah string ke timestamp

@@ -137,7 +137,7 @@
 				<div class="modal-content">
 					<div class="modal-body" style="padding:0">
 						<div class="modal-body d-flex justify-content-center align-items-center" style="max-width: 600px;">
-							<img src="https://www.authenticity.id/assets/elite-html/images/banner_elite.gif" alt="Banner Elite" class="img-fluid" width="100%">
+							<img src="<?php echo base_url('assets/elite-html/images/banner_elite.gif') ?>" alt="Banner Elite" class="img-fluid" width="100%">
 						</div>
 					</div>
 				</div>

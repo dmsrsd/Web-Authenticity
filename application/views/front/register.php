@@ -283,11 +283,11 @@
 						<div class='col-sm-12'>
 							<div class="form-check">
 								<input class="form-check-input" type="checkbox" id="check1" name="option1" value="terms of use" required>
-								<label class="form-check-label">Saya Menyetujui <a href="https://www.authenticity.id/tnc">Terms and Condition</a></label>
+								<label class="form-check-label">Saya Menyetujui <a href="<?php echo base_url('tnc') ?>">Terms and Condition</a></label>
 							</div>
 							<div class="form-check">
 								<input class="form-check-input" type="checkbox" id="check1" name="option1" value="privacy policy" required>
-								<label class="form-check-label">Saya Menyetujui <a href="https://www.authenticity.id/privacy">Personal Information Processor Privacy</a></label>
+								<label class="form-check-label">Saya Menyetujui <a href="<?php echo base_url('privacy') ?>">Personal Information Processor Privacy</a></label>
 							</div>
 						</div>
 					</div>

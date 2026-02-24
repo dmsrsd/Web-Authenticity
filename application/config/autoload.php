@@ -2,7 +2,7 @@
 
 $autoload['packages'] = array();
 $autoload['libraries'] = array('session','database',"excel","encrypt");
-$autoload['helper'] = array('url','cookie',"html","form","array","informasi");
+$autoload['helper'] = array('url','cookie',"html","form","array","informasi","dev");
 $autoload['config'] = array();
 $autoload['language'] = array();
 $autoload['model'] = array('model_global','authmodel'); 

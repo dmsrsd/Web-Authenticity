@@ -154,7 +154,7 @@ if (empty($this->datamember)) {
 	if ($page != "login" && $page != "register") { ?>
 		<div class='sticky hide'>
 			<div class=''>
-				<!--<a href="https://www.authenticity.id/authentic-store" target="_self">--><img src='<?= base_url() ?>assets/front/img/login-sticky.gif' width='280'>
+				<!--<a href="<?php echo base_url('authentic-store') ?>" target="_self">--><img src='<?= base_url() ?>assets/front/img/login-sticky.gif' width='280'>
 				<!--</a>-->
 				<!--
 				<div class='left-sticky'><i class='fa fa-chevron-right'></i> Login for More Benefit</div>
@@ -345,7 +345,9 @@ if (empty($this->datamember)) {
 <script src="<?php echo base_url() ?>assets/front/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="<?= base_url() ?>assets/datepicker/js/bootstrap-datepicker.js" type="text/javascript"></script>
 <script src="<?php echo base_url() ?>assets/front/js/css3-animate-it.js" type="text/javascript"></script>
+<?php if (!is_localhost()) { ?>
 <script src='https://connect.facebook.net/en_US/all.js' type="text/javascript"></script>
+<?php } ?>
 <!-- FancyBox -->
 <script src="<?php echo base_url() ?>assets/front/js/fancyapps.js"></script>
 <script src="<?php echo base_url() ?>assets/front/js/navbar.js"></script>
@@ -361,14 +363,14 @@ if (empty($this->datamember)) {
 	});
 </script>
 <script>
-	var popupLogin = "<?php echo $_SESSION["popupLogin"]; ?>";
-	var userver = "<?php echo $_SESSION["verifytnmcmember"]; ?>";
+	var popupLogin = <?php echo json_encode(isset($_SESSION['popupLogin']) ? $_SESSION['popupLogin'] : ''); ?>;
+	var userver = <?php echo json_encode(isset($_SESSION['verifytnmcmember']) ? $_SESSION['verifytnmcmember'] : ''); ?>;
 	if(userver!='' && userver!=popupLogin){
 		$('#modalGwh').modal({
 			backdrop: 'static',
 			keyboard: false
 		});
-		<?php $_SESSION["popupLogin"] = $_SESSION["verifytnmcmember"]; ?>
+		<?php if (isset($_SESSION['verifytnmcmember'])) { $_SESSION['popupLogin'] = $_SESSION['verifytnmcmember']; } ?>
 	}
 
 	$(document).on("click", '.acccookie', function() {
@@ -377,7 +379,7 @@ if (empty($this->datamember)) {
 			dataType: "json",
 			contentType: false,
 			processData: false,
-			url: "<?php echo base_url(); ?>accept-cookie",
+			url: <?php echo json_encode(base_url().'accept-cookie'); ?>,
 			beforeSend: function() {
 				$(this).html("Silahkan tunggu ...");
 				$(this).attr("disable", "disable");
@@ -393,7 +395,7 @@ if (empty($this->datamember)) {
 </script>
 <script>
 	// tambahkan class jika banner cookie nongol
-	<?php if ($this->cookie == "") { ?>
+	<?php if (empty($this->cookie)) { ?>
 		$('#BannerAds').addClass('banner-ads-cookie');
 	<?php } ?>
 	$('#CloseAds').click(function() {
@@ -562,7 +564,7 @@ if (empty($this->datamember)) {
 		//--- tambahan-revamp
 			function getMore(section,page){
 				var dataform = new FormData();
-				dataform.append('<?php echo $this->security->get_csrf_token_name(); ?>', '<?php echo $this->security->get_csrf_hash(); ?>');
+				dataform.append(<?php echo json_encode($this->security->get_csrf_token_name()); ?>, <?php echo json_encode($this->security->get_csrf_hash()); ?>);
 				dataform.append('section', section);
 				dataform.append('page', page);
 				$.ajax({
@@ -571,7 +573,7 @@ if (empty($this->datamember)) {
 					dataType: "json",
 					contentType: false,
 					processData: false,
-					url: "<?php echo base_url();?>podcast/getMoreCampaign",
+					url: <?php echo json_encode(base_url().'podcast/getMoreCampaign'); ?>,
 					beforeSend: function () {
 						$('#cta-more-'+section).html("Loading data ...");
 					},
@@ -649,39 +651,43 @@ if (empty($this->datamember)) {
 		// console.dir("Tweet");
 	});
 
+	<?php if (!is_localhost()) { ?>
 	FB.init({
 		appId: "2153941954652615",
 		status: true,
 		cookie: true,
 		version: '3.2'
 	});
+	<?php } else { ?>
+	window.FB = window.FB || { init: function(){} };
+	<?php } ?>
 </script>
 <?php if (!empty($this->datamember)) {  ?>
 	<script type="text/javascript">
-		Moengage.identifyUser("<?php echo $this->datamember['id'] ?>");
+		Moengage.identifyUser(<?php echo json_encode((string)$this->datamember['id']); ?>);
 	</script>
 <?php } 
 if(($this->uri->segment(1)==="profile") and ($this->uri->segment(2)=="")){ ?>
 	<script type="text/javascript">
-		Moengage.add_user_name("<?php echo $member['fullname'] ?>");       
-		Moengage.add_email("<?php echo $member['email'] ?>");           
-		Moengage.add_mobile("<?php echo $member['hp'] ?>");       
+		Moengage.add_user_name(<?php echo json_encode($member['fullname'] ?? ''); ?>);       
+		Moengage.add_email(<?php echo json_encode($member['email'] ?? ''); ?>);           
+		Moengage.add_mobile(<?php echo json_encode($member['hp'] ?? ''); ?>);       
 
 		<?php $gender= ($member['gender'] === "male") ? "M" : "F"; ?>
-		Moengage.add_gender("<?php echo $gender ?>");
+		Moengage.add_gender(<?php echo json_encode($gender); ?>);
 
 		<?php
 			$dobParts = explode('-', $member['dob']);
 			$dobDateJs = 'new Date(' . $dobParts[0] . ', ' . ((int)$dobParts[1] - 1) . ', ' . (int)$dobParts[2] . ')';
 		?>
-		Moengage.add_birthday("<?php echo $dobDateJs; ?>");
+		Moengage.add_birthday(<?php echo json_encode($dobDateJs); ?>);
 	</script>
 
 <?php	if($_SERVER['HTTP_REFERER'] =="https://www.authenticity.id/login"){ ?>
 	<script>
 		Moengage.track_event("Successful Login", {
 			"login_type": "normal",
-			"email": "<?php echo $member['email'] ?>"
+			"email": <?php echo json_encode($member['email'] ?? ''); ?>
 		});
 
 	</script>
@@ -689,16 +695,16 @@ if(($this->uri->segment(1)==="profile") and ($this->uri->segment(2)=="")){ ?>
 <?php } else { ?>
 	<script>
 		Moengage.track_event("Complete Registration Member", {
-			"fullname": "<?php echo $member['fullname'] ?>",
-			"mobile_number": "<?php echo $member['hp'] ?>",
-			"email": "<?php echo $member['email'] ?>",
-			"gender": "<?php echo $member['gender'] ?>",
-			"birthday": "<?php echo $member['dob'] ?>",
-			"instagram_account": "<?php echo $member['instagram'] ?>",
-			"smoker": "<?php echo $member['issmoke'] ?>",
-			"cigarette": "<?php echo $member['rokok'] ?>",
-			"passion": "<?php echo $member['passion'] ?>",
-			"sign_up_type": "<?php echo $member['dari'] ?>"
+			"fullname": <?php echo json_encode($member['fullname'] ?? ''); ?>,
+			"mobile_number": <?php echo json_encode($member['hp'] ?? ''); ?>,
+			"email": <?php echo json_encode($member['email'] ?? ''); ?>,
+			"gender": <?php echo json_encode($member['gender'] ?? ''); ?>,
+			"birthday": <?php echo json_encode($member['dob'] ?? ''); ?>,
+			"instagram_account": <?php echo json_encode($member['instagram'] ?? ''); ?>,
+			"smoker": <?php echo json_encode($member['issmoke'] ?? ''); ?>,
+			"cigarette": <?php echo json_encode($member['rokok'] ?? ''); ?>,
+			"passion": <?php echo json_encode($member['passion'] ?? ''); ?>,
+			"sign_up_type": <?php echo json_encode($member['dari'] ?? ''); ?>
 		});
 	</script>
 <?php } }
@@ -748,8 +754,8 @@ if($this->uri->segment(1)==="login"){ ?>
 <?php	if($this->uri->segment(1) =="lab-detail"){ ?>
 	<script>
 		Moengage.track_event("Product detail page authenticity Lab", {
-			"product_name": "<?php echo $product['judul']; ?>",
-			"product_price": "<?php echo number_format($product['harga']); ?>"
+			"product_name": <?php echo json_encode($product['judul'] ?? ''); ?>,
+			"product_price": <?php echo json_encode(isset($product['harga']) ? number_format($product['harga']) : ''); ?>
    		 });
 
 	</script>

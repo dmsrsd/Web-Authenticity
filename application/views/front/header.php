@@ -65,7 +65,7 @@ Moengage = moe({
 <link rel="dns-prefetch" href="https://sdk-06.moengage.com/" />
 <script src="https://cdn.moengage.com/release/dc_6/versions/2/moe_webSdk_webp.min.latest.js?app_id=GZPAHVPBNRUL40E93ZF53429&debug_logs=1"></script>
 
-	<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' www.example.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; img-src 'self' data:; font-src 'self' fonts.gstatic.com;">
+	<meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://*.moengage.com https://sdk-06.moengage.com https://cdn.moengage.com https://app-cdn.moengage.com; script-src 'self' 'unsafe-inline' www.example.com https://cdn.moengage.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; img-src 'self' data:; font-src 'self' fonts.gstatic.com;">
 
 
 <!-- MOENGAGE END -->
@@ -220,6 +220,7 @@ Moengage = moe({
 		gtag('config', 'AW-400197189');
 	</script>
 
+	<?php if (!is_localhost()): ?>
 	<!-- Facebook Pixel Code -->
 	<script>
 		! function(f, b, e, v, n, t, s) {
@@ -248,6 +249,7 @@ Moengage = moe({
 &noscript=1" />
 	</noscript>
 	<!-- End Facebook Pixel Code -->
+	<?php endif; ?>
 
 	<meta name="facebook-domain-verification" content="oasvsakpotut3wap2b4gn331lq8pzk" />
 

@@ -32,16 +32,16 @@
 	<link rel="stylesheet" href="<?php echo base_url('assets/elite-html/css/animate.css') ?>"> 
 	<link rel="stylesheet" href="<?php echo base_url('assets/elite-html/css/style.css') ?>"> 
 	<link rel="stylesheet" href="<?php echo base_url('assets/elite-html/css/global.css') ?>"> 
-    <link href="https://www.authenticity.id/assets/front/css/font-awesome.css" rel="stylesheet">
+    <link href="<?php echo base_url('assets/front/css/font-awesome.css') ?>" rel="stylesheet">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Electrolize&family=Goldman&display=swap" rel="stylesheet">
-    <link rel="canonical" href="https://www.authenticity.id/elite/download/<?php echo $this->uri->segment(3) ?>"/>
+    <link rel="canonical" href="<?php echo base_url('elite/download/'.$this->uri->segment(3)) ?>"/>
     <meta property="fb:app_id" content="2153941954652615"/>
     <meta property="og:title" content="<?php echo $kartu;  ?>"/>
     <meta property="og:description" content="<?php echo $desk;  ?>"/>
     <meta property="og:type" content="article"/>
-    <meta property="og:url" content="https://www.authenticity.id/elite/download/<?php echo $this->uri->segment(3) ?>"/>
+    <meta property="og:url" content="<?php echo base_url('elite/download/'.$this->uri->segment(3)) ?>"/>
     <meta property="og:image" content="<?php echo $url;  ?>"> 
     <meta property="og:site_name" content="Authenticity">
     <meta name="twitter:card" content="summary_large_image">
@@ -141,6 +141,7 @@
 		gtag('config', 'AW-400197189');
 	</script>
 
+	<?php if (!is_localhost()): ?>
 	<!-- Facebook Pixel Code -->
 	<script>
 		! function(f, b, e, v, n, t, s) {
@@ -168,6 +169,7 @@
 		<img height="1" width="1" src="https://www.facebook.com/tr?id=2808783446063669&ev=PageView&noscript=1" />
 	</noscript>
 	<!-- End Facebook Pixel Code -->
+	<?php endif; ?>
 
 	<meta name="facebook-domain-verification" content="oasvsakpotut3wap2b4gn331lq8pzk" />
 

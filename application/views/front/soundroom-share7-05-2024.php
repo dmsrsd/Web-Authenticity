@@ -290,7 +290,7 @@
             <button onclick="myFunction()" onmouseout="outFunc()" class="toolstip clickbtn"><span class="tooltiptext" id="myTooltip">Copy Dan Bagikan</span> <i class="fa fa-copy"></i> Copy Text</button>
             <button onclick="downloadimage()" onmouseout="outFunc()" class="toolstip clickbtn"><span class="tooltiptext" id="myTooltip">Download Dan Bagikan</span> <i class="fa fa-download"></i> Download</button>
         </div>
-        <audio id="audio" src="https://www.authenticity.id/uploads/soundroom/<?php echo $soundroom['sound'];?>"></audio>
+        <audio id="audio" src="<?php echo base_url('uploads/soundroom/'.$soundroom['sound']) ?>"></audio>
         <div class='soundbar'>
             <div class='row'>
                 <div class='col-sm-6'>

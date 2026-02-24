@@ -1,0 +1,34 @@
+# Authenticity - CodeIgniter 3
+# Database menggunakan MySQL di host (WSL/server)
+# Jalankan: docker compose up -d
+#
+# Di host (WSL/server) pastikan:
+# - MySQL sudah jalan (sudo service mysql start)
+# - Database & user sudah ada
+# - App connect ke host via host.docker.internal
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: authenticity-app
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-127.0.0.1:8003}:80"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      DB_HOST: host.docker.internal
+      DB_PORT: 3306
+      DB_DATABASE: ${DB_DATABASE:-gridsf}
+      DB_USERNAME: ${DB_USERNAME:-root}
+      DB_PASSWORD: ${DB_PASSWORD:-admin123}
+    volumes:
+      - .:/var/www/html
+    networks:
+      - authenticity-network
+
+networks:
+  authenticity-network:
+    driver: bridge

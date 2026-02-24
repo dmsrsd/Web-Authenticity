@@ -1,5 +1,5 @@
 <div class="container">
-	<img src="https://www.authenticity.id/uploads/head22.jpg" width="100%">
+	<img src="<?php echo base_url('uploads/head22.jpg') ?>" width="100%">
 	<div class="row" style="margin-top: 30px">
 		<div class="col-md-8">
 			<div class="video-container">
@@ -9,7 +9,7 @@
 			<h1>9856789</h1> User Melihat
 			</div>
 		</div>
-		<div class="col-md-4 hidden-xs"><img src="https://www.authenticity.id/uploads/chat.jpg" width="100%">
+		<div class="col-md-4 hidden-xs"><img src="<?php echo base_url('uploads/chat.jpg') ?>" width="100%">
 
 			</iframe>
 

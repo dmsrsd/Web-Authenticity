@@ -74,7 +74,7 @@ if (empty($this->datamember)) {
 	if ($page != "login" && $page != "register") { ?>
 		<div class='sticky hide'>
 			<div class=''>
-				<!--<a href="https://www.authenticity.id/authentic-store" target="_self">--><img src='<?= base_url() ?>assets/front/img/login-sticky.gif' width='280'>
+				<!--<a href="<?php echo base_url('authentic-store') ?>" target="_self">--><img src='<?= base_url() ?>assets/front/img/login-sticky.gif' width='280'>
 				<!--</a>-->
 				<!--
 				<div class='left-sticky'><i class='fa fa-chevron-right'></i> Login for More Benefit</div>
@@ -190,7 +190,9 @@ if (empty($this->datamember)) {
 <script src="<?php echo base_url() ?>assets/front/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="<?= base_url() ?>assets/datepicker/js/bootstrap-datepicker.js" type="text/javascript"></script>
 <script src="<?php echo base_url() ?>assets/front/js/css3-animate-it.js" type="text/javascript"></script>
+<?php if (!is_localhost()) { ?>
 <script src='https://connect.facebook.net/en_US/all.js' type="text/javascript"></script>
+<?php } ?>
 <script>
 	$(document).ready(function() {
 		<?php
@@ -357,12 +359,16 @@ if (empty($this->datamember)) {
 		// console.dir("Tweet");
 	});
 
+	<?php if (!is_localhost()) { ?>
 	FB.init({
 		appId: "2153941954652615",
 		status: true,
 		cookie: true,
 		version: '3.2'
 	});
+	<?php } else { ?>
+	window.FB = window.FB || { init: function(){} };
+	<?php } ?>
 </script>
 
 <!-- Google tag (gtag.js) -->

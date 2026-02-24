@@ -1349,7 +1349,7 @@ class Soundroom extends MY_Controller {
         	$download = false;
 
             if ($download == true && !file_exists($path)) {
-                $url = 'https://www.authenticity.id/uploads/soundroom/'.$file;
+                $url = base_url('uploads/soundroom/'.$file);
                 file_put_contents($path, fopen($url, 'r'));
             }
 

@@ -66,7 +66,7 @@
     <script>
         document.getElementById('btnDownload').addEventListener('click', function() {
         const input = document.getElementById('teks_input');
-        const imageUrl = "https://www.authenticity.id/assets/duoverse-html/images/template.png";
+        const imageUrl = "<?php echo base_url('assets/duoverse-html/images/template.png') ?>";
 
         // 1Salin teks ke clipboard
         navigator.clipboard.writeText(input.value)

@@ -171,7 +171,7 @@
 			<?php if ($season == '2025'){ ?>
 				<!--<div class="col-lg-12">
 					<div class='container' style="display:box; margin-top:10px;">
-						<a href="https://www.authenticity.id/profile/vote?year=2025" target="_blank"><img src='<?= base_url() ?>assets/front/img/soundroom/banner_wner.png' width="100%"></a>
+						<a href="<?php echo base_url('profile/vote?year=2025') ?>" target="_blank"><img src='<?= base_url() ?>assets/front/img/soundroom/banner_wner.png' width="100%"></a>
 					</div>
 				</div>-->
 			<?php } ?>

@@ -14,7 +14,7 @@
 			</div>
 		</div>
 
-		<img src="https://www.authenticity.id/assets/front/img/banner-rewards-2020.jpg" width="100%">
+		<img src="<?php echo base_url('assets/front/img/banner-rewards-2020.jpg') ?>" width="100%">
 		<!--<img src="https://www.authenticity.id/uploads/head-rewards.jpeg" width="100%">-->
 
 

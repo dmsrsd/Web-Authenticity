@@ -109,11 +109,11 @@
 									<div class="col-sm-12">
 										<div class="form-check">
 											<input class="form-check-input" type="checkbox" id="check1" name="tnc1" value="1" required="">
-											<label class="form-check-label">Saya Menyetujui <a href="https://www.authenticity.id/tnc" target="_blank">Terms and Condition</a></label>
+											<label class="form-check-label">Saya Menyetujui <a href="<?php echo base_url('tnc') ?>" target="_blank">Terms and Condition</a></label>
 										</div>
 										<div class="form-check">
 											<input class="form-check-input" type="checkbox" id="check1" name="tnc2" value="1" required="">
-											<label class="form-check-label">Saya Menyetujui <a href="https://www.authenticity.id/privacy" target="_blank">Personal Information Processor Privacy</a></label>
+											<label class="form-check-label">Saya Menyetujui <a href="<?php echo base_url('privacy') ?>" target="_blank">Personal Information Processor Privacy</a></label>
 										</div>
 									</div>
 								</div>

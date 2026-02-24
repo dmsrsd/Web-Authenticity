@@ -1,6 +1,6 @@
 
 <div class="container">
-	<img src="https://www.authenticity.id/uploads/head-darbotz.jpeg" width="100%">
+	<img src="<?php echo base_url('uploads/head-darbotz.jpeg') ?>" width="100%">
 	<div class="row" style="margin-top: 30px">
 		<div class="col-md-8">
 			<div class="video-container">
@@ -70,7 +70,7 @@
 				</div>
 				<div class='col-sm-4'>
 					<div class='text-center'>
-						<a href='https://www.authenticity.id/'><img src='https://www.authenticity.id/uploads/logow.png' style='width:120px;'></a><br><br>
+						<a href='<?php echo base_url() ?>'><img src='<?php echo base_url("uploads/logow.png") ?>' style='width:120px;'></a><br><br>
 						2020 Simply Authentic. All Rights Reserved.
 					</div>
 				</div>

@@ -39,3 +39,4 @@ RUN echo "opcache.enable=1" >> /usr/local/etc/php/conf.d/opcache.ini \
     && echo "opcache.max_accelerated_files=10000" >> /usr/local/etc/php/conf.d/opcache.ini
 
 EXPOSE 80
+CMD ["apache2-foreground"]

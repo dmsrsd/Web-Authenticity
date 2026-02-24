@@ -1,11 +1,7 @@
 <head>
 <?php 
 	header("Content-Security-Policy: font-src 'self' data: https://fonts.gstatic.com https://fonts.googleapis.com;");
-	
-header("HTTP/1.1 301 Moved Permanently");
-header("Location: " . (function_exists('base_url') ? base_url() : (isset($_SERVER['HTTP_HOST']) && preg_match('/^(localhost|127\.0\.0\.1)(:\d+)?$/i', $_SERVER['HTTP_HOST']) ? 'http://' . $_SERVER['HTTP_HOST'] . '/' : 'https://www.authenticity.id/'));
-exit();
-
+	// Redirect 301 dihapus: menyebabkan redirect loop (setiap request ke base_url(), exit)
 ?>
 
 

@@ -8,12 +8,14 @@
 	#RewriteCond %{HTTP_HOST} !^www\. [NC]
 	#RewriteCond %{HTTPS}s ^on(s)|
 	#RewriteRule ^ https%1://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
-# Skip redirect untuk localhost (development)
+# Skip redirect untuk localhost dan staging (development)
 RewriteCond %{HTTP_HOST} ^localhost(:\d+)?$ [NC,OR]
-RewriteCond %{HTTP_HOST} ^127\.0\.0\.1(:\d+)?$ [NC]
+RewriteCond %{HTTP_HOST} ^127\.0\.0\.1(:\d+)?$ [NC,OR]
+RewriteCond %{HTTP_HOST} ^staging\.authenticity\.id$ [NC]
 RewriteRule ^ - [L]
 
-# Production: force HTTPS + www.authenticity.id
+# Production: force HTTPS + www.authenticity.id (hanya untuk host production)
+RewriteCond %{HTTP_HOST} ^(www\.)?authenticity\.id$ [NC]
 RewriteCond %{HTTPS} off [OR]
 RewriteCond %{HTTP_HOST} !^www\.authenticity\.id$ [NC]
 RewriteRule ^(.*)$ https://www.authenticity.id/$1 [L,R=301]	 

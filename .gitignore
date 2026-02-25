@@ -26,3 +26,6 @@ database/*.sql.gz
 .env
 *.ps1
 *.bak
+nginx/
+DEPLOY-EC2.md
+README-ubuntu-nginx.md

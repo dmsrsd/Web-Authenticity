@@ -1,0 +1,41 @@
+# Git
+.git
+.gitignore
+
+# Environment (copy .env.example to .env on server, jangan ikut build)
+.env
+.env.*
+!.env.example
+
+# IDE / OS
+.idea
+.vscode
+*.swp
+*.swo
+Thumbs.db
+.DS_Store
+
+# Node (jika ada frontend build, build di host atau stage terpisah)
+node_modules
+npm-debug.log
+
+# Cache & logs (akan dibuat di container)
+application/cache/*
+application/logs/*
+!application/cache/index.html
+!application/logs/index.html
+
+# Docs (optional, kurangi ukuran image)
+*.md
+!README.md
+
+# Tests
+test
+tests
+phpunit.xml
+.circleci
+.github
+
+# Misc
+*.log
+*.tmp

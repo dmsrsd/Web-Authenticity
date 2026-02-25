@@ -51,8 +51,9 @@ $dbs = "db_".$ex[0];
 $active_group = 'default';
 $active_record = TRUE;
 
-// Support env vars untuk Docker (database di host/WSL)
+// Support env vars untuk Docker (database di host/WSL/EC2)
 $db['default']['hostname'] = getenv('DB_HOST') ?: 'localhost';
+$db['default']['port']     = getenv('DB_PORT') ?: '3306';
 $db['default']['username'] = getenv('DB_USERNAME') ?: 'root';
 $db['default']['password'] = getenv('DB_PASSWORD') ?: 'admin123';
 

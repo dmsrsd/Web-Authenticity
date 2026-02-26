@@ -14,8 +14,8 @@ class Event extends MY_Controller {
 		$data['subtitle'] = " | Event";
 		$data['kategori'] = $this->kategori;
 		$data['playlist_menu'] = $this->playlist_menu;
-		$data['event_aktif'] = $this->model_global->get_data(array('select' => '*', 'row','table' => 'event', 'where' =>array('periode_end >' => date('Y-m-d H:i:s')), 'order_by'=>'periode_end desc'));
-		$data['event_setelahnya'] = $this->model_global->get_data(array('select' => '*', 'row','table' => 'event', 'where' =>array('periode_end <' => date('Y-m-d H:i:s')), 'order_by'=>'periode_end desc'));
+		$data['event_aktif'] = $this->model_global->get_data(array('select' => '*', 'row','table' => 'event', 'where' => array('periode_end >' => date('Y-m-d H:i:s'), 'status !=' => 2), 'order_by'=>'periode_end desc'));
+		$data['event_setelahnya'] = $this->model_global->get_data(array('select' => '*', 'row','table' => 'event', 'where' => array('periode_end <' => date('Y-m-d H:i:s'), 'status !=' => 2), 'order_by'=>'periode_end desc'));
 		//print_r($data); exit;
 		$this->load->view('front/podcast/header',$data);
 		$this->load->view('front/event/event-home',$data);
@@ -25,8 +25,12 @@ class Event extends MY_Controller {
 		$data['website'] = $this->website;
 		$data['kategori'] = $this->kategori;
 		$data['playlist_menu'] = $this->playlist_menu;
-		$data['event'] = $this->model_global->get_data(array('data' => 'row', 'row','table' => 'event', 'where' =>array('id_event' => $id)));
-		$data['event_setelahnya'] = $this->model_global->get_data(array('select' => '*', 'row','table' => 'event', 'where' =>array('id_event !=' => $id), 'order_by' => 'periode_end desc'));
+		$data['event'] = $this->model_global->get_data(array('data' => 'row', 'row','table' => 'event', 'where' => array('id_event' => $id, 'status !=' => 2)));
+		if (empty($data['event'])) {
+			redirect('event');
+			return;
+		}
+		$data['event_setelahnya'] = $this->model_global->get_data(array('select' => '*', 'row','table' => 'event', 'where' => array('id_event !=' => $id, 'status !=' => 2), 'order_by' => 'periode_end desc'));
 		//$hasil = str_replace(' ', '-', strtolower($name));
 		$this->load->view('front/podcast/header',$data);
 		$this->load->view('front/event/detail',$data);

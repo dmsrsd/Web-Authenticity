@@ -16,7 +16,7 @@ class Campaign extends MY_Controller {
 		$data['kontributor'] = $this->model_global->get_data(array('select' => '*', 'table' => 'kontributor','where' => array('status' => 1), 'order_by' => 'nama asc'));
 		$data['slide'] = $this->model_global->get_data(array('select' => '*', 'table' => 'slide','where' => array('status' => 1,'kategori' => 4), 'order_by' => 'urutan asc'));
 		$data['campaign'] = $this->model_global->get_data(array('select' => '*', 'table' => 'web_section','where' => array('slug' => $slug), 'order_by' => 'order_number asc'));
-		$data['campaign_video'] = $this->model_global->get_data(array('select' => '*', 'table' => 'district_campaign','where' => array('section' => $data['campaign'][0]['id'],'status' => 1), 'order_by' => 'urutan asc'));
+		$data['campaign_video'] = $this->model_global->get_data(array('select' => '*', 'table' => '_campaign','where' => array('section' => $data['campaign'][0]['id'],'status' => 1), 'order_by' => 'urutan asc'));
 		$this->load->view('front/podcast/header',$data);
 		$this->load->view('front/podcast/campaign-detail',$data);
 

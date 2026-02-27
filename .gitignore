@@ -26,3 +26,5 @@ database/*.sql.gz
 .env
 *.ps1
 *.bak
+nginx/
+*.md

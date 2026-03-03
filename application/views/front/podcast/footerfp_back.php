@@ -15,7 +15,7 @@
 						<div class="foter-left__nav">
 							<a href='<?= base_url() ?>'><img src='<?php echo base_url() ?>uploads/logow.png' style='width:120px;'></a>
 							<div class='text-left2'>
-								<?php echo date("Y"); ?> Authenticity. All Rights Reserved.
+								<?php echo date("Y"); ?> PT Norojono Tobacco International. All Rights Reserved.
 								<br>
 								<a href='<?= base_url() ?>tentang'>About</a> |
 								<a href='<?= base_url() ?>tnc'>Terms &amp; Condition</a> |

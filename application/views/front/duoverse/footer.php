@@ -19,7 +19,7 @@
                         <div class="foter-left__nav">
                             <a href='<?php echo base_url() ?>'><img src='<?=base_url('assets/duoverse-html')?>/images/logow.png' style='width:120px;'></a>
                             <div class='text-left2'>
-                                2025 Authenticity. All Rights Reserved.
+                                2026 PT Norojono Tobacco International. All Rights Reserved.
                                 <br>
                                 <a href='<?php echo base_url("tentang") ?>' style="color:white;">About</a> |
                                 <a href='<?php echo base_url("tnc") ?>' style="color:white;">Terms &amp; Condition</a> |

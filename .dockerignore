@@ -25,6 +25,10 @@ application/logs/*
 !application/cache/index.html
 !application/logs/index.html
 
+# User uploads (media/podcast/soundroom) — pakai volume mount di server, jangan masuk image
+uploads
+upload
+
 # Docs (optional, kurangi ukuran image)
 *.md
 !README.md
@@ -39,3 +43,6 @@ phpunit.xml
 # Misc
 *.log
 *.tmp
+
+# Stat/stream assets (besar, tetap dari volume di server)
+stat

@@ -1767,7 +1767,8 @@ class Logic extends AdminController {
 			if(empty($_FILES['image']['name'])){
 				unset($_POST['image']);
 			}else{
-				unlink("uploads/podcast/".$_POST['img_awal']);
+				$old_img = isset($_POST['img_awal']) ? trim((string)$_POST['img_awal']) : '';
+				if ($old_img !== '' && is_file("uploads/podcast/".$old_img)) { @unlink("uploads/podcast/".$old_img); }
 				$_POST['image'] = $this->upload_foto($_FILES['image'],"podcast",FALSE);
 			}
 			unset($_POST['img_awal']);
@@ -1775,7 +1776,8 @@ class Logic extends AdminController {
 			if(empty($_FILES['image_mobile']['name'])){
 				unset($_POST['image_mobile']);
 			}else{
-				unlink("uploads/podcast/".$_POST['img_awal_mobile']);
+				$old_mob = isset($_POST['img_awal_mobile']) ? trim((string)$_POST['img_awal_mobile']) : '';
+				if ($old_mob !== '' && is_file("uploads/podcast/".$old_mob)) { @unlink("uploads/podcast/".$old_mob); }
 				$_POST['image_mobile'] = $this->upload_foto($_FILES['image_mobile'],"podcast",FALSE);
 			}
 			unset($_POST['img_awal_mobile']);
@@ -1824,7 +1826,8 @@ class Logic extends AdminController {
 			if(empty($_FILES['image']['name'])){
 				unset($_POST['image']);
 			}else{
-				unlink("uploads/podcast/".$_POST['img_awal']);
+				$old_file = isset($_POST['img_awal']) ? trim((string)$_POST['img_awal']) : '';
+				if ($old_file !== '' && is_file("uploads/podcast/".$old_file)) { @unlink("uploads/podcast/".$old_file); }
 				$_POST['image'] = $this->upload_foto($_FILES['image'],"podcast",FALSE);
 			}
 			unset($_POST['img_awal']);

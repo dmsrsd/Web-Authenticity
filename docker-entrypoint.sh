@@ -8,5 +8,10 @@ if [ -d /var/www/html ]; then
     chmod -R o+rX /var/www/html 2>/dev/null || true
     chown -R www-data:www-data /var/www/html/application/cache /var/www/html/application/logs 2>/dev/null || true
     chmod -R 775 /var/www/html/application/cache /var/www/html/application/logs 2>/dev/null || true
+    # Agar upload (podcast, dll) bisa ditulis Apache
+    if [ -d /var/www/html/uploads ]; then
+        chown -R www-data:www-data /var/www/html/uploads 2>/dev/null || true
+        chmod -R 775 /var/www/html/uploads 2>/dev/null || true
+    fi
 fi
 exec apache2-foreground

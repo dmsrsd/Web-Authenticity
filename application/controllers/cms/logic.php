@@ -183,55 +183,48 @@ class Logic extends AdminController {
 			$result = move_uploaded_file($temp_name, $file_path);
 
 			if ($result) {
-				if($thumb==TRUE){
+				if($thumb==TRUE && function_exists('imagecreatetruecolor')){
 					$thumb_path = $upload_dir.$folder.'/thumb/';
+					if (!is_dir($thumb_path)) { mkdir($thumb_path, 0775, true); }
 					$thumbnail = $thumb_path.$file_image;
 					$upload_image = $file_path;
-					if($thumb_width==""){
-						$thumb_width = 500;
-					}else{
-						$thumb_width = $thumb_width;
-					}
-					$info = getimagesize($upload_image);
-					$aspectRatio = $info[1] / $info[0];
-					$thumb_height = (int)($aspectRatio * $thumb_width) . "px";
-					$thumb_width .= "px";
-
-					list($width,$height) = getimagesize($upload_image);
-					$thumb_create = imagecreatetruecolor($thumb_width,$thumb_height);
-					switch($file_ext){
-						case '.jpg':
-							$source = imagecreatefromjpeg($upload_image);
-							break;
-						case '.jpeg':
-							$source = imagecreatefromjpeg($upload_image);
-							break;
-
-						case '.png':
-							$source = imagecreatefrompng($upload_image);
-							break;
-						case '.gif':
-							$source = imagecreatefromgif($upload_image);
-							break;
-						default:
-							$source = imagecreatefromjpeg($upload_image);
-					}
-					//$source = imagecreatefrompng($upload_image);
-					imagecopyresized($thumb_create,$source,0,0,0,0,$thumb_width,$thumb_height,$width,$height);
-					switch($file_ext){
-						case '.jpg' || '.jpeg':
-							imagejpeg($thumb_create,$thumbnail,100);
-							break;
-						case '.png':
-							imagepng($thumb_create,$thumbnail,100);
-							break;
-
-						case '.gif':
-							imagegif($thumb_create,$thumbnail,100);
-							break;
-						default:
-							imagejpeg($thumb_create,$thumbnail,100);
-						break;
+					$tw = (is_numeric($thumb_width) && $thumb_width !== '') ? (int)$thumb_width : 500;
+					$tw = max(1, min($tw, 2000));
+					$info = @getimagesize($upload_image);
+					if ($info && isset($info[0], $info[1]) && $info[0] > 0 && $info[1] > 0) {
+						$width  = (int)$info[0];
+						$height = (int)$info[1];
+						$aspectRatio = $height / $width;
+						$th = max(1, (int)round($aspectRatio * $tw));
+						$thumb_create = imagecreatetruecolor($tw, $th);
+						if ($thumb_create !== false) {
+							switch($file_ext){
+								case '.jpg':
+								case '.jpeg':
+									$source = @imagecreatefromjpeg($upload_image);
+									break;
+								case '.png':
+									$source = @imagecreatefrompng($upload_image);
+									break;
+								case '.gif':
+									$source = @imagecreatefromgif($upload_image);
+									break;
+								default:
+									$source = @imagecreatefromjpeg($upload_image);
+							}
+							if ($source !== false) {
+								imagecopyresized($thumb_create, $source, 0, 0, 0, 0, $tw, $th, $width, $height);
+								if ($file_ext === '.png') {
+									imagepng($thumb_create, $thumbnail, 9);
+								} elseif ($file_ext === '.gif') {
+									imagegif($thumb_create, $thumbnail);
+								} else {
+									imagejpeg($thumb_create, $thumbnail, 90);
+								}
+								imagedestroy($source);
+							}
+							imagedestroy($thumb_create);
+						}
 					}
 				}
 				return $file_image;
@@ -1856,10 +1849,10 @@ class Logic extends AdminController {
 
             $insert_id = $this->model_global->insert($_POST, 'podcast');
             if($insert_id){
-                redirect($this->template['url'].'podcast-new?_id='.$id.'&s=true&m=Data Berhasil Disimpan');
+                redirect($this->template['url'].'podcast-new?_id='.$insert_id.'&s=true&m=Data Berhasil Disimpan');
             }
             else{
-                redirect($this->template['url'].'podcast-new?_id='.$id.'&s=false&m=Data Gagal Disimpan');
+                redirect($this->template['url'].'podcast-new?s=false&m=Data Gagal Disimpan');
             }
         }
     }

@@ -1380,7 +1380,11 @@ class Dashboard extends AdminController {
 		$this->render('write-new');
 	}
 	public function artikel(){
-		$head = $_GET['k'];
+		$head = isset($_GET['k']) ? $_GET['k'] : 'music';
+		if (!isset($this->template['headkategori'][$head])) {
+			$keys = is_array($this->template['headkategori']) ? array_keys($this->template['headkategori']) : array();
+			$head = !empty($keys) ? $keys[0] : 'music';
+		}
 		$this->template["judul"] = $this->template['headkategori'][$head];
 		$this->template['website'] = $this->model_global->get_data(array('data' => 'row','table' => 'website', 'where' => array('id_website' => 1)));
 		$this->template['data'] = $this->model_global->get_data(array(
@@ -1393,7 +1397,11 @@ class Dashboard extends AdminController {
 		$this->render('artikel');
 	}
 	public function artikel_new(){
-		$head = $_GET['k'];
+		$head = isset($_GET['k']) ? $_GET['k'] : 'music';
+		if (!isset($this->template['headkategori'][$head])) {
+			$keys = is_array($this->template['headkategori']) ? array_keys($this->template['headkategori']) : array();
+			$head = !empty($keys) ? $keys[0] : 'music';
+		}
 		$this->template["judul"] = "Insert ".$this->template['headkategori'][$head];
 		$this->template['website'] = $this->model_global->get_data(array('data' => 'row','table' => 'website', 'where' => array('id_website' => 1)));
 		$this->template['kategori'] = $this->model_global->get_data(array('select' => '*', 'table' => 'kategori','where' => array('status' => 1,'head_kategori'=>$head), 'order_by' => 'nama asc'));

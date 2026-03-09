@@ -1085,11 +1085,12 @@ class Logic extends AdminController {
 				$_POST['thumbnail'] = $this->upload_foto($_FILES['thumbnail'],"article",TRUE,"");
 			}
             $insert_id = $this->model_global->insert($_POST, 'artikel');
+            $k = isset($_GET['k']) ? '&k='.urlencode($_GET['k']) : '';
             if($insert_id){
-                redirect($this->template['url'].'artikel-new?_id='.$id.'&s=true&m=Data Berhasil Disimpan&k='.$_GET['k']);
+                redirect($this->template['url'].'artikel-new?_id='.$insert_id.'&s=true&m=Data Berhasil Disimpan'.$k);
             }
             else{
-                redirect($this->template['url'].'artikel-new?_id='.$id.'&s=false&m=Data Gagal Disimpan&k='.$_GET['k']);
+                redirect($this->template['url'].'artikel-new?s=false&m=Data Gagal Disimpan'.$k);
             }
         }
     }

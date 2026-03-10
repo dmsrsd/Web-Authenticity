@@ -139,7 +139,6 @@
 <script>
 	document.addEventListener('DOMContentLoaded', function() {
 		const container = document.querySelector('.container');
-		const togglePasswordButtons = container.querySelectorAll('.toggle-password');
 		const recoverPasswordButton = document.getElementById('RecoverPassword');
 		const cancelResetButton = document.getElementById('cancelreset');
 
@@ -151,16 +150,17 @@
 				notifMessage.innerHTML = ''; // Remove the content
 			}, 3000);
 		}
-		
 
-		container.addEventListener('click', function(event) {
-			if (event.target.classList.contains('toggle-password')) {
-				event.target.classList.toggle('fa-eye');
-				event.target.classList.toggle('fa-eye-slash');
-				const input = document.querySelector(event.target.getAttribute('toggle'));
-				input.type = input.type === 'password' ? 'text' : 'password';
-			}
-		});
+		if (container) {
+			container.addEventListener('click', function(event) {
+				if (event.target.classList.contains('toggle-password')) {
+					event.target.classList.toggle('fa-eye');
+					event.target.classList.toggle('fa-eye-slash');
+					const input = document.querySelector(event.target.getAttribute('toggle'));
+					if (input) input.type = input.type === 'password' ? 'text' : 'password';
+				}
+			});
+		}
 
 		if (recoverPasswordButton) {
 			recoverPasswordButton.addEventListener('click', function() {

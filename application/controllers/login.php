@@ -403,10 +403,10 @@ class Login extends MY_Controller {
 		: (date("Y") - $birthDate[2]));
 		*/
 		//bypass age
-		//dob section
+		//dob section (simpen ke format YYYY-MM-DD kalau lengkap, else kosong)
 		$yobb = '';
-		$yob = $_POST['tahun_lahir'];
-		if($_POST['bulan_lahir'] == '' || $_POST['tahun_lahir'] == ''){
+		$yob  = isset($_POST['tahun_lahir']) ? $_POST['tahun_lahir'] : '';
+		if (empty($_POST['bulan_lahir']) || empty($_POST['tahun_lahir']) || empty($_POST['tgl_lahir'])) {
 		/*	$s = "false";
 			$m = "Data konfirmasi usia masih ada yang kosong!";
 			$this->response = $this->session->flashdata('response');
@@ -423,6 +423,16 @@ class Login extends MY_Controller {
 		// unset($_POST['bulan_lahir']);
 		// unset($_POST['tgl_lahir']);
 		
+		// bentuk dob untuk disimpan (YYYY-MM-DD) – pakai 1 jika tgl kosong
+		$dob = '';
+		if (!empty($_POST['tahun_lahir']) && !empty($_POST['bulan_lahir'])) {
+			$tahun = (int) $_POST['tahun_lahir'];
+			$bulan = (int) $_POST['bulan_lahir'];
+			$tgl   = !empty($_POST['tgl_lahir']) ? (int) $_POST['tgl_lahir'] : 1;
+			$dob   = sprintf('%04d-%02d-%02d', $tahun, $bulan, $tgl);
+		}
+		$_POST['dob'] = $dob;
+
 		//cek untuk email selain gmail dan yahoo
 		$email = $_POST['email']; 
 		// ambil domain email
@@ -434,8 +444,6 @@ class Login extends MY_Controller {
 			exit;
 		}
 		//end cek
-
-		$_POST['dob'] = $dob;
 
 			$age = 0; // default
 			if (!empty($_POST['tahun_lahir'])) {

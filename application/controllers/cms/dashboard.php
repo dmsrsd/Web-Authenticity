@@ -1385,6 +1385,7 @@ class Dashboard extends AdminController {
 			$keys = is_array($this->template['headkategori']) ? array_keys($this->template['headkategori']) : array();
 			$head = !empty($keys) ? $keys[0] : 'music';
 		}
+		$this->template['k'] = $head;
 		$this->template["judul"] = $this->template['headkategori'][$head];
 		$this->template['website'] = $this->model_global->get_data(array('data' => 'row','table' => 'website', 'where' => array('id_website' => 1)));
 		$this->template['data'] = $this->model_global->get_data(array(
@@ -1402,6 +1403,7 @@ class Dashboard extends AdminController {
 			$keys = is_array($this->template['headkategori']) ? array_keys($this->template['headkategori']) : array();
 			$head = !empty($keys) ? $keys[0] : 'music';
 		}
+		$this->template['k'] = $head;
 		$this->template["judul"] = "Insert ".$this->template['headkategori'][$head];
 		$this->template['website'] = $this->model_global->get_data(array('data' => 'row','table' => 'website', 'where' => array('id_website' => 1)));
 		$this->template['kategori'] = $this->model_global->get_data(array('select' => '*', 'table' => 'kategori','where' => array('status' => 1,'head_kategori'=>$head), 'order_by' => 'nama asc'));

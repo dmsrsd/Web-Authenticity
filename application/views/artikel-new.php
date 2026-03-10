@@ -42,7 +42,7 @@
 			";
 	}
 	?>		
-	<form action="<?=base_url()?>cms/logic/artikelProses?k=<?=$_GET['k']?>" method="post" data-parsley-validate enctype="multipart/form-data">
+	<form action="<?=base_url()?>cms/logic/artikelProses?k=<?=isset($k) ? $k : 'music'?>" method="post" data-parsley-validate enctype="multipart/form-data">
 		<input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" style="display: none">
 		<div class="panel-body"> 
 			<?php if(isset($data['id_artikel']) && $data['id_artikel'] != ''): ?>

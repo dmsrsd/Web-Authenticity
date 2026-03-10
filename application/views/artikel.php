@@ -6,7 +6,7 @@
 	<div class="row">
 		<div class='col-sm-6'><?php echo $judul;?> List</div>
 		<div class='col-sm-6' align='right'>
-			<a href="<?=$url."artikel-new?k=".$_GET['k']?>" class="btn btn-success btn-sm"><i class=" fa fa-plus"></i> Tambah</a>
+			<a href="<?=$url."artikel-new?k=".(isset($k) ? $k : 'music')?>" class="btn btn-success btn-sm"><i class=" fa fa-plus"></i> Tambah</a>
 		</div>
 	</div>
 </div>
@@ -47,7 +47,7 @@
 						</a>
 					</td>
 					<td align='center'>
-						<a href="<?=$url?>artikel-new?k=<?=$_GET['k']?>&_id=<?=$row['id_artikel']?>" class='btn btn-xs btn-success  '><i class="fa fa-edit "></i></a>
+						<a href="<?=$url?>artikel-new?k=<?=isset($k) ? $k : 'music'?>&_id=<?=$row['id_artikel']?>" class='btn btn-xs btn-success  '><i class="fa fa-edit "></i></a>
 						<a class='btn btn-xs btn-danger' onclick="return confirm('Are you sure you want to delete this item?');" href="<?=base_url()?>cms/logic/delete/artikel/<?=$row['id_artikel']?>?part=artikel" class="text-danger"><i class="fa fa-trash-o"></i></a>					
 					</td>
 				</tr>

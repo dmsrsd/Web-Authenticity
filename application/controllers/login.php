@@ -585,7 +585,7 @@ class Login extends MY_Controller {
 						//'passion' => implode(",",$_POST['passion']),
 						'created_date' => date('Y-m-d H:i:s')
 					];
-					// var_dump($dt_member); die();
+					var_dump($dt_member); die();
 					// $insert_id = $this->model_global->insert($_POST, 'member');
 					$insert_id = $this->model_global->insert($dt_member, 'member');
 					if($insert_id){

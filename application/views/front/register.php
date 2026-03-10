@@ -1,12 +1,9 @@
 <?php
-// $red = "";
-// if (isset($_GET['req'])) {
-// 	if ($_GET['req'] != "") {
-// 		$red = "?req=" . $_GET['req'];
-// 	}
-// }
+$red = '';
+if (isset($_GET['req']) && $_GET['req'] !== '') {
+	$red = '?req=' . $_GET['req'];
+}
 ?>
-
 <div class="step-wizard">
 	<!-- <ul class="step-wizard__indicator">
 		<li class="step active"><span>1</span></li>
@@ -15,8 +12,8 @@
 	</ul> -->
 	<form role="form" id="step-form" action="<?= base_url(); ?>login/submitregister<?= $red; ?>" method="post" data-parsley-validate autocomplete="off">
 		<input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>" style="display: none">
-		<input type="hidden" name="se" value="<?= $se; ?>" style="display: none">
-		<input type="hidden" name="to" value="<?= $_GET['to']; ?>" style="display: none">
+		<input type="hidden" name="se" value="<?= isset($se) ? htmlspecialchars($se) : ''; ?>" style="display: none">
+		<input type="hidden" name="to" value="<?= isset($_GET['to']) ? htmlspecialchars($_GET['to']) : ''; ?>" style="display: none">
 		<input type="hidden" name="red" id="red-val" value="<?= isset($_GET['action'])? $_GET['action']:''; ?>" style="display: none">
 		<?php $response = $this->session->flashdata('response');
 		if (isset($response["status"]) && $response["status"] == "error") : ?>
@@ -31,8 +28,8 @@
 		<div class="step-wizard__content">
 			<?php 
 			$reg_issmoke = 0;
-			$reg_fullname = $reg_email = $reg_gender = $reg_hp = $reg_rokok = $reg_rokoklain = $reg_nik = '';
-			$reg_tgl = $reg_bln = $reg_thn = $reg_provinsi = $reg_kota = $reg_instagram = '';
+			$reg_username = $reg_fullname = $reg_email = $reg_gender = $reg_hp = $reg_rokok = $reg_rokoklain = $reg_nik = '';
+			$reg_tgl = $reg_bln = $reg_thn = $reg_provinsi = $reg_kota = $reg_instagram = $reg_passion = $reg_district = '';
 			$socialmedia_connect = $this->session->userdata('social_media');
 			if( $socialmedia_connect=='twitter' || $socialmedia_connect=='facebook' || $socialmedia_connect=='google' ){
 				$socialmedia_info = $this->session->userdata('socialmedia_info');
@@ -45,20 +42,23 @@
 			//--- untuk tamp
 			$tamp_register = $this->session->flashdata('tamp_register');
 			if($tamp_register!=''){
-				$reg_fullname = $tamp_register['fullname'];
-				$reg_email = $tamp_register['email'];
-				$reg_gender = $tamp_register['gender'];
-				$reg_hp = $tamp_register['hp'];
-				$reg_issmoke = $tamp_register['issmoke'];
-				$reg_rokok = $tamp_register['rokok'];
-				$reg_rokoklain = $tamp_register['rokok_lain'];
-				$reg_nik = $tamp_register['nik'];
-				$reg_tgl = $tamp_register['tgl_lahir'];
-				$reg_bln = $tamp_register['bulan_lahir'];
-				$reg_thn = $tamp_register['tahun_lahir'];
-				$reg_provinsi = $tamp_register['id_provinsi'];
-				$reg_kota = $tamp_register['id_kota'];
-				$reg_instagram = $tamp_register['instagram'];
+				$reg_fullname = isset($tamp_register['fullname']) ? $tamp_register['fullname'] : '';
+				$reg_username = isset($tamp_register['username']) ? $tamp_register['username'] : $reg_fullname;
+				$reg_email = isset($tamp_register['email']) ? $tamp_register['email'] : '';
+				$reg_gender = isset($tamp_register['gender']) ? $tamp_register['gender'] : '';
+				$reg_hp = isset($tamp_register['hp']) ? $tamp_register['hp'] : '';
+				$reg_issmoke = isset($tamp_register['issmoke']) ? $tamp_register['issmoke'] : 0;
+				$reg_rokok = isset($tamp_register['rokok']) ? $tamp_register['rokok'] : '';
+				$reg_rokoklain = isset($tamp_register['rokok_lain']) ? $tamp_register['rokok_lain'] : '';
+				$reg_nik = isset($tamp_register['nik']) ? $tamp_register['nik'] : '';
+				$reg_tgl = isset($tamp_register['tgl_lahir']) ? $tamp_register['tgl_lahir'] : '';
+				$reg_bln = isset($tamp_register['bulan_lahir']) ? $tamp_register['bulan_lahir'] : '';
+				$reg_thn = isset($tamp_register['tahun_lahir']) ? $tamp_register['tahun_lahir'] : '';
+				$reg_provinsi = isset($tamp_register['id_provinsi']) ? $tamp_register['id_provinsi'] : '';
+				$reg_kota = isset($tamp_register['id_kota']) ? $tamp_register['id_kota'] : '';
+				$reg_district = isset($tamp_register['district']) ? $tamp_register['district'] : '';
+				$reg_instagram = isset($tamp_register['instagram']) ? $tamp_register['instagram'] : '';
+				$reg_passion = isset($tamp_register['passion']) ? (is_array($tamp_register['passion']) ? implode(', ', $tamp_register['passion']) : $tamp_register['passion']) : '';
 			}
 			?>
 			<div class="step-wizard__page active">
@@ -251,7 +251,7 @@
 						</div>
 						<div class='col-sm-12'>
 							<label>District *</label>
-							<select class='form-control kec' name='district' id="id_kec" required>
+							<select class='form-control kec' name='district' id="id_kec" value="<?php echo $reg_district; ?>" required>
 								<option value=''>--</option>
 							</select>
 						</div>

@@ -79,7 +79,10 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 			$ipaddress = getenv('REMOTE_ADDR');
 		else
 			$ipaddress = 'UNKNOWN';
-		return $ipaddress;
+		if (strpos($ipaddress, ',') !== false) {
+			$ipaddress = trim(explode(',', $ipaddress)[0]);
+		}
+		return (strlen($ipaddress) > 45) ? substr($ipaddress, 0, 45) : $ipaddress;
 	}
     function namadate($tgl){
 		$bulanarr = array("","Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember");

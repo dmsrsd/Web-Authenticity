@@ -231,6 +231,11 @@ class mp3file
         if ($this->bitpos==8)
             return false;
 
+        // safeguard: avoid reading past end of block
+        if ($this->blocksize === 0 || $this->blockpos >= $this->blocksize || !isset($this->block[$this->blockpos+1])) {
+            return 0;
+        }
+
         $b=0;
         $whichbit = 7-$this->bitpos;
         $mult = $this->powarr[$whichbit]; //$mult = pow(2,7-$this->pos);

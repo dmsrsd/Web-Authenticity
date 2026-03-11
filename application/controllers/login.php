@@ -11,18 +11,7 @@ class Login extends MY_Controller {
 
 	}
 	public function index(){
-		@session_start();	
-		
-		// $this->session->unset_userdata('socialmedia_info');
-		// $this->session->unset_userdata('social_media');			 
-
-		// if(isset($_GET['rel']) && $_GET['rel']!=''){
-		// 	$rel = $_GET['rel'];
-		// 	$this->session->set_flashdata('rel', $rel);
-		// }
-
-		//echo $this->generateRandomString();
-		//print_r($_SESSION);
+		@session_start();
 		$data['website'] = $this->website;
 		$data['kategori'] = $this->kategori;
 		$data['se'] = "";
@@ -35,31 +24,16 @@ class Login extends MY_Controller {
 				redirect(base_url()."login");
 			}
 		}
-		//$data['slide'] = $this->model_global->get_data(array('select' => '*', 'table' => 'slide','where' => array('status' => 1,'kategori'=>'home'), 'order_by' => 'id_slide desc'));
-
-		//$this->load->view('front/'.$data['website']['theme'].'/header',$data);
-		//$this->load->view('front/'.$data['website']['theme'].'/home',$data);
-
-
-		//--- tambahan-revamp	
 			$data['playlist_menu'] = $this->model_global->get_data(array('select' => '*', 'table' => 'web_section','where' => array('status' => 1, 'show_at_menu'=>1), 'order_by'=>'order_number asc'));
 			$data['provinsi'] = $this->model_global->get_data(array('select' => '*', 'table' => 'tbl_provinsi', 'order_by' => 'provinsi asc'));
 
 			$data['twitter_login_url'] = site_url('login/twitter');		
 			$data['facebook_login_url'] = site_url('login/facebook');		
-			$data['google_login_url'] = site_url('login/google');	
-			
-			// if( $this->session->userdata('tw_status') == 'verified' ){
-			// 	$userdata = $this->session->all_userdata();
-			// 	var_dump($userdata); die();
-			// }
-		//-- tambahan-revamp-end
+			$data['google_login_url'] = site_url('login/google');
 
 		if(empty($this->datamember)){
 			$data['playlist_menu'] = $this->model_global->get_data(array('select' => '*', 'table' => 'web_section','where' => array('status' => 1, 'show_at_menu'=>1), 'order_by'=>'order_number asc'));
-			
 			$data['subtitle'] = " | Login";
-			//$this->load->view('front/podcast/header',$data);
 			$this->load->view('front/podcast/header',$data);
 			$this->load->view('front/login',$data);
 			$this->load->view('front/podcast/footerfp');
@@ -75,20 +49,7 @@ class Login extends MY_Controller {
 			}
 
 		}
-		if(isset($_GET['t'])){
-			$cek = verifyEmail($_GET['t'],"anggir13@gmail.com",true);
-			print_r($cek);
-			echo $cek[0];
-		}
 	}
-
-	// public function devreset(){
-	// 	$passz = '11111111';
-	// 	$pass = $this->encrypt->encode($passz);
-
-	// 	KiBUEMXLgeWsdcVAmC1w/ntE6SCuYiq1z1rWuZh77Nmo1jks3Pr5RPmwie2OiakMjFSW4YD9xvIdVYe7edeI5w==
-	// 	die($pass);
-	// }
 
 	public function in(){
 		@session_start();
@@ -101,15 +62,12 @@ class Login extends MY_Controller {
 		if($this->input->post('se')=="wxwKQMOtmjWd9G2qsbNlDQb9E52PgrVQwUId9UlUz2ZcIQDANCj2HSs66aq29SjREGdc1Uf8PcfvvwlcGtw"){
 			$getse = "?se=".$this->input->post('se');
 		}
-		//cek untuk email selain gmail dan yahoo
 		$domain = substr(strrchr($user, "@"), 1);
-		// cek apakah domain termasuk gmail.com atau yahoo.com
 		if ($domain != "gmail.com" && $domain != "yahoo.com" && $domain != "moengage.com") {
 			$this->session->set_flashdata('response', array('status' => 'error', 'message' => 'Email harus menggunakan Gmail atau Yahoo!'));
 			redirect(base_url().'login'.$getse);
 			exit;
 		}
-		//end cek
 
 		if(!empty($cek)){
 			if($this->encrypt->decode($cek['password']) == $passz){
@@ -137,8 +95,7 @@ class Login extends MY_Controller {
 						$up['tokenexp_forgot'] = "";
 						$_SESSION["verifytnmcmember"] = $cek['id_member'];
 						$this->model_global->update($up, 'member', array('id_member' => $cek['id_member']));
-						//if(isset($this->input->post('se'))){
-							if($this->input->post('se')=="wxwKQMOtmjWd9G2qsbNlDQb9E52PgrVQwUId9UlUz2ZcIQDANCj2HSs66aq29SjREGdc1Uf8PcfvvwlcGtw"){
+						if($this->input->post('se')=="wxwKQMOtmjWd9G2qsbNlDQb9E52PgrVQwUId9UlUz2ZcIQDANCj2HSs66aq29SjREGdc1Uf8PcfvvwlcGtw"){
 								redirect(base_url()."rewards/se/".$this->input->post('se'));
 							}else{
 								if($to!=""){
@@ -147,9 +104,6 @@ class Login extends MY_Controller {
 									redirect(base_url().'profile');
 								}
 							}
-						//}else{
-						//	redirect(base_url().'profile');
-						//}
 					}
 				}else{
 					$this->response = $this->session->flashdata('response');
@@ -171,9 +125,7 @@ class Login extends MY_Controller {
 	public function active(){
 		@session_start();
 		$ver = $_GET['ver'];
-		//$cek = $this->model_global->get_data(array('data' => 'row','table' => 'member', 'where' => array('token_active' => $ver,'date(tokenexp_active) >='=>date('Y-m-d'))));
 		$cek = $this->model_global->get_data(array('data' => 'row','table' => 'member', 'where' => array('token_active' => $ver)));
-		//print_r($cek); exit;
 		if(!empty($cek)){
 			$ac['active'] = "1";
             $update = $this->model_global->update($ac, 'member', array('id_member' => $cek['id_member']));
@@ -269,50 +221,22 @@ class Login extends MY_Controller {
 		$cek = $this->model_global->get_data(array('data' => 'row','table' => 'member', 'where' => array('email' => $email)));
 		if(!empty($cek)){
 			$acak = $this->generateRandomString();
-			$pass = $this->encrypt->encode($acak);
-			//$ac['password'] = $pass ;
 			$exp = date('Y-m-d', strtotime("+3 days"));
 			$acak = rand()."simpli".$_POST['email'];
 			$ac['token_forgot'] = md5($acak);
 			$ac['tokenexp_forgot'] = $exp;
 
-			/*
-			$cek2 = verifyEmail($_POST['email'],"info@simplyauthentic.id",true);
-			if($cek2[0]=="invalid"){
-				$this->response = $this->session->flashdata('responsereset');
-				$this->session->set_flashdata('responsereset', array('status' => 'error', 'message' => 'Pastikan email Anda aktif! '));
-				redirect(base_url().'login');
-
-			}else{
-				*/
-				$update = $this->model_global->update($ac, 'member', array('id_member' => $cek['id_member']));
+			$update = $this->model_global->update($ac, 'member', array('id_member' => $cek['id_member']));
 
 				if($update){
 
 					$to_email = $cek['email'];
-					// $this->load->config('email');
 					$this->load->library('email');
 
 					$config['protocol'] = 'smtp';
-					$config['mailpath'] = '/usr/sbin/sendmail';					
-					// $config['smtp_host'] = 'smtp.zoho.com';
-					// $config['smtp_port'] = '465'; // 8025, 587 and 25 can also be used. Use Port 465 for SSL.
-					// $config['smtp_timeout'] = '7';
-					// //$config['smtp_user'] = 'info@simplyauthentic.id';
-					// //$config['smtp_pass'] = 'clasmild16';
-					// $config['smtp_user'] = 'noreply@simplyauthentic.id';
-					// $config['smtp_pass'] = 'Simple-Tapi-t4k-simpels';
-					// $config['smtp_user'] = 'noreplyauthenticity@gmail.com';
-					// $config['smtp_pass'] = 'fqfnfzradwlxzzzt';
-					//sendinblue
-					// $config['smtp_host'] = 'smtp-relay.sendinblue.com';
-                    // $config['smtp_port'] = '465'; // 8025, 587 and 25 can also be used. Use Port 465 for SSL.
-                    // $config['smtp_timeout'] = '7';
-                    // $config['smtp_user'] = 'admin@simplyauthentic.id';
-                    // $config['smtp_pass'] = '13rBws6z9I7WvtDq';
-					// new smtp google
+					$config['mailpath'] = '/usr/sbin/sendmail';
 					$config['smtp_host'] = 'smtp.gmail.com';
-                    $config['smtp_port'] = '465'; // 8025, 587 and 25 can also be used. Use Port 465 for SSL.
+                    $config['smtp_port'] = '465';
                     $config['smtp_timeout'] = '7';
                     $config['smtp_user'] = 'gridsf@gramedia-majalah.com';
                     $config['smtp_pass'] = 'zcup oxoy yfug waqs';
@@ -322,13 +246,9 @@ class Login extends MY_Controller {
 					$config['newline'] = "\r\n";
 					$config['smtp_crypto'] = 'ssl';
 					$this->email->initialize($config);
-					//$this->email->from("noreply@simplyauthentic.id", 'Authenticity');
 					$this->email->from("gridsf@gramedia-majalah.com", 'Authenticity');
 					$this->email->to($to_email);
 					$this->email->subject('Authenticity : Reset your password');
-					// $em['data'] ="Dear <b>".$cek['fullname']."</b>, <br><br>
-					// Please change your password immediately.<br><br><a href='".base_url()."/reset-password?ver=".md5($acak)."'>Click here to <b>RESET</b> your Password</a>.
-					// Thank you.";
 
 					$em['data'] ="Dear <b>".$cek['fullname']."</b>, <br><br>
 					Please change your password immediately.<br><br><a href='".base_url('reset-password?ver='.md5($acak))."'>Click here to <b>RESET</b> your Password</a>.
@@ -343,7 +263,6 @@ class Login extends MY_Controller {
 						show_error($this->email->print_debugger());
 						$this->session->set_flashdata('responsereset', array('status' => 'success', 'message' => 'Something error, please contact us! '));
 					}else{
-						// $this->session->set_flashdata('responsereset', array('status' => 'success', 'message' => 'Check your email for a new password! '));
 						$this->session->set_flashdata('responsereset', array('status' => 'success', 'message' => 'Check your email to reset your password!'));
 					}
 
@@ -351,7 +270,6 @@ class Login extends MY_Controller {
 				}else{
 					redirect(base_url());
 				}
-			//}
 		}else{
 			$this->response = $this->session->flashdata('responsereset');
 			$this->session->set_flashdata('responsereset', array('status' => 'error', 'message' => 'Your email is not match!'));
@@ -361,11 +279,9 @@ class Login extends MY_Controller {
 
 	public function submitregister(){
 		@$to = $_POST['to'];
-		//echo $to; exit;
 		$ret['status'] = "false";
 		$m = "";
 		$ret['message'] = "";
-		//unset($_POST['id_provinsi']);
 		unset($_POST['confirmpassword']);
 		unset($_POST['red']);
 		$gen = $this->generateRandomString();
@@ -378,7 +294,6 @@ class Login extends MY_Controller {
 		$_POST['tokenexp_active'] = $exp;
 		$_POST['status'] = "1";
 		$_POST['active'] = "1";
-		//$_POST['id_kota'] = "500";
 		$red="";
 
 		if(isset($_GET['req'])){
@@ -392,38 +307,14 @@ class Login extends MY_Controller {
 		$red .= ($red=='')? '?to='.$to:'&to='.$to;
 		$tamp_register = $_POST;
 		$this->session->set_flashdata('tamp_register', $tamp_register);
-		/*
-		$birthDate = $_POST['dob'];
-		$birthDate = explode("-", $birthDate);
-		$age1 = (date("md", date("U", mktime(0, 0, 0, $birthDate[2], $birthDate[1], $birthDate[0]))) > date("md")
-		? ((date("Y") - $birthDate[0]) - 1)
-		: (date("Y") - $birthDate[0]));
-		$age = (date("md", date("U", mktime(0, 0, 0, $birthDate[0], $birthDate[1], $birthDate[2]))) > date("md")
-		? ((date("Y") - $birthDate[2]) - 1)
-		: (date("Y") - $birthDate[2]));
-		*/
-		//bypass age
-		//dob section (simpen ke format YYYY-MM-DD kalau lengkap, else kosong)
+
 		$yobb = '';
-		$yob  = isset($_POST['tahun_lahir']) ? $_POST['tahun_lahir'] : '';
 		if (empty($_POST['bulan_lahir']) || empty($_POST['tahun_lahir']) || empty($_POST['tgl_lahir'])) {
-		/*	$s = "false";
-			$m = "Data konfirmasi usia masih ada yang kosong!";
-			$this->response = $this->session->flashdata('response');
-			$this->session->set_flashdata('response', array('status' => 'error', 'message' => $m));
-			// redirect(base_url().'register'.$red);
-			redirect(base_url().'login'.$red);
-			*/
 			$yobb = '';
 		}else{
 			$yobb = $_POST['bulan_lahir'].'-'.$_POST['tahun_lahir'];
 		}
 
-		// unset($_POST['tahun_lahir']);
-		// unset($_POST['bulan_lahir']);
-		// unset($_POST['tgl_lahir']);
-		
-		// bentuk dob untuk disimpan (YYYY-MM-DD) – pakai 1 jika tgl kosong
 		$dob = '';
 		if (!empty($_POST['tahun_lahir']) && !empty($_POST['bulan_lahir'])) {
 			$tahun = (int) $_POST['tahun_lahir'];
@@ -433,31 +324,25 @@ class Login extends MY_Controller {
 		}
 		$_POST['dob'] = $dob;
 
-		//cek untuk email selain gmail dan yahoo
-		$email = $_POST['email']; 
-		// ambil domain email
+		$email = $_POST['email'];
 		$domain = substr(strrchr($email, "@"), 1);
-		// cek apakah domain termasuk gmail.com atau yahoo.com
 		if ($domain != "gmail.com" && $domain != "yahoo.com" && $domain != "moengage.com") {
 			$this->session->set_flashdata('response', array('status' => 'error', 'message' => 'Email harus menggunakan Gmail atau Yahoo!'));
 			redirect(base_url().'login'.$red);
 			exit;
 		}
-		//end cek
 
-			$age = 0; // default
+			$age = 0;
 			if (!empty($_POST['tahun_lahir'])) {
-				$tahun_lahir = (int) $_POST['tahun_lahir']; // pastikan integer
+				$tahun_lahir = (int) $_POST['tahun_lahir'];
 				$tahun_sekarang = (int) date('Y');
-				$age = $tahun_sekarang - $tahun_lahir; // cukup kurangi tahunnya saja
+				$age = $tahun_sekarang - $tahun_lahir;
 			}
-			// Cek umur
 			if ($age < 17) {
 			$s = "false";
 			$m = "You're not 17 years old yet!";
 			$this->response = $this->session->flashdata('response');
 			$this->session->set_flashdata('response', array('status' => 'error', 'message' => $m));
-			// redirect(base_url().'register'.$red);
 			redirect(base_url().'login'.$red);
 		}else{
 			$adap = strlen($_POST['password']);
@@ -472,7 +357,6 @@ class Login extends MY_Controller {
 					$m = "Email has been used, use another email!";
 					$this->response = $this->session->flashdata('response');
 					$this->session->set_flashdata('response', array('status' => 'error', 'message' => $m));
-					// redirect(base_url().'register'.$red);
 					redirect(base_url().'login'.$red);
 
 				}else{
@@ -482,63 +366,31 @@ class Login extends MY_Controller {
 		}
 		$go = "0";
 		$cek = verifyEmail($_POST['email'],"gridsf@gramedia-majalah.com",true);
-		if($s=="true"){
-			if($cek[0]=="valid"){
-				$go="1";
-			}else{
-				$s = "false";
-				// $m = "Pastikan email Anda aktif!";
-				$m = "Make sure your email is active!";
-				$this->response = $this->session->flashdata('response');
-				$this->session->set_flashdata('response', array('status' => 'error', 'message' => $m));
-				// redirect(base_url().'register'.$red);
-				redirect(base_url().'login'.$red);
-
+		if ($s == "true") {
+			if (isset($cek[0]) && $cek[0] == "valid") {
+				$go = "1";
+			} else {
+				$reason = isset($cek[1]) ? $cek[1] : '';
+				if (is_string($reason) && stripos($reason, 'could not connect to server') !== false) {
+					$go = "1";
+				} else {
+					$s = "false";
+					$m = "Make sure your email is active!";
+					$this->response = $this->session->flashdata('response');
+					$this->session->set_flashdata('response', array('status' => 'error', 'message' => $m));
+					redirect(base_url().'login'.$red);
+				}
 			}
-		}else{
-			$go="0";
+		} else {
+			$go = "0";
 		}
 		if($go=="1"){
-			//$_POST['age'] = $age;
-
-			//$insert_id = $this->model_global->insert($_POST, 'member');
-			//if($insert_id){
 
 				$this->load->library('email');
-				// $this->load->config('email');
 				$config['protocol'] = 'smtp';
 				$config['mailpath'] = '/usr/sbin/sendmail';
-				// $config['smtp_host'] = 'smtp.zoho.com';
-				// $config['smtp_port'] = '465'; // 8025, 587 and 25 can also be used. Use Port 465 for SSL.
-				// $config['smtp_timeout'] = '7';
-				// //$config['smtp_user'] = 'info@simplyauthentic.id';
-				// //$config['smtp_pass'] = 'clasmild16';
-				// $config['smtp_user'] = 'noreply@simplyauthentic.id';
-				// $config['smtp_pass'] = 'Simple-Tapi-t4k-simpels';
-				// $config['smtp_user'] = 'noreplyauthenticity@gmail.com';
-				// $config['smtp_pass'] = 'fqfnfzradwlxzzzt';
-				//sendinblue
-                // // $config['smtp_pass'] = 'fqfnfzradwlxzzzt';
-				// $config['smtp_host'] = 'smtp-relay.sendinblue.com';
-				// $config['smtp_port'] = '465'; // 8025, 587 and 25 can also be used. Use Port 465 for SSL.
-				// $config['smtp_timeout'] = '7';
-				// $config['smtp_user'] = 'admin@simplyauthentic.id';
-				// $config['smtp_pass'] = '13rBws6z9I7WvtDq';
-				// new smtp google
-				// $config['smtp_host'] = 'smtp.gmail.com';
-				// $config['smtp_port'] = '465'; // 8025, 587 and 25 can also be used. Use Port 465 for SSL.
-				// $config['smtp_timeout'] = '7';
-				// $config['smtp_user'] = 'gridsf@gramedia-majalah.com';
-				// $config['smtp_pass'] = 'zcup oxoy yfug waqs';
-
-				//$config['smtp_host'] = 'smtp.zoho.com';
-				//$config['smtp_port'] = '465'; // 8025, 587 and 25 can also be used. Use Port 465 for SSL.
-				//$config['smtp_timeout'] = '7';
-				//$config['smtp_user'] = 'info@authenticity.id';
-				//$config['smtp_pass'] = 'clasmild16';
-				
 				$config['smtp_host'] = 'in-v3.mailjet.com';
-				$config['smtp_port'] = '465'; // 8025, 587 and 25 can also be used. Use Port 465 for SSL.
+				$config['smtp_port'] = '465';
 				$config['smtp_timeout'] = '7';
 				$config['smtp_user'] = 'b467205daf9b1fbcbc56b6409a9c47c9';
 				$config['smtp_pass'] = 'de9787bb240517f9ff187ebe432fa3a8';
@@ -549,21 +401,20 @@ class Login extends MY_Controller {
 				$config['smtp_crypto'] = 'ssl';
 				$this->email->initialize($config);
 				$this->email->from("noreply@authenticity.id", 'Authenticity.id');
-				//$this->email->from("noreply@simplyauthentic.id", 'Authenticity');
 				$this->email->to($_POST['email']);
 				$this->email->subject('Authenticity.id : Verifikasi');
 
-				$ver = $_POST['token_active'] ;
-				// $em['data']="Hi <b>".ucwords($_POST['fullname'])."</b>.lo sudah siap untuk masuk ke wahana penuh inpirasi yang ciamik di <b>Authenticity</b>. Agar perjalanan lo lebih aman untuk menjelajah, jangan lupa aktivasi lewat link di bawah ini ya.";
-				// $em['data'].="<br><br><a href='".base_url()."login/active/?ver=".$ver."'>Click here for ACTIVATION</a>";
-				// $em['data']="<b>".ucwords($_POST['fullname'])."</b>.Biar lo bisa akses semua konten, event, dan reward di <b>Authenticity.id</b>, klik tombol verifikasi di bawah. Abis itu, lo langsung jadi bagian dari keseruan ini dan siap eksplor yang udah kita siapin buat lo.";
-				// $em['data'].="<br><br><a href='".base_url()."login/active/?ver=".$ver."'>Verifikasi Sekarang!</a>";
-				$em['data'].=base_url()."login/active/?ver=".$ver;
+				$ver = $_POST['token_active'];
+				$em = array();
+				$em['data'] = base_url()."login/active/?ver=".$ver;
 				$pesan = $this->load->view('front/email-register',$em,TRUE);
 				$this->email->message($pesan);
 				$se = $this->email->send();
+				if (!$se) {
+					log_message('error', 'Register email send failed for '.$_POST['email'].' : '.$this->email->print_debugger());
+				}
 
-				if($se){
+				if(true){
 					$tamp_rokok = $_POST['rokok'];
 					if($tamp_rokok=='Lainnya'){
 						$_POST['rokok'] = $_POST['rokok_lain'];
@@ -571,10 +422,8 @@ class Login extends MY_Controller {
 					unset($_POST['rokok_lain']);
 
 					$dt_member = [
-						//'id_kota' => htmlspecialchars($this->input->post('id_kota')),
-						//'fullname' => htmlspecialchars($this->input->post('fullname')),
 						'my_referal' => $gen,
-						'fullname' => htmlspecialchars($this->input->post('username')), //dibuat username karena yg full name di takeoff
+						'fullname' => htmlspecialchars($this->input->post('username')),
 						'email' => htmlspecialchars($this->input->post('email')),
 						'address' => htmlspecialchars($this->input->post('address')),
 						'gender' => htmlspecialchars($this->input->post('gender')),
@@ -590,11 +439,8 @@ class Login extends MY_Controller {
 						'district' => $_POST['district'],
 						'id_tbl_provinsi' => $_POST['id_provinsi'],
 						'id_tbl_kota' => $_POST['id_kota'],
-						//'passion' => implode(",",$_POST['passion']),
 						'created_date' => date('Y-m-d H:i:s')
 					];
-					var_dump($dt_member); die();
-					// $insert_id = $this->model_global->insert($_POST, 'member');
 					$insert_id = $this->model_global->insert($dt_member, 'member');
 					if($insert_id){
 						$this->session->set_userdata('first_login', 'yes');
@@ -623,36 +469,16 @@ class Login extends MY_Controller {
 						$ret['message'] = "Error Proccessing..";
 						$this->response = $this->session->flashdata('response');
 						$this->session->set_flashdata('response', array('status' => 'error', 'message' => $ret['message']));
-						// redirect(base_url().'register'.$red);
 						redirect(base_url().'login'.$red);
 
 					}
-				}else{
-					$log["type"] = "register";
-					$log["email"] = $_POST["email"];
-					//$log["id_member"] = $id_member;
-					$log["created_date"] = date('Y-m-d H:i:s');
-					$log["log"] = "EMAIL TIDAK VALID";
-					$this->model_global->insert($log, 'log');
-					$ret['status'] = "false";
-					$ret['message'] = "Error Proccessing email tidak valid";
-					$x = $this->email->print_debugger();
-					$this->response = $this->session->flashdata('response');
-					$this->session->set_flashdata('response', array('status' => 'error', 'message' => $ret['message']));
-					// redirect(base_url().'register'.$red);
-					redirect(base_url().'login'.$red);
 				}
-			//}else{
-			//	$ret['status'] = "false";
-			//	$ret['message'] = "Error Proccessing";
-			//}
 
 		}else{
 			$ret['status'] = "false";
 			$ret['message'] = $m;
 			$this->response = $this->session->flashdata('response');
 			$this->session->set_flashdata('response', array('status' => 'error', 'message' => $m));
-			// redirect(base_url().'register'.$red);
 			redirect(base_url().'login'.$red);
 		}
 
@@ -675,10 +501,6 @@ class Login extends MY_Controller {
 				redirect(base_url()."register");
 			}
 		}
-		//$data['slide'] = $this->model_global->get_data(array('select' => '*', 'table' => 'slide','where' => array('status' => 1,'kategori'=>'home'), 'order_by' => 'id_slide desc'));
-
-		//$this->load->view('front/'.$data['website']['theme'].'/header',$data);
-		//$this->load->view('front/'.$data['website']['theme'].'/home',$data);
 		if(empty($this->datamember)){
 			$this->load->view('front/podcast/header',$data);
 			$this->load->view('front/register',$data);
@@ -700,24 +522,14 @@ class Login extends MY_Controller {
 		$data['website'] = $this->website;
 		$data['kategori'] = $this->kategori;
 		$data['provinsi'] = $this->model_global->get_data(array('select' => '*', 'table' => 'kota','order_by' => 'provinsi asc'));
-		// $data['provinsi'] = $this->model_global->get_data(array('select' => '*', 'table' => 'kota','group_by' => 'provinsi', 'order_by' => 'provinsi asc'));
-		//$data['slide'] = $this->model_global->get_data(array('select' => '*', 'table' => 'slide','where' => array('status' => 1,'kategori'=>'home'), 'order_by' => 'id_slide desc'));
-
-		//$this->load->view('front/'.$data['website']['theme'].'/header',$data);
-		//$this->load->view('front/'.$data['website']['theme'].'/home',$data);
 		$this->load->view('front/podcast/header',$data);
 		$this->load->view('front/register-thanks',$data);
 
 	}
 
-	//-- SOCIALMEDIA-CONNECT
-		
 		public function twitter(){
-
 			$this->load->library('twconnect');
 			$twredirect = $this->twconnect->twredirect();
-			// var_dump($twredirect); die();
-			// redirect(base_url()."login");
 		}
 
 		public function twitter_callback(){
@@ -726,7 +538,6 @@ class Login extends MY_Controller {
 			$this->load->library('twconnect');
 			$callback = $this->twconnect->twprocess_callback();
 			if($callback===false){
-				//-- destroy-all-userdata
 				if( $this->session->userdata('tw_status') == 'old_token' ){
 					$this->session->sess_destroy();
 				}
@@ -737,7 +548,6 @@ class Login extends MY_Controller {
 					$tw_id = $this->session->userdata('user_id');
 					$twitter_data = $this->twconnect->twaccount_verify_credentials();
 
-					//-- cek-member
 					$old_member = false;
 					$cek = $this->model_global->get_data(array('data' => 'row','table' => 'member', 'where' => array('status'=>1, 'active'=>1, 'socialmedia_connect'=>'twitter', 'socialmedia_id' => $twitter_data->id)));
 					if(!empty($cek)){
@@ -775,7 +585,6 @@ class Login extends MY_Controller {
 			$callbackurltoyourwebsite = base_url() . 'facebook/callback';
 			$data['facebook_login_url'] = $this->facebook->loginURL($callbackurltoyourwebsite);
 			redirect($data['facebook_login_url']);
-			// echo '<a href="'.$data['facebook_login_url'].'">Login FB</a>';
 		}
 
 		public function facebook_callback(){
@@ -805,7 +614,6 @@ class Login extends MY_Controller {
 					redirect($facebook_login_url);
 				}
 
-				//-- cek-member
 				$old_member = false;
 				$cek = $this->model_global->get_data(array('data' => 'row','table' => 'member', 'where' => array('status'=>1, 'active'=>1, 'socialmedia_connect'=>'facebook', 'socialmedia_id' => $fbuser['id'])));
 				if(!empty($cek)){
@@ -867,9 +675,9 @@ class Login extends MY_Controller {
 			include_once APPPATH . "libraries/Google/vendor/autoload.php";
 			
 			$google_client = new Google_Client();
-			$google_client->setClientId(G_KEY); //masukkan ClientID anda 
-			$google_client->setClientSecret(G_SECRET); //masukkan Client Secret Key anda
-			$google_client->setRedirectUri(base_url().'google/callback'); //Masukkan Redirect Uri anda
+			$google_client->setClientId(G_KEY);
+			$google_client->setClientSecret(G_SECRET);
+			$google_client->setRedirectUri(base_url().'google/callback');
 			$google_client->addScope('email');
 			$google_client->addScope('profile');
 
@@ -882,9 +690,9 @@ class Login extends MY_Controller {
 			include_once APPPATH . "libraries/Google/vendor/autoload.php";
 			
 			$google_client = new Google_Client();
-			$google_client->setClientId(G_KEY); //masukkan ClientID anda 
-			$google_client->setClientSecret(G_SECRET); //masukkan Client Secret Key anda
-			$google_client->setRedirectUri(base_url().'google/callback'); //Masukkan Redirect Uri anda
+			$google_client->setClientId(G_KEY);
+			$google_client->setClientSecret(G_SECRET);
+			$google_client->setRedirectUri(base_url().'google/callback');
 			$google_client->addScope('email');
 			$google_client->addScope('profile');
 
@@ -894,12 +702,10 @@ class Login extends MY_Controller {
 				if(!isset($token["error"]))
 				{
 					$google_client->setAccessToken($token['access_token']);
-					// $this->session->set_userdata('access_token', $token['access_token']);
 					$google_service = new Google_Service_Oauth2($google_client);
 					$data = $google_service->userinfo->get();
 					$current_datetime = date('Y-m-d H:i:s');
 
-					//-- cek-member
 					$old_member = false;
 					$cek = $this->model_global->get_data(array('data' => 'row','table' => 'member', 'where' => array('status'=>1, 'active'=>1, 'socialmedia_connect'=>'google', 'socialmedia_id' => $data['id'])));
 					if(!empty($cek)){

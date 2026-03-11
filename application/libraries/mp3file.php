@@ -16,9 +16,18 @@ class mp3file
         $this->blockmax= 1024;
 
         $this->mp3data = array();
-        $this->mp3data['Filesize'] = filesize($filename);
+        if (!is_string($filename) || $filename === '' || !is_file($filename) || !is_readable($filename)) {
+            $this->mp3data = array('Filesize' => 0, 'Encoding' => 'Unknown');
+            $this->fd = null;
+            return $this;
+        }
+        $this->mp3data['Filesize'] = (int) @filesize($filename);
 
-        $this->fd = fopen($filename,'rb');
+        $this->fd = @fopen($filename,'rb');
+        if (!$this->fd) {
+            $this->mp3data = array('Filesize' => $this->mp3data['Filesize'], 'Encoding' => 'Unknown');
+            return $this;
+        }
         $this->prefetchblock();
         $this->readmp3frame();
 
@@ -163,9 +172,18 @@ class mp3file
     }
     protected function prefetchblock()
     {
-        $block = fread($this->fd, $this->blockmax);
+        if (!$this->fd) {
+            $this->block = array();
+            $this->blocksize = 0;
+            $this->blockpos = 0;
+            return;
+        }
+        $block = @fread($this->fd, $this->blockmax);
+        if ($block === false) {
+            $block = '';
+        }
         $this->blocksize = strlen($block);
-        $this->block = unpack("C*", $block);
+        $this->block = ($this->blocksize > 0) ? unpack("C*", $block) : array();
         $this->blockpos=0;
     }
     protected function skipid3tag()

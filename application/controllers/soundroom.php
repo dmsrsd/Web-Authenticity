@@ -817,8 +817,11 @@ class Soundroom extends MY_Controller {
 			$top7 = range(2, 8);
 			$html.="<table width='100%' cellpadding='0' cellspacing='0' class='tbody'>";
 			foreach($soundroom as $row){
-				$path = "uploads/soundroom/$row[sound]";
-				if(file_exists($path)){
+				$filename = isset($row['sound']) ? (string) $row['sound'] : '';
+				$path = "uploads/soundroom/".$filename;
+				$fullpath = FCPATH.$path;
+				$duration = '-';
+				if($filename !== '' && is_file($fullpath)){
                     if ($lib_version == 1) {
                         $stats = $this->mp3file->set_file(FCPATH.'uploads/soundroom/'.$row['sound'])->get_metadata();
                         $duration = isset($stats['Length mm:ss']) ? $stats['Length mm:ss'] : '-';
@@ -1343,7 +1346,10 @@ class Soundroom extends MY_Controller {
     {
         $file = isset($_GET['file']) ? $_GET['file'] : '';
         $version = isset($_GET['version']) ? $_GET['version'] : '2';
-        $path = "uploads/soundroom/$file";
+        $file = (string) $file;
+        $file = basename(str_replace('\\', '/', $file));
+        $path = "uploads/soundroom/".$file;
+        $fullpath = FCPATH.$path;
 
         if (!empty($file)) {
         	$download = false;
@@ -1353,14 +1359,14 @@ class Soundroom extends MY_Controller {
                 file_put_contents($path, fopen($url, 'r'));
             }
 
-	        if (file_exists($path)) {
+	        if (is_file($fullpath)) {
 	            if ($version == 1) {
 	                $this->load->library('mp3file');
-	                $stats = (array) $this->mp3file->set_file(FCPATH.$path)->get_metadata();
+	                $stats = (array) $this->mp3file->set_file($fullpath)->get_metadata();
 	            } else {
 	                $this->load->library('mp3info');
 	                $this->mp3info->resetMetadata();
-	                $stats = (array) $this->mp3info->getMetadata(FCPATH.$path, true);
+	                $stats = (array) $this->mp3info->getMetadata($fullpath, true);
 
 	                if ($stats && isset($stats['duration'])) {
 	                	$minutes = floor($stats['duration'] % 60);

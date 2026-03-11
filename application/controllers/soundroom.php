@@ -726,13 +726,14 @@ class Soundroom extends MY_Controller {
 		// $where['a.approve']=1;
 		// $where['a.status']=1;
 		// $where['a.approve']=1;
-		$kota = "ALL";
-		if($_POST['kota']!="ALL" && $_POST['kota']!="" && isset($_POST['kota'])){
-			$where['b.id_kota']=$_POST['kota'];
-			$kota = $_POST['kota'];
+		$kota = isset($_POST['kota']) ? $_POST['kota'] : 'ALL';
+		if($kota !== "ALL" && $kota !== ""){
+			$where['b.id_kota'] = $kota;
 		}
-		if(isset($_POST['start']) && $_POST['start']!='ALL'){
-			$next = ($_POST['end']=='ALL') ? 1 : $_POST['end'] + 1;
+		$start = isset($_POST['start']) ? $_POST['start'] : 'ALL';
+		$end = isset($_POST['end']) ? $_POST['end'] : 'ALL';
+		if($start !== 'ALL'){
+			$next = ($end === 'ALL') ? 1 : ((int) $end + 1);
 			$paging = "12,".($next -1) * 12;
 		}else{
 			$next = 1;
@@ -761,8 +762,8 @@ class Soundroom extends MY_Controller {
 			}
 		}
 
-		if($_POST['kota']!="ALL" && $_POST['kota']!="" && isset($_POST['kota'])){
-			$arr_kota[] = $_POST['kota'];
+		if($kota !== "ALL" && $kota !== ""){
+			$arr_kota[] = $kota;
 		}
 
 		$this->db->select('s.*, k.kota, k.provinsi');

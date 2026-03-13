@@ -436,7 +436,7 @@ class Soundroom extends MY_Controller {
 					}
 				}
 				if ($year >= '2024') { //buat if jika 2024 ke atas bisa share
-					if ($year == '2025' && $row['top10'] == 1) {
+					if ($year == '2025' && isset($row['top10']) && $row['top10'] == 1) {
 						$html .= "<div class='badge-winner'><img src='". base_url() ."assets/front/img/soundroom/badge-10.png'></div>";
 					}
 					$url_share = base_url()."soundroom/share/".$row['id_soundroom']."?year=".$year."&utm_source=sroom24&utm_medium=sroom24visitor&utm_campaign=sr24".$row['judul']."&utm_id=sroom24visitor&utm_term=sroom24visitor";

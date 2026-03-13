@@ -356,11 +356,8 @@ class Soundroom extends MY_Controller {
 		$this->db->where('s.approve', 1);
 		$this->db->where('s.status', 1);
 
-		if ($year == '2023') {
-			$this->db->order_by('s.top3 desc, s.rank asc');	
-		} elseif ($year == '2025') {
-			$this->db->group_by('s.judul');
-			$this->db->order_by('s.top3 desc, s.rank asc');	
+		if ($year == '2023' || $year == '2025') {
+			$this->db->order_by('s.top3 desc, s.rank asc');
 		} else {
 			$this->db->order_by('s.top3 desc');
 		}
@@ -378,11 +375,8 @@ class Soundroom extends MY_Controller {
 		$this->db->where('s.approve', 1);
 		$this->db->where('s.status', 1);
 
-		if ($year == '2023') {
-			$this->db->order_by('s.top3 desc, s.rank asc');	
-		} elseif ($year == '2025') {
-			$this->db->group_by('s.judul');
-			$this->db->order_by('s.top3 desc, s.rank asc');	
+		if ($year == '2023' || $year == '2025') {
+			$this->db->order_by('s.top3 desc, s.rank asc');
 		} else {
 			$this->db->order_by('s.top3 desc');
 		}

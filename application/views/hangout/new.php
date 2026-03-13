@@ -4,7 +4,7 @@
 <div class="panel panel-default">
 	<div class="panel-heading">
 		<div class="row">
-			<div class='col-sm-6'><?php echo $nama;?></div>
+			<div class='col-sm-6'><?php echo isset($data['nama_outlet']) ? htmlspecialchars($data['nama_outlet']) : 'Tambah Hangout';?></div>
 			<div class='col-sm-6' align='right'>
 
 			</div>
@@ -119,7 +119,7 @@
 		
 		<div class="panel-footer">
 			<button type="submit" onclick=" " class="btn btn-primary">Submit</button>
-			<a href='<?=base_url('cms/event')?>podcast' class='btn btn-default'>Back</a>
+			<a href='<?=base_url('cms/event/hangout')?>' class='btn btn-default'>Back</a>
 			<button type="reset" class="btn btn-inverse">Clear</button>
 		</div>
 	</form>

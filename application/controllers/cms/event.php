@@ -217,11 +217,11 @@ class Event extends AdminController {
 		$file_image = "";
 		$upload_dir = FCPATH.'uploads/hangout';
 	
-		$FILE_MIMES = array('image/jpeg','image/jpg','image/png');
+		$FILE_MIMES = array('image/jpeg','image/jpg','image/png','image/x-png','image/pjpeg');
 		$FILE_EXTS  = array('.jpeg','.jpg','.png');
 	
 		if ($file && $file['name'] != "") {
-			$file_type  = $file['type'];
+			$file_type  = isset($file['type']) ? trim(strtolower($file['type'])) : '';
 			$file_name  = $file['name'];
 			$file_size  = $file['size'];
 	
@@ -233,8 +233,9 @@ class Event extends AdminController {
 	
 			$file_ext = strtolower(substr($file_name, strrpos($file_name,".")));
 	
-			// cek ekstensi & mime
-			if(!in_array($file_ext, $FILE_EXTS) || !in_array($file_type, $FILE_MIMES)){
+			// cek ekstensi & mime (mime bisa beda per browser: image/x-png, image/png; charset=...)
+			$mime_ok = in_array($file_type, $FILE_MIMES) || preg_match('/^image\/(jpeg|jpg|png|pjpeg|x-png)(\s*;|$)/i', $file_type);
+			if(!in_array($file_ext, $FILE_EXTS) || !$mime_ok){
 				redirect('cms/event/hangoutnew?s=false&m=Invalid file type');
 				exit;
 			}
@@ -290,11 +291,11 @@ class Event extends AdminController {
 		$file_image = "";
 		$upload_dir = FCPATH.'uploads/hangout';
 	
-		$FILE_MIMES = array('image/jpeg','image/jpg','image/png');
+		$FILE_MIMES = array('image/jpeg','image/jpg','image/png','image/x-png','image/pjpeg');
 		$FILE_EXTS  = array('.jpeg','.jpg','.png');
 	
 		if ($file && $file['name'] != "") {
-			$file_type  = $file['type'];
+			$file_type  = isset($file['type']) ? trim(strtolower($file['type'])) : '';
 			$file_name  = $file['name'];
 			$file_size  = $file['size'];
 	
@@ -306,8 +307,9 @@ class Event extends AdminController {
 	
 			$file_ext = strtolower(substr($file_name, strrpos($file_name,".")));
 	
-			// cek ekstensi & mime
-			if(!in_array($file_ext, $FILE_EXTS) || !in_array($file_type, $FILE_MIMES)){
+			// cek ekstensi & mime (mime bisa beda per browser: image/x-png, image/png; charset=...)
+			$mime_ok = in_array($file_type, $FILE_MIMES) || preg_match('/^image\/(jpeg|jpg|png|pjpeg|x-png)(\s*;|$)/i', $file_type);
+			if(!in_array($file_ext, $FILE_EXTS) || !$mime_ok){
 				redirect('cms/event/hangoutedit/'.$id.'?s=false&m=Invalid file type');
 				exit;
 			}

@@ -13,7 +13,7 @@
 	<div class="row">
 		<div class='col-sm-6'><?php echo $judul;?> List</div> 
 		<div class='col-sm-6' align='right'>
-			<!--<a href="<?=$url?>member-excel" class="btn btn-success btn-sm"><i class=" fa fa-file"></i> Export Excel</a>-->
+			<a href="<?=$url?>member-csv<?=isset($n) ? $n : ''?>" class="btn btn-success btn-sm"><i class="fa fa-download"></i> Download CSV (All)</a>
 		</div>		
 	</div>
 </div>

@@ -1462,33 +1462,107 @@ class Dashboard extends AdminController {
 		}else{
 			$ac = " and active=1";
 		}
-		$ac.= " and id_member !=1";
-		$search = strtolower($_POST['search']['value']);
-		$limit = $_POST['length'];
-		$start = $_POST['start'];
-		$sql = $this->db->query("SELECT * from member  where status!='-1' $ac")->result_array();
-		$sql_count = count($sql);
-		$order_field = $_POST['order'][0]['column'];
-		$order_ascdesc = $_POST['order'][0]['dir'];
-		$order = " ORDER BY ".$_POST['columns'][$order_field]['data']." ".$order_ascdesc;
-		$sqlquery = "SELECT  @NUM:=@NUM + 1 AS no,member.* FROM member , (SELECT @NUM:=0)A where status!='-1'
-			and (fullname LIKE '%".$search."%' or email LIKE '%".$search."%' or hp LIKE '%".$search."%' or address LIKE '%".$search."%') $ac";
+		$ac .= " and id_member !=1";
+		$where_base = " status!='-1' ".$ac;
 
-		$embel = $order." LIMIT ".$limit." OFFSET ".$start;
-		$query = $this->db->query($sqlquery)->result_array();
-		$querydata = $this->db->query($sqlquery.$embel)->result_array();
-		$sql_filter_count = count($query);
-		$data = $querydata;
+		$search = isset($_POST['search']['value']) ? trim($_POST['search']['value']) : '';
+		$search_esc = $this->db->escape_like_str($search);
+		$search_condition = $search === ''
+			? ''
+			: " and (fullname LIKE '%".$search_esc."%' or email LIKE '%".$search_esc."%' or hp LIKE '%".$search_esc."%' or address LIKE '%".$search_esc."%') ";
+
+		$limit = (int) $_POST['length'];
+		$start = (int) $_POST['start'];
+		$limit = $limit > 0 ? $limit : 10;
+		$start = $start >= 0 ? $start : 0;
+
+		// recordsTotal: COUNT only, no full table load
+		$cnt_row = $this->db->query("SELECT COUNT(*) as cnt FROM member WHERE ".$where_base)->row_array();
+		$sql_count = (int) $cnt_row['cnt'];
+
+		// recordsFiltered: COUNT with search, no full result load
+		$cnt_filtered = $this->db->query("SELECT COUNT(*) as cnt FROM member WHERE ".$where_base.$search_condition)->row_array();
+		$sql_filter_count = (int) $cnt_filtered['cnt'];
+
+		// Order: whitelist column name
+		$order_field = (int) $_POST['order'][0]['column'];
+		$order_ascdesc = strtoupper($_POST['order'][0]['dir']) === 'DESC' ? 'DESC' : 'ASC';
+		$allowed_order = array('no','fullname','email','hp','address','last_login','created_date','id_member');
+		$order_col = isset($_POST['columns'][$order_field]['data']) ? $_POST['columns'][$order_field]['data'] : 'id_member';
+		if (!in_array($order_col, $allowed_order, true)) {
+			$order_col = 'id_member';
+		}
+		$order = " ORDER BY ".$order_col." ".$order_ascdesc." LIMIT ".$limit." OFFSET ".$start;
+
+		// Data: single query with LIMIT/OFFSET (server-side pagination)
+		$sqlquery = "SELECT @NUM:=@NUM + 1 AS no, member.* FROM member, (SELECT @NUM:=".(int)$start.") A WHERE ".$where_base.$search_condition.$order;
+		$querydata = $this->db->query($sqlquery)->result_array();
+
 		$callback = array(
-			'draw'=>$_POST['draw'],
-			'recordsTotal'=>$sql_count,
-			'recordsFiltered'=>$sql_filter_count,
-			'data'=>$data
+			'draw' => (int) $_POST['draw'],
+			'recordsTotal' => $sql_count,
+			'recordsFiltered' => $sql_filter_count,
+			'data' => $querydata
 		);
 		header('Content-Type: application/json');
 		echo json_encode($callback);
-
 	}
+
+	/**
+	 * Download all member data as CSV (same filter as member list: aktif / non-aktif via ?n=1).
+	 * Streams in chunks to avoid memory exhaustion.
+	 */
+	public function member_csv(){
+		if(isset($_GET['n'])){
+			$ac = " and active!=1";
+			$suffix = 'nonaktif';
+		}else{
+			$ac = " and active=1";
+			$suffix = 'aktif';
+		}
+		$ac .= " and id_member !=1";
+		$where_base = " status!='-1' ".$ac;
+
+		$filename = 'member_'.$suffix.'_'.date('Y-m-d').'.csv';
+		header('Content-Type: text/csv; charset=UTF-8');
+		header('Content-Disposition: attachment; filename="'.$filename.'"');
+		header('Pragma: no-cache');
+		header('Expires: 0');
+		$out = fopen('php://output', 'w');
+		// BOM for UTF-8 (Excel)
+		fwrite($out, "\xEF\xBB\xBF");
+
+		$headers = array('No', 'Nama', 'Email', 'Hp', 'Alamat', 'Last Login', 'Register Date');
+		fputcsv($out, $headers);
+
+		$chunk = 5000;
+		$offset = 0;
+		$no = 0;
+		do {
+			$sql = "SELECT id_member, fullname, email, hp, address, last_login, created_date FROM member WHERE ".$where_base." ORDER BY id_member ASC LIMIT ".(int)$chunk." OFFSET ".(int)$offset;
+			$rows = $this->db->query($sql)->result_array();
+			foreach ($rows as $row) {
+				$no++;
+				fputcsv($out, array(
+					$no,
+					$row['fullname'],
+					$row['email'],
+					$row['hp'],
+					$row['address'],
+					$row['last_login'],
+					$row['created_date']
+				));
+			}
+			$offset += $chunk;
+			if (count($rows) > 0) {
+				flush();
+			}
+		} while (count($rows) === $chunk);
+
+		fclose($out);
+		exit;
+	}
+
 	public function membercek(){
 		$qm = $this->db->query("select id_member from member where email='".$_GET['email']."'")->result_array();
 		$idm =  $qm[0]['id_member'];
@@ -1604,25 +1678,12 @@ class Dashboard extends AdminController {
 		if(isset($_GET['n'])){
 			$this->template["n"] = "?n=1";
 			$this->template["judul"] = "Member - Non Aktif";
-			$this->template['data'] = $this->model_global->get_data(array(
-				'select' => 'a.*',
-				'table' => 'member a',
-				//'join' => array('kota b','b.id_kota = a.id_kota'),
-				'where' => array('active !='=>1,'a.status !='=>-1,'a.id_member !='=>"1"),
-				'order_by' => 'a.id_member desc'
-			));
 		}else{
 			$this->template["n"] = "";
 			$this->template["judul"] = "Member - Aktif";
-			$this->template['data'] = $this->model_global->get_data(array(
-				'select' => 'a.*',
-				'table' => 'member a',
-				//'join' => array('kota b','b.id_kota = a.id_kota'),
-				'where' => array('active'=>1,'a.status !='=>-1,'a.id_member !='=>"1"),
-				'order_by' => 'a.id_member desc'
-			));
-
 		}
+		// Data loaded via AJAX (memberajax) with server-side pagination
+		$this->template['data'] = array();
 		$this->render('memberajax');
 	}
 	public function memberold(){

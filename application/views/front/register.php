@@ -543,44 +543,46 @@ if (isset($_GET['req']) && $_GET['req'] !== '') {
 		});
 
 		// Debug payload yang akan dikirim ke MoEngage saat klik SUBMIT
-		form.addEventListener("submit", function () {
-			try {
-				const payload = {
-					fullname: form.username ? form.username.value : "",
-					email: form.email ? form.email.value : "",
-					gender: form.gender ? form.gender.value : "",
-					mobile_number: form.hp ? form.hp.value : "",
-					year_of_birth: form.tahun ? form.tahun.value : "",
-					month_of_birth: form.bulan ? form.bulan.value : "",
-					day_of_birth: form.tgl ? form.tgl.value : "",
-					province_id: form.id_provinsi ? form.id_provinsi.value : "",
-					city_id: form.id_kota ? form.id_kota.value : "",
-					district: form.district ? form.district.value : "",
-					instagram_account: form.instagram ? form.instagram.value : "",
-					smoker: (function () {
-						const checked = document.querySelector(".smoker:checked");
-						return checked ? checked.value : "";
-					})(),
-					cigarette: form.rokok ? form.rokok.value : "",
-					passion: (function () {
-						const passions = form.querySelectorAll("input[name='passion[]']:checked");
-						return Array.from(passions).map(function (p) { return p.value; });
-					})()
-				};
+		if (form) {
+			form.addEventListener("submit", function () {
+				try {
+					const payload = {
+						fullname: form.username ? form.username.value : "",
+						email: form.email ? form.email.value : "",
+						gender: form.gender ? form.gender.value : "",
+						mobile_number: form.hp ? form.hp.value : "",
+						year_of_birth: form.tahun ? form.tahun.value : "",
+						month_of_birth: form.bulan ? form.bulan.value : "",
+						day_of_birth: form.tgl ? form.tgl.value : "",
+						province_id: form.id_provinsi ? form.id_provinsi.value : "",
+						city_id: form.id_kota ? form.id_kota.value : "",
+						district: form.district ? form.district.value : "",
+						instagram_account: form.instagram ? form.instagram.value : "",
+						smoker: (function () {
+							const checked = document.querySelector(".smoker:checked");
+							return checked ? checked.value : "";
+						})(),
+						cigarette: form.rokok ? form.rokok.value : "",
+						passion: (function () {
+							const passions = form.querySelectorAll("input[name='passion[]']:checked");
+							return Array.from(passions).map(function (p) { return p.value; });
+						})()
+					};
 
-				if (window.console && console.log) {
-					console.log("MoEngage registration debug payload:", payload);
-				}
+					if (window.console && console.log) {
+						console.log("MoEngage registration debug payload:", payload);
+					}
 
-				if (typeof Moengage !== "undefined" && typeof Moengage.track_event === "function") {
-					Moengage.track_event("Debug Registration Submit", payload);
+					if (typeof Moengage !== "undefined" && typeof Moengage.track_event === "function") {
+						Moengage.track_event("Debug Registration Submit", payload);
+					}
+				} catch (e) {
+					if (window.console && console.error) {
+						console.error("Error building MoEngage debug payload:", e);
+					}
 				}
-			} catch (e) {
-				if (window.console && console.error) {
-					console.error("Error building MoEngage debug payload:", e);
-				}
-			}
-		});
+			});
+		}
 
 	});
 

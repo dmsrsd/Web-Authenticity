@@ -325,6 +325,8 @@ if (isset($_GET['req']) && $_GET['req'] !== '') {
 		const btnRegister = document.getElementById("btnRegister");
 		const idProvinsi = document.getElementById("id_provinsi");
 		const overlayAll = document.querySelector(".overlay-all");
+		const nextButton = document.querySelector(".next-button");
+		const prevButton = document.querySelector(".prev-button");
 		let allowSubmit = false;
 
 		const redVal = document.getElementById("red-val");
@@ -387,19 +389,23 @@ if (isset($_GET['req']) && $_GET['req'] !== '') {
 				}
 			});
 
-			if (step === 0) {
-				document.querySelector(".prev-button").style.display = "none";
-				document.querySelector(".submit-button").style.display = "none";
-			} else {
-				document.querySelector(".prev-button").style.display = "block";
+			if (prevButton) {
+				if (step === 0) {
+					prevButton.style.display = "none";
+				} else {
+					prevButton.style.display = "block";
+				}
 			}
 
-			if (step === steps.length - 1) {
-				document.querySelector(".next-button").style.display = "none";
-				document.querySelector(".submit-button").style.display = "block";
-			} else {
-				document.querySelector(".next-button").style.display = "block";
-				document.querySelector(".submit-button").style.display = "none";
+			const submitButton = document.querySelector(".submit-button");
+			if (submitButton && nextButton) {
+				if (step === steps.length - 1) {
+					nextButton.style.display = "none";
+					submitButton.style.display = "block";
+				} else {
+					nextButton.style.display = "block";
+					submitButton.style.display = "none";
+				}
 			}
 		}
 
@@ -416,23 +422,27 @@ if (isset($_GET['req']) && $_GET['req'] !== '') {
 			return true;
 		}
 
-		document.querySelector(".next-button").addEventListener("click", function() {
-			if (validateStep(currentStep)) {
-				currentStep++;
-				updateStep(currentStep);
-			} else {
-				lblStatusSignup.innerHTML = "<div class='alert alert-danger'>Please fill in all required fields</div>";
-				allowSubmit = false;
-				setTimeout(function() {
-					lblStatusSignup.innerHTML = ''; // Remove the content
-				}, 3000);
-			}
-		});
+		if (nextButton) {
+			nextButton.addEventListener("click", function() {
+				if (validateStep(currentStep)) {
+					currentStep++;
+					updateStep(currentStep);
+				} else {
+					lblStatusSignup.innerHTML = "<div class='alert alert-danger'>Please fill in all required fields</div>";
+					allowSubmit = false;
+					setTimeout(function() {
+						lblStatusSignup.innerHTML = ''; // Remove the content
+					}, 3000);
+				}
+			});
+		}
 
-		document.querySelector(".prev-button").addEventListener("click", function() {
-			currentStep--;
-			updateStep(currentStep);
-		});
+		if (prevButton) {
+			prevButton.addEventListener("click", function() {
+				currentStep--;
+				updateStep(currentStep);
+			});
+		}
 
 		stepIndicators.forEach((step, index) => {
 			step.addEventListener("click", function() {
@@ -532,6 +542,45 @@ if (isset($_GET['req']) && $_GET['req'] !== '') {
 			}
 		});
 
+		// Debug payload yang akan dikirim ke MoEngage saat klik SUBMIT
+		form.addEventListener("submit", function () {
+			try {
+				const payload = {
+					fullname: form.username ? form.username.value : "",
+					email: form.email ? form.email.value : "",
+					gender: form.gender ? form.gender.value : "",
+					mobile_number: form.hp ? form.hp.value : "",
+					year_of_birth: form.tahun ? form.tahun.value : "",
+					month_of_birth: form.bulan ? form.bulan.value : "",
+					day_of_birth: form.tgl ? form.tgl.value : "",
+					province_id: form.id_provinsi ? form.id_provinsi.value : "",
+					city_id: form.id_kota ? form.id_kota.value : "",
+					district: form.district ? form.district.value : "",
+					instagram_account: form.instagram ? form.instagram.value : "",
+					smoker: (function () {
+						const checked = document.querySelector(".smoker:checked");
+						return checked ? checked.value : "";
+					})(),
+					cigarette: form.rokok ? form.rokok.value : "",
+					passion: (function () {
+						const passions = form.querySelectorAll("input[name='passion[]']:checked");
+						return Array.from(passions).map(function (p) { return p.value; });
+					})()
+				};
+
+				if (window.console && console.log) {
+					console.log("MoEngage registration debug payload:", payload);
+				}
+
+				if (typeof Moengage !== "undefined" && typeof Moengage.track_event === "function") {
+					Moengage.track_event("Debug Registration Submit", payload);
+				}
+			} catch (e) {
+				if (window.console && console.error) {
+					console.error("Error building MoEngage debug payload:", e);
+				}
+			}
+		});
 
 	});
 

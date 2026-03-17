@@ -704,7 +704,10 @@ if(($this->uri->segment(1)==="profile") and ($this->uri->segment(2)=="")){ ?>
 			"smoker": <?php echo json_encode($member['issmoke'] ?? ''); ?>,
 			"cigarette": <?php echo json_encode($member['rokok'] ?? ''); ?>,
 			"passion": <?php echo json_encode($member['passion'] ?? ''); ?>,
-			"sign_up_type": <?php echo json_encode($member['dari'] ?? ''); ?>
+			"sign_up_type": <?php echo json_encode($member['dari'] ?? ''); ?>,
+			"district": <?php echo json_encode($member['district'] ?? ''); ?>,
+			"province_id": <?php echo json_encode($member['id_tbl_provinsi'] ?? $member['id_provinsi'] ?? ''); ?>,
+			"city_id": <?php echo json_encode($member['id_tbl_kota'] ?? $member['id_kota'] ?? ''); ?>
 		});
 	</script>
 <?php } }

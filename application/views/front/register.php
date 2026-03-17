@@ -544,7 +544,9 @@ if (isset($_GET['req']) && $_GET['req'] !== '') {
 
 		// Debug payload yang akan dikirim ke MoEngage saat klik SUBMIT
 		if (form) {
-			form.addEventListener("submit", function () {
+			form.addEventListener("submit", function (e) {
+				// DEBUG: stop submit supaya payload bisa dicek di console
+				e.preventDefault();
 				try {
 					const payload = {
 						fullname: form.username ? form.username.value : "",

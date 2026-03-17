@@ -36,7 +36,3 @@
     </div>
 </div>
 <?php $this->load->view('front/podcast/footerfp');?>
-<script>
-
-	$(document).on('ready', function() {
-</script>

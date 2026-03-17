@@ -325,6 +325,8 @@ if (isset($_GET['req']) && $_GET['req'] !== '') {
 		const btnRegister = document.getElementById("btnRegister");
 		const idProvinsi = document.getElementById("id_provinsi");
 		const overlayAll = document.querySelector(".overlay-all");
+		const urlParams = new URLSearchParams(window.location.search);
+		const isDebugMoe = urlParams.get('debug_moe') === '1';
 		const nextButton = document.querySelector(".next-button");
 		const prevButton = document.querySelector(".prev-button");
 		let allowSubmit = false;
@@ -545,8 +547,6 @@ if (isset($_GET['req']) && $_GET['req'] !== '') {
 		// Debug payload yang akan dikirim ke MoEngage saat klik SUBMIT
 		if (form) {
 			form.addEventListener("submit", function (e) {
-				// DEBUG: stop submit supaya payload bisa dicek di console
-				e.preventDefault();
 				try {
 					const payload = {
 						fullname: form.username ? form.username.value : "",
@@ -573,10 +573,17 @@ if (isset($_GET['req']) && $_GET['req'] !== '') {
 
 					if (window.console && console.log) {
 						console.log("MoEngage registration debug payload:", payload);
+						console.table ? console.table(payload) : null;
 					}
 
 					if (typeof Moengage !== "undefined" && typeof Moengage.track_event === "function") {
 						Moengage.track_event("Debug Registration Submit", payload);
+					}
+
+					// Jika ada ?debug_moe=1 di URL, tahan submit supaya payload bisa dibaca dengan jelas
+					if (isDebugMoe) {
+						e.preventDefault();
+						alert('Debug payload telah dicetak di DevTools Console (lihat \"MoEngage registration debug payload\")');
 					}
 				} catch (e) {
 					if (window.console && console.error) {

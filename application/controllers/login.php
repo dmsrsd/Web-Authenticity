@@ -415,6 +415,29 @@ class Login extends MY_Controller {
 				}
 
 				if(true){
+					// Debug payload register (termasuk district) via .env DEBUG_MOE=1
+					if (getenv('DEBUG_MOE') === '1') {
+						header('Content-Type: application/json');
+						echo json_encode([
+							'fullname'         => $this->input->post('username'),
+							'email'            => $this->input->post('email'),
+							'gender'           => $this->input->post('gender'),
+							'hp'               => $this->input->post('hp'),
+							'bulan_lahir'      => $this->input->post('bulan_lahir'),
+							'tahun_lahir'      => $this->input->post('tahun_lahir'),
+							'tgl_lahir'        => $this->input->post('tgl_lahir'),
+							'dob'              => $dob,
+							'district'         => $this->input->post('district'),
+							'id_provinsi'      => $this->input->post('id_provinsi'),
+							'id_kota'          => $this->input->post('id_kota'),
+							'instagram'        => $this->input->post('instagram'),
+							'smoker'           => $this->input->post('issmoke'),
+							'rokok'            => $this->input->post('rokok'),
+							'rokok_lain'       => $this->input->post('rokok_lain'),
+							'passion'          => $this->input->post('passion'),
+						], JSON_PRETTY_PRINT);
+						exit;
+					}
 					$tamp_rokok = $_POST['rokok'];
 					if($tamp_rokok=='Lainnya'){
 						$_POST['rokok'] = $_POST['rokok_lain'];

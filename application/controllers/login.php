@@ -124,7 +124,8 @@ class Login extends MY_Controller {
 
 	public function active(){
 		@session_start();
-		$ver = $_GET['ver'];
+		$h = '<meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">';
+		$ver = isset($_GET['ver']) ? $_GET['ver'] : '';
 		$cek = $this->model_global->get_data(array('data' => 'row','table' => 'member', 'where' => array('token_active' => $ver)));
 		if(!empty($cek)){
 			$ac['active'] = "1";
@@ -137,7 +138,6 @@ class Login extends MY_Controller {
 				$this->model_global->insert($point, 'point');
 			}
             if($update){
-				$h = '<meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">';
 				$this->session->set_userdata('membersimply', array());
 				unset($_SESSION['verifytnmcmember']);
 				if(isset($cek['se'])){

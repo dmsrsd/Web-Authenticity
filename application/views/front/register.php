@@ -575,9 +575,25 @@ if (isset($_GET['req']) && $_GET['req'] !== '') {
 		if (form) {
 			form.addEventListener("submit", function (e) {
 				try {
+					// Guard: only track when the form is valid and password confirmed.
+					const isFormValid = typeof form.checkValidity === "function" ? form.checkValidity() : true;
+					const passwordValue = form.password ? form.password.value : "";
+					const confirmPasswordValue = form.confirmpassword ? form.confirmpassword.value : "";
+					const isPasswordMatched = passwordValue !== "" && passwordValue === confirmPasswordValue;
+					if (!isFormValid || !isPasswordMatched) {
+						return;
+					}
+
+					if (form.dataset.moeTrackingDone === "1") {
+						return;
+					}
 					if (form.hp) {
 						form.hp.value = normalizePhoneTo62(form.hp.value);
 					}
+					const provinceSelect = form.id_provinsi;
+					const citySelect = form.id_kota;
+					const provinceName = provinceSelect && provinceSelect.selectedIndex >= 0 ? provinceSelect.options[provinceSelect.selectedIndex].text.trim() : "";
+					const cityName = citySelect && citySelect.selectedIndex >= 0 ? citySelect.options[citySelect.selectedIndex].text.trim() : "";
 					const payload = {
 						fullname: form.username ? form.username.value : "",
 						email: form.email ? form.email.value : "",
@@ -588,6 +604,8 @@ if (isset($_GET['req']) && $_GET['req'] !== '') {
 						day_of_birth: form.tgl_lahir ? form.tgl_lahir.value : "",
 						province_id: form.id_provinsi ? form.id_provinsi.value : "",
 						city_id: form.id_kota ? form.id_kota.value : "",
+						province_name: provinceName === "--" ? "" : provinceName,
+						city_name: cityName === "--" ? "" : cityName,
 						district: form.district ? form.district.value : "",
 						instagram_account: form.instagram ? form.instagram.value : "",
 						smoker: (function () {
@@ -606,11 +624,33 @@ if (isset($_GET['req']) && $_GET['req'] !== '') {
 						console.table ? console.table(payload) : null;
 					}
 
+					if (typeof Moengage !== "undefined") {
+						if (typeof Moengage.add_user_attribute === "function") {
+							Moengage.add_user_attribute("Province", payload.province_name || payload.province_id);
+							Moengage.add_user_attribute("City", payload.city_name || payload.city_id);
+							Moengage.add_user_attribute("District", payload.district || "");
+							Moengage.add_user_attribute("rokok", payload.cigarette || "");
+						}
+						if (typeof Moengage.track_event === "function") {
+							Moengage.track_event("Complete Registration Member", payload);
+						} else if (typeof Moengage.track === "function") {
+							Moengage.track("Complete Registration Member", payload);
+						}
+					}
+
 					// Jika ada ?debug_moe=1 di URL, tahan submit supaya payload bisa dibaca dengan jelas
 					if (isDebugMoe) {
 						e.preventDefault();
 						alert('Payload telah dicetak di DevTools Console (lihat \"MoEngage registration payload\")');
+						return;
 					}
+
+					// Let MoEngage request flush before navigation.
+					e.preventDefault();
+					form.dataset.moeTrackingDone = "1";
+					setTimeout(function () {
+						form.submit();
+					}, 350);
 				} catch (e) {
 					if (window.console && console.error) {
 						console.error("Error building MoEngage debug payload:", e);

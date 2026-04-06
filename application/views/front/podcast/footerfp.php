@@ -687,54 +687,7 @@ if(($this->uri->segment(1)==="profile") and ($this->uri->segment(2)=="")){ ?>
 		Moengage.add_birthday(<?php echo json_encode($dobDateJs); ?>);
 	</script>
 
-<?php
-	$isFirstLoginAfterRegister = ($this->session->userdata('first_login') === 'yes');
-	if ($isFirstLoginAfterRegister) {
-		$this->session->unset_userdata('first_login');
-	}
-	$provinceId = $member['id_tbl_provinsi'] ?? $member['id_provinsi'] ?? '';
-	$cityId = $member['id_tbl_kota'] ?? $member['id_kota'] ?? '';
-	$provinceName = $member['nama_provinsi'] ?? $member['provinsi'] ?? $provinceId;
-	$cityName = $member['nama_kota'] ?? $member['kota'] ?? $cityId;
-	if ((!$provinceName || $provinceName === $provinceId || !$cityName || $cityName === $cityId) && !empty($cityId)) {
-		$kotaLookup = $this->db->get_where('kota', array('id_kota' => $cityId))->row_array();
-		if (!empty($kotaLookup)) {
-			if (!empty($kotaLookup['kota'])) {
-				$cityName = $kotaLookup['kota'];
-			}
-			if (!empty($kotaLookup['provinsi'])) {
-				$provinceName = $kotaLookup['provinsi'];
-			}
-		}
-	}
-	if ($isFirstLoginAfterRegister) { ?>
-	<script>
-		if (typeof Moengage !== "undefined" && typeof Moengage.add_user_attribute === "function") {
-			Moengage.add_user_attribute("Province", <?php echo json_encode($provinceName); ?>);
-			Moengage.add_user_attribute("City", <?php echo json_encode($cityName); ?>);
-			Moengage.add_user_attribute("District", <?php echo json_encode($member['district'] ?? ''); ?>);
-			Moengage.add_user_attribute("rokok", <?php echo json_encode($member['rokok'] ?? ''); ?>);
-		}
-		Moengage.track_event("Registration Completed", {
-			"fullname": <?php echo json_encode($member['fullname'] ?? ''); ?>,
-			"mobile_number": <?php echo json_encode($member['hp'] ?? ''); ?>,
-			"email": <?php echo json_encode($member['email'] ?? ''); ?>,
-			"gender": <?php echo json_encode($member['gender'] ?? ''); ?>,
-			"birthday": <?php echo json_encode($member['dob'] ?? ''); ?>,
-			"instagram_account": <?php echo json_encode($member['instagram'] ?? ''); ?>,
-			"smoker": <?php echo json_encode($member['issmoke'] ?? ''); ?>,
-			"cigarette": <?php echo json_encode($member['rokok'] ?? ''); ?>,
-			"passion": <?php echo json_encode($member['passion'] ?? ''); ?>,
-			"sign_up_type": <?php echo json_encode($member['dari'] ?? ''); ?>,
-			"district": <?php echo json_encode($member['district'] ?? ''); ?>,
-			"province_id": <?php echo json_encode($provinceId); ?>,
-			"city_id": <?php echo json_encode($cityId); ?>,
-			"province_name": <?php echo json_encode($provinceName); ?>,
-			"city_name": <?php echo json_encode($cityName); ?>,
-			"event_version": "v2"
-		});
-	</script>
-<?php } else if ((isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '') === "https://www.authenticity.id/login"){ ?>
+<?php if ((isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '') === "https://www.authenticity.id/login"){ ?>
 	<script>
 		Moengage.track_event("Successful Login", {
 			"login_type": "normal",
@@ -743,24 +696,6 @@ if(($this->uri->segment(1)==="profile") and ($this->uri->segment(2)=="")){ ?>
 
 	</script>
 
-<?php } else { ?>
-	<script>
-		Moengage.track_event("Complete Registration Member", {
-			"fullname": <?php echo json_encode($member['fullname'] ?? ''); ?>,
-			"mobile_number": <?php echo json_encode($member['hp'] ?? ''); ?>,
-			"email": <?php echo json_encode($member['email'] ?? ''); ?>,
-			"gender": <?php echo json_encode($member['gender'] ?? ''); ?>,
-			"birthday": <?php echo json_encode($member['dob'] ?? ''); ?>,
-			"instagram_account": <?php echo json_encode($member['instagram'] ?? ''); ?>,
-			"smoker": <?php echo json_encode($member['issmoke'] ?? ''); ?>,
-			"cigarette": <?php echo json_encode($member['rokok'] ?? ''); ?>,
-			"passion": <?php echo json_encode($member['passion'] ?? ''); ?>,
-			"sign_up_type": <?php echo json_encode($member['dari'] ?? ''); ?>,
-			"district": <?php echo json_encode($member['district'] ?? ''); ?>,
-			"province_id": <?php echo json_encode($member['id_tbl_provinsi'] ?? $member['id_provinsi'] ?? ''); ?>,
-			"city_id": <?php echo json_encode($member['id_tbl_kota'] ?? $member['id_kota'] ?? ''); ?>
-		});
-	</script>
 <?php } }
 if($this->uri->segment(1)==="login"){ ?>
 <script>

@@ -166,17 +166,17 @@ class Tarotunes extends MY_Controller {
 
         $config['protocol'] = 'smtp';
         $config['mailpath'] = '/usr/sbin/sendmail';
-        $config['smtp_host'] = 'smtp.zoho.com';
+        $config['smtp_host'] = 'smtp.gmail.com';
         $config['smtp_port'] = '465';
         $config['smtp_timeout'] = '7';
-        $config['smtp_user'] = 'info@authenticity.id';
-        $config['smtp_pass'] = 'clasmild16';
+        $config['smtp_user'] = 'gridsf@gramedia-majalah.com';
+        $config['smtp_pass'] = 'zcup oxoy yfug waqs';
         $config['charset'] = 'utf-8';
         $config['mailtype'] = 'html';
         $config['newline'] = "\r\n";
         $config['smtp_crypto'] = 'ssl';
         $this->email->initialize($config);
-        $this->email->from("info@authenticity.id", 'Authenticity');
+        $this->email->from("gridsf@gramedia-majalah.com", 'Authenticity');
         $this->email->to($to_email);
         $this->email->subject('Authenticity : Tarotunes');
 

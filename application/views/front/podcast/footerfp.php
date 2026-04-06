@@ -683,7 +683,7 @@ if(($this->uri->segment(1)==="profile") and ($this->uri->segment(2)=="")){ ?>
 		Moengage.add_birthday(<?php echo json_encode($dobDateJs); ?>);
 	</script>
 
-<?php	if($_SERVER['HTTP_REFERER'] =="https://www.authenticity.id/login"){ ?>
+<?php if ((isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '') === "https://www.authenticity.id/login"){ ?>
 	<script>
 		Moengage.track_event("Successful Login", {
 			"login_type": "normal",

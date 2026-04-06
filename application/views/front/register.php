@@ -310,7 +310,7 @@ if (isset($_GET['req']) && $_GET['req'] !== '') {
 		if (cachedRegisterPayload) {
 			try {
 				const parsedPayload = JSON.parse(cachedRegisterPayload);
-				console.log("MoEngage registration debug payload (restored):", parsedPayload);
+				console.log("MoEngage registration payload (restored):", parsedPayload);
 				if (console.table) console.table(parsedPayload);
 			} catch (err) {
 				console.warn("Failed to parse restored register payload:", err);
@@ -339,6 +339,7 @@ if (isset($_GET['req']) && $_GET['req'] !== '') {
 		const overlayAll = document.querySelector(".overlay-all");
 		const urlParams = new URLSearchParams(window.location.search);
 		const isDebugMoe = urlParams.get('debug_moe') === '1';
+		const registrationEventName = "Complete Registration Member";
 		const nextButton = document.querySelector(".next-button");
 		const prevButton = document.querySelector(".prev-button");
 		let allowSubmit = false;
@@ -573,15 +574,15 @@ if (isset($_GET['req']) && $_GET['req'] !== '') {
 						email: form.email ? form.email.value : "",
 						gender: form.gender ? form.gender.value : "",
 						mobile_number: form.hp ? form.hp.value : "",
-						year_of_birth: form.tahun ? form.tahun.value : "",
-						month_of_birth: form.bulan ? form.bulan.value : "",
-						day_of_birth: form.tgl ? form.tgl.value : "",
+						year_of_birth: form.tahun_lahir ? form.tahun_lahir.value : "",
+						month_of_birth: form.bulan_lahir ? form.bulan_lahir.value : "",
+						day_of_birth: form.tgl_lahir ? form.tgl_lahir.value : "",
 						province_id: form.id_provinsi ? form.id_provinsi.value : "",
 						city_id: form.id_kota ? form.id_kota.value : "",
 						district: form.district ? form.district.value : "",
 						instagram_account: form.instagram ? form.instagram.value : "",
 						smoker: (function () {
-							const checked = document.querySelector(".smoker:checked");
+							const checked = document.querySelector("input[name='issmoke']:checked");
 							return checked ? checked.value : "";
 						})(),
 						cigarette: form.rokok ? form.rokok.value : "",
@@ -592,19 +593,19 @@ if (isset($_GET['req']) && $_GET['req'] !== '') {
 					};
 
 					if (window.console && console.log) {
-						console.log("MoEngage registration debug payload:", payload);
+						console.log("MoEngage registration payload:", payload);
 						console.table ? console.table(payload) : null;
 					}
 					sessionStorage.setItem("moe_register_payload", JSON.stringify(payload));
 
 					if (typeof Moengage !== "undefined" && typeof Moengage.track_event === "function") {
-						Moengage.track_event("Debug Registration Submit", payload);
+						Moengage.track_event(registrationEventName, payload);
 					}
 
 					// Jika ada ?debug_moe=1 di URL, tahan submit supaya payload bisa dibaca dengan jelas
 					if (isDebugMoe) {
 						e.preventDefault();
-						alert('Debug payload telah dicetak di DevTools Console (lihat \"MoEngage registration debug payload\")');
+						alert('Payload telah dicetak di DevTools Console (lihat \"MoEngage registration payload\")');
 					}
 				} catch (e) {
 					if (window.console && console.error) {

@@ -1,5 +1,9 @@
 <?php 
     $type = isset($type) ? (int) $type : (isset($_GET['type']) ? (int) $_GET['type'] : 1);
+    $memberId = !empty($this->datamember['id']) ? (int) $this->datamember['id'] : 0;
+    $sendEmailUrl = $memberId > 0
+        ? base_url('tarotunes/shareemails/'.$this->uri->segment(3).'?type='.$type.'&id='.$memberId)
+        : '';
     if($type === 1){ 
         $gambar= base_url('assets/tarotunes-html/images/card/'. $kartu_1['gambar']);
         $kartu = $kartu_1['nama_kartu'];
@@ -350,7 +354,11 @@
                 <a href="<?php echo base_url('tarotunes/share/'.$this->uri->segment(3)); ?>" class="btn-download">Back</a>
             </div>
             <div class="col-md-4 text-center">
-            <a href="" class="btn-download"><div onclick="kirimData(this,'<?php echo base_url('tarotunes/shareemails/'.$this->uri->segment(3).'?type='.$type.'&id='.$this->datamember['id']); ?>')">Send E Mail</div></a>
+            <?php if($memberId > 0){ ?>
+                <a href="" class="btn-download"><div onclick="kirimData(this,'<?php echo $sendEmailUrl; ?>')">Send E Mail</div></a>
+            <?php } else { ?>
+                <a href="<?php echo base_url('login?to=tarotunes'); ?>" class="btn-download">Login to Send Email</a>
+            <?php } ?>
             </div>
             <div class="col-md-4 text-center">
                 <a href="<?php echo base_url('tarotunes/download/'.$this->uri->segment(3).'?type='.$type); ?>" class="btn-download">Share</a>
@@ -363,12 +371,14 @@
 </div>
     <?php $this->load->view("front/tarotunes/footer.php");?>
 	
+    <?php if (!empty($member['email'])) { ?>
 	<script type="text/javascript">
 		Moengage.track_event("Tarotunes", {
 		"email": "<?php echo $member['email'] ?>",
 		"halaman": "share tarotunes"
     });
 	</script>
+    <?php } ?>
 	
     <script>
         // Fungsi Share

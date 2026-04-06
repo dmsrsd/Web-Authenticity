@@ -131,7 +131,18 @@ class Tarotunes extends MY_Controller {
 		
 	}
     public function shareemails($id){
-        $cek = $this->model_global->get_data(array('data' => 'row','table' => 'member a','where' => array( 'a.id_member' =>$_GET['id'])));
+        $memberId = (int) $this->input->get('id', true);
+        if ($memberId <= 0) {
+            show_404();
+            return;
+        }
+
+        $cek = $this->model_global->get_data(array('data' => 'row','table' => 'member a','where' => array( 'a.id_member' =>$memberId)));
+        if (!$cek || empty($cek['email'])) {
+            show_404();
+            return;
+        }
+
         $kartu = $this->model_global->get_data(array('data' => 'row','table' => 'tarrots_member a','where' => array( 'a.id_tarrots_member' =>$id)));
         if($kartu){
             $data['kartu_1'] = $this->model_global->get_data(array('data' => 'row', 'select' => 'nama_kartu , gambar , up', 'table' => 'tarrots_module a','where' => array( 'a.id_tarrots' =>$kartu['id_tarrots_1'])));
@@ -195,25 +206,50 @@ class Tarotunes extends MY_Controller {
             echo json_encode(['success' => false, 'message' => 'No image uploaded.']);
             return;
         }
+        $relativeDir = 'tarrotunes-file';
+        $uploadDir = rtrim(FCPATH, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $relativeDir . DIRECTORY_SEPARATOR;
 
-        $config['upload_path'] = './tarrotunes-file/';
+        // Ensure upload directory exists and is writable in shared hosting setups.
+        if (!is_dir($uploadDir)) {
+            @mkdir($uploadDir, 0777, true);
+        }
+        if (!is_writable($uploadDir)) {
+            @chmod($uploadDir, 0777);
+        }
+
+        // Fallback directory to avoid hard failure if primary folder is not writable.
+        if (!is_writable($uploadDir)) {
+            $relativeDir = 'application/cache/tarrotunes-file';
+            $uploadDir = rtrim(FCPATH, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $relativeDir . DIRECTORY_SEPARATOR;
+            if (!is_dir($uploadDir)) {
+                @mkdir($uploadDir, 0777, true);
+            }
+            if (!is_writable($uploadDir)) {
+                @chmod($uploadDir, 0777);
+            }
+        }
+
+        if (!is_writable($uploadDir)) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Upload folder is not writable. Please set write permission on ' . $uploadDir
+            ]);
+            return;
+        }
+
+        $config['upload_path'] = $uploadDir;
         $config['allowed_types'] = 'jpg|jpeg|png';
         $config['file_name'] = 'tarotunes-' . time();
         $config['overwrite'] = false;
-
-        // Pastikan folder uploads/ bisa ditulis
-        if (!is_dir($config['upload_path'])) {
-            mkdir($config['upload_path'], 0755, true);
-        }
 
         $this->load->library('upload', $config);
 
         if ($this->upload->do_upload('image')) {
             $uploadData = $this->upload->data();
-            $fileUrl = base_url('tarrotunes-file/' . $uploadData['file_name']);
+            $fileUrl = base_url(trim($relativeDir, '/') . '/' . $uploadData['file_name']);
             echo json_encode(['success' => true, 'url' => $fileUrl]);
         } else {
-            echo json_encode(['success' => false, 'message' => $this->upload->display_errors()]);
+            echo json_encode(['success' => false, 'message' => strip_tags($this->upload->display_errors())]);
         }
     }
 

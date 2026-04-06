@@ -306,6 +306,18 @@ if (isset($_GET['req']) && $_GET['req'] !== '') {
 <script src="<?php echo base_url() ?>assets/front/js/moment.js"></script>
 <script>
 	document.addEventListener("DOMContentLoaded", function() {
+		const cachedRegisterPayload = sessionStorage.getItem("moe_register_payload");
+		if (cachedRegisterPayload) {
+			try {
+				const parsedPayload = JSON.parse(cachedRegisterPayload);
+				console.log("MoEngage registration debug payload (restored):", parsedPayload);
+				if (console.table) console.table(parsedPayload);
+			} catch (err) {
+				console.warn("Failed to parse restored register payload:", err);
+			}
+			sessionStorage.removeItem("moe_register_payload");
+		}
+
 		const form = document.getElementById("step-form");
 		const steps = document.querySelectorAll(".step-wizard__page");
 		const stepIndicators = document.querySelectorAll(".step");
@@ -332,7 +344,7 @@ if (isset($_GET['req']) && $_GET['req'] !== '') {
 		let allowSubmit = false;
 
 		const redVal = document.getElementById("red-val");
-		if(redVal.value=='register'){
+		if(redVal && redVal.value=='register'){
 			const signinTab = document.getElementById('signinTab');
 			const signupTab = document.getElementById('signupTab');
 			signinTab.classList.remove('active');
@@ -352,12 +364,12 @@ if (isset($_GET['req']) && $_GET['req'] !== '') {
 		}else{
 
 			// Clear input values
-			emailInput.value = '';
-			passwordInput.value = '';
-			confirmPasswordInput.value = '';
+			if (emailInput) emailInput.value = '';
+			if (passwordInput) passwordInput.value = '';
+			if (confirmPasswordInput) confirmPasswordInput.value = '';
 
 			// Hide smoker div by default
-			smokerDiv.style.display = "none";
+			if (smokerDiv) smokerDiv.style.display = "none";
 		}
 
 		// hide notif kalo sudah lama
@@ -457,6 +469,7 @@ if (isset($_GET['req']) && $_GET['req'] !== '') {
 
 		// Function to set input filter
 		function setInputFilter(textbox, inputFilter) {
+			if (!textbox) return;
 			const events = ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"];
 
 			events.forEach((event) => {
@@ -484,31 +497,37 @@ if (isset($_GET['req']) && $_GET['req'] !== '') {
 
 		// Function to toggle password visibility
 		function togglePasswordVisibilitySignup(input) {
+			if (!input) return;
 			input.type = input.type === "password" ? "text" : "password";
 		}
 
 		// Event listener for password toggle button
-		togglePasswordButtonSignUp.addEventListener("click", function() {
-			alert('sasasas');
-			togglePasswordVisibilitySignup(passwordInput);
-		});
+		if (togglePasswordButtonSignUp) {
+			togglePasswordButtonSignUp.addEventListener("click", function() {
+				togglePasswordVisibilitySignup(passwordInput);
+			});
+		}
 		// Event listener for password-confirm toggle button
-		togglePasswordConfirmButtonSignUp.addEventListener("click", function() {
-			togglePasswordVisibilitySignup(confirmPasswordInput);
-		});
+		if (togglePasswordConfirmButtonSignUp) {
+			togglePasswordConfirmButtonSignUp.addEventListener("click", function() {
+				togglePasswordVisibilitySignup(confirmPasswordInput);
+			});
+		}
 
 		// Event listener for rokok select change
-		selectrokok.addEventListener("change", function(){
-			const rokok = selectrokok.value;
-			if( rokok == 'Lainnya' ){
-				rokoklain.style.display = 'block';
-			}else{
-				rokoklain.style.display = 'none';
-			}
-		});
+		if (selectrokok) {
+			selectrokok.addEventListener("change", function(){
+				const rokok = selectrokok.value;
+				if( rokok == 'Lainnya' ){
+					if (rokoklain) rokoklain.style.display = 'block';
+				}else{
+					if (rokoklain) rokoklain.style.display = 'none';
+				}
+			});
+		}
 
 		// Event listener for smoker radio buttons
-		smokerDiv.style.display = "none";
+		if (smokerDiv) smokerDiv.style.display = "none";
 		smokerRadioButtons.forEach((radio) => {
 			radio.addEventListener("click", function() {
 				const val = radio.value;
@@ -527,22 +546,23 @@ if (isset($_GET['req']) && $_GET['req'] !== '') {
 		});
 
 		// Event listener for confirmPasswordInput keyup
-		confirmPasswordInput.addEventListener("keyup", function(e) {
-			const pass = passwordInput.value;
-			const confpass = confirmPasswordInput.value;
-			if (pass === confpass) {
-				// lblStatusSignup.innerHTML = '';
-				lblStatusSignup.innerHTML = "<div class='alert alert-success'>Password is match</div>";
-				allowSubmit = true;
-			} else {
-				lblStatusSignup.innerHTML = "<div class='alert alert-danger'>Password not matching</div>";
-				allowSubmit = false;
+		if (confirmPasswordInput && passwordInput && lblStatusSignup) {
+			confirmPasswordInput.addEventListener("keyup", function(e) {
+				const pass = passwordInput.value;
+				const confpass = confirmPasswordInput.value;
+				if (pass === confpass) {
+					lblStatusSignup.innerHTML = "<div class='alert alert-success'>Password is match</div>";
+					allowSubmit = true;
+				} else {
+					lblStatusSignup.innerHTML = "<div class='alert alert-danger'>Password not matching</div>";
+					allowSubmit = false;
 
-				setTimeout(function() {
-					lblStatusSignup.innerHTML = ''; // Remove the content
-				}, 3000);
-			}
-		});
+					setTimeout(function() {
+						lblStatusSignup.innerHTML = '';
+					}, 3000);
+				}
+			});
+		}
 
 		// Debug payload yang akan dikirim ke MoEngage saat klik SUBMIT
 		if (form) {
@@ -575,6 +595,7 @@ if (isset($_GET['req']) && $_GET['req'] !== '') {
 						console.log("MoEngage registration debug payload:", payload);
 						console.table ? console.table(payload) : null;
 					}
+					sessionStorage.setItem("moe_register_payload", JSON.stringify(payload));
 
 					if (typeof Moengage !== "undefined" && typeof Moengage.track_event === "function") {
 						Moengage.track_event("Debug Registration Submit", payload);

@@ -150,10 +150,14 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 			}
 		}
 
-		// Open a socket connection with the hostname, smtp port 25
-		$connect = @fsockopen($mx_ip, 25);
+		// Open a socket connection with bounded timeout to avoid long request hangs.
+		$connectTimeoutSeconds = 5;
+		$errno = 0;
+		$errstr = '';
+		$connect = @fsockopen($mx_ip, 25, $errno, $errstr, $connectTimeoutSeconds);
 
 		if ($connect) {
+			stream_set_timeout($connect, $connectTimeoutSeconds);
 
 				  // Initiate the Mail Sending SMTP transaction
 			if (preg_match('/^220/i', $out = fgets($connect, 1024))) {
@@ -187,6 +191,9 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 		} else {
 			$result = 'invalid';
 			$details .= 'Could not connect to server';
+			if (!empty($errstr)) {
+				$details .= ': '.$errstr;
+			}
 		}
 		if ($getdetails) {
 			return array($result, $details);

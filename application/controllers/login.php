@@ -278,10 +278,17 @@ class Login extends MY_Controller {
 	}
 
 	public function submitregister(){
-		@$to = $_POST['to'];
+		$to = (string) $this->input->post('to', true);
 		$ret['status'] = "false";
 		$m = "";
 		$ret['message'] = "";
+		$email = trim((string) $this->input->post('email', true));
+		if ($email === '') {
+			$this->response = $this->session->flashdata('response');
+			$this->session->set_flashdata('response', array('status' => 'error', 'message' => 'Email wajib diisi.'));
+			redirect(base_url().'login?action=register'.($to !== '' ? '&to='.$to : ''));
+			return;
+		}
 		unset($_POST['confirmpassword']);
 		unset($_POST['red']);
 		$gen = $this->generateRandomString();
@@ -289,7 +296,7 @@ class Login extends MY_Controller {
 		$_POST["modified_date"] = date('Y-m-d H:i:s');
 		$_POST["created_date"] = date('Y-m-d H:i:s');
 		$exp = date('Y-m-d', strtotime("+3 days"));
-		$acak = rand()."simpli".$_POST['email'];
+		$acak = rand()."simpli".$email;
 		$_POST['token_active'] = md5($acak);
 		$_POST['tokenexp_active'] = $exp;
 		$_POST['status'] = "1";
@@ -324,7 +331,6 @@ class Login extends MY_Controller {
 		}
 		$_POST['dob'] = $dob;
 
-		$email = $_POST['email'];
 		$domain = substr(strrchr($email, "@"), 1);
 		if ($domain != "gmail.com" && $domain != "yahoo.com" && $domain != "moengage.com") {
 			$this->session->set_flashdata('response', array('status' => 'error', 'message' => 'Email harus menggunakan Gmail atau Yahoo!'));
@@ -351,7 +357,7 @@ class Login extends MY_Controller {
 				$m = "Password harus lebih dari 6 karakter";
 			}else{
 				$_POST['password'] = $this->encrypt->encode($_POST['password']);
-				$cek2 = $this->model_global->get_data(array('data' => 'row','table' => 'member', 'where' => array('email' => $_POST['email'])));
+				$cek2 = $this->model_global->get_data(array('data' => 'row','table' => 'member', 'where' => array('email' => $email)));
 				if(!empty($cek2)){
 					$s = "false";
 					$m = "Email has been used, use another email!";
@@ -365,7 +371,7 @@ class Login extends MY_Controller {
 			}
 		}
 		$go = "0";
-		$cek = verifyEmail($_POST['email'],"gridsf@gramedia-majalah.com",true);
+		$cek = verifyEmail($email,"gridsf@gramedia-majalah.com",true);
 		if ($s == "true") {
 			if (isset($cek[0]) && $cek[0] == "valid") {
 				$go = "1";
@@ -401,7 +407,7 @@ class Login extends MY_Controller {
 				$config['smtp_crypto'] = 'ssl';
 				$this->email->initialize($config);
 				$this->email->from("noreply@authenticity.id", 'Authenticity.id');
-				$this->email->to($_POST['email']);
+				$this->email->to($email);
 				$this->email->subject('Authenticity.id : Verifikasi');
 
 				$ver = $_POST['token_active'];
@@ -411,7 +417,7 @@ class Login extends MY_Controller {
 				$this->email->message($pesan);
 				$se = $this->email->send();
 				if (!$se) {
-					log_message('error', 'Register email send failed for '.$_POST['email'].' : '.$this->email->print_debugger());
+					log_message('error', 'Register email send failed for '.$email.' : '.$this->email->print_debugger());
 				}
 
 				if(true){

@@ -397,22 +397,35 @@
         //fungsi kirim email
         const loader = document.getElementById('appLoader');
         function kirimData(el,url) {
-            el.removeAttribute('onclick');
-            el.classList.remove('disabled');
+            if (el.dataset.sending === '1') {
+                return;
+            }
+            el.dataset.sending = '1';
             loader.classList.add('is-active');
             $.ajax({
                 url: url,
                 method: 'GET',
+                dataType: 'json',
                 success: function(response) {
-                    alert("Berhasil Di simpan ke Email Lo!");
-                    el.textContent = 'Email Sent';
+                    if (response && response.status) {
+                        alert(response.message || "Email berhasil dikirim!");
+                        el.textContent = 'Email Sent';
+                    } else {
+                        alert((response && response.message) ? response.message : "Gagal kirim email.");
+                    }
                     console.log(response);
                     loader.classList.remove('is-active');
+                    el.dataset.sending = '0';
                 },
                 error: function(xhr, status, error) {
-                    alert("Jaringan sibuk coba lagi nanti");
+                    let message = "Jaringan sibuk coba lagi nanti";
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        message = xhr.responseJSON.message;
+                    }
+                    alert(message);
                     console.log(xhr.responseText);
                     loader.classList.remove('is-active');
+                    el.dataset.sending = '0';
                 }
             });
         }

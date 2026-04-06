@@ -131,74 +131,67 @@ class Tarotunes extends MY_Controller {
 		
 	}
     public function shareemails($id){
+        $this->output->set_content_type('application/json');
         $memberId = (int) $this->input->get('id', true);
         if ($memberId <= 0) {
-            show_404();
+            echo json_encode(array('status' => false, 'message' => 'Invalid member id.'));
             return;
         }
 
         $cek = $this->model_global->get_data(array('data' => 'row','table' => 'member a','where' => array( 'a.id_member' =>$memberId)));
         if (!$cek || empty($cek['email'])) {
-            show_404();
+            echo json_encode(array('status' => false, 'message' => 'Member email not found.'));
             return;
         }
 
         $kartu = $this->model_global->get_data(array('data' => 'row','table' => 'tarrots_member a','where' => array( 'a.id_tarrots_member' =>$id)));
-        if($kartu){
-            $data['kartu_1'] = $this->model_global->get_data(array('data' => 'row', 'select' => 'nama_kartu , gambar , up', 'table' => 'tarrots_module a','where' => array( 'a.id_tarrots' =>$kartu['id_tarrots_1'])));
-            $data['kartu_2'] = $this->model_global->get_data(array('data' => 'row', 'select' => 'nama_kartu , gambar , up', 'table' => 'tarrots_module a','where' => array( 'a.id_tarrots' =>$kartu['id_tarrots_2'])));
-            $data['kartu_3'] = $this->model_global->get_data(array('data' => 'row', 'select' => 'nama_kartu , gambar , up', 'table' => 'tarrots_module a','where' => array( 'a.id_tarrots' =>$kartu['id_tarrots_3'])));
-            $data['kartu_4'] = $this->model_global->get_data(array('data' => 'row', 'select' => 'nama_kartu , gambar , up', 'table' => 'tarrots_module a','where' => array( 'a.id_tarrots' =>$kartu['id_tarrots_4'])));
-            $data['kartu_5'] = $this->model_global->get_data(array('data' => 'row', 'select' => 'nama_kartu , gambar , up', 'table' => 'tarrots_module a','where' => array( 'a.id_tarrots' =>$kartu['id_tarrots_5'])));
-            $data['kartu_6'] = $this->model_global->get_data(array('data' => 'row', 'select' => 'nama_kartu , gambar , up', 'table' => 'tarrots_module a','where' => array( 'a.id_tarrots' =>$kartu['id_tarrots_6'])));
-            $data['kartu_7'] = $this->model_global->get_data(array('data' => 'row', 'select' => 'nama_kartu , gambar , up', 'table' => 'tarrots_module a','where' => array( 'a.id_tarrots' =>$kartu['id_tarrots_7'])));
-            $data['kartu_8'] = $this->model_global->get_data(array('data' => 'row', 'select' => 'nama_kartu , gambar , up', 'table' => 'tarrots_module a','where' => array( 'a.id_tarrots' =>$kartu['id_tarrots_8'])));
-            $data['kartu_9'] = $this->model_global->get_data(array('data' => 'row', 'select' => 'nama_kartu , gambar , up', 'table' => 'tarrots_module a','where' => array( 'a.id_tarrots' =>$kartu['id_tarrots_9'])));
-            $data['kartu_10'] = $this->model_global->get_data(array('data' => 'row', 'select' => 'nama_kartu , gambar , up', 'table' => 'tarrots_module a','where' => array( 'a.id_tarrots' =>$kartu['id_tarrots_10'])));
-            
-            $to_email = $cek['email'];
-            $this->load->library('email');
-
-            $config['protocol'] = 'smtp';
-            $config['mailpath'] = '/usr/sbin/sendmail';		
-            // new smtp google
-            // $config['smtp_host'] = 'smtp.gmail.com';
-            // $config['smtp_port'] = '465'; // 8025, 587 and 25 can also be used. Use Port 465 for SSL.
-            // $config['smtp_timeout'] = '7';
-            // $config['smtp_user'] = 'gridsf@gramedia-majalah.com';
-            // $config['smtp_pass'] = 'zcup oxoy yfug waqs';
-            //zoho
-            $config['smtp_host'] = 'smtp.zoho.com';
-            $config['smtp_port'] = '465'; // 8025, 587 and 25 can also be used. Use Port 465 for SSL.
-            $config['smtp_timeout'] = '7';
-            $config['smtp_user'] = 'info@authenticity.id';
-            $config['smtp_pass'] = 'clasmild16';
-
-            $config['charset'] = 'utf-8';
-            $config['mailtype'] = 'html';
-            $config['newline'] = "\r\n";
-            $config['smtp_crypto'] = 'ssl';
-            $this->email->initialize($config);
-            $this->email->from("info@authenticity.id", 'Authenticity');
-            $this->email->to($to_email);
-            $this->email->subject('Authenticity : Tarotunes');
-
-            $pesan = $this->load->view('front/tarotunes/share-emails-template',$data,TRUE);
-            $this->email->message($pesan);
-            $se = $this->email->send();
-
-            $this->response = $this->session->flashdata('responsereset');
-            if(!$se){
-                show_error($this->email->print_debugger());
-                $this->session->set_flashdata('responsereset', array('status' => 'success', 'message' => 'Something error, please contact us! '));
-            }else{
-                // $this->session->set_flashdata('responsereset', array('status' => 'success', 'message' => 'Check your email for a new password! '));
-                $this->session->set_flashdata('responsereset', array('status' => 'success', 'message' => 'Check your email to reset your password!'));
-            }
-
-            //redirect(base_url().'login');
+        if(!$kartu){
+            echo json_encode(array('status' => false, 'message' => 'Tarot result not found.'));
+            return;
         }
-		
+
+        $data['kartu_1'] = $this->model_global->get_data(array('data' => 'row', 'select' => 'nama_kartu , gambar , up', 'table' => 'tarrots_module a','where' => array( 'a.id_tarrots' =>$kartu['id_tarrots_1'])));
+        $data['kartu_2'] = $this->model_global->get_data(array('data' => 'row', 'select' => 'nama_kartu , gambar , up', 'table' => 'tarrots_module a','where' => array( 'a.id_tarrots' =>$kartu['id_tarrots_2'])));
+        $data['kartu_3'] = $this->model_global->get_data(array('data' => 'row', 'select' => 'nama_kartu , gambar , up', 'table' => 'tarrots_module a','where' => array( 'a.id_tarrots' =>$kartu['id_tarrots_3'])));
+        $data['kartu_4'] = $this->model_global->get_data(array('data' => 'row', 'select' => 'nama_kartu , gambar , up', 'table' => 'tarrots_module a','where' => array( 'a.id_tarrots' =>$kartu['id_tarrots_4'])));
+        $data['kartu_5'] = $this->model_global->get_data(array('data' => 'row', 'select' => 'nama_kartu , gambar , up', 'table' => 'tarrots_module a','where' => array( 'a.id_tarrots' =>$kartu['id_tarrots_5'])));
+        $data['kartu_6'] = $this->model_global->get_data(array('data' => 'row', 'select' => 'nama_kartu , gambar , up', 'table' => 'tarrots_module a','where' => array( 'a.id_tarrots' =>$kartu['id_tarrots_6'])));
+        $data['kartu_7'] = $this->model_global->get_data(array('data' => 'row', 'select' => 'nama_kartu , gambar , up', 'table' => 'tarrots_module a','where' => array( 'a.id_tarrots' =>$kartu['id_tarrots_7'])));
+        $data['kartu_8'] = $this->model_global->get_data(array('data' => 'row', 'select' => 'nama_kartu , gambar , up', 'table' => 'tarrots_module a','where' => array( 'a.id_tarrots' =>$kartu['id_tarrots_8'])));
+        $data['kartu_9'] = $this->model_global->get_data(array('data' => 'row', 'select' => 'nama_kartu , gambar , up', 'table' => 'tarrots_module a','where' => array( 'a.id_tarrots' =>$kartu['id_tarrots_9'])));
+        $data['kartu_10'] = $this->model_global->get_data(array('data' => 'row', 'select' => 'nama_kartu , gambar , up', 'table' => 'tarrots_module a','where' => array( 'a.id_tarrots' =>$kartu['id_tarrots_10'])));
+        
+        $to_email = $cek['email'];
+        $this->load->library('email');
+
+        $config['protocol'] = 'smtp';
+        $config['mailpath'] = '/usr/sbin/sendmail';
+        $config['smtp_host'] = 'smtp.zoho.com';
+        $config['smtp_port'] = '465';
+        $config['smtp_timeout'] = '7';
+        $config['smtp_user'] = 'info@authenticity.id';
+        $config['smtp_pass'] = 'clasmild16';
+        $config['charset'] = 'utf-8';
+        $config['mailtype'] = 'html';
+        $config['newline'] = "\r\n";
+        $config['smtp_crypto'] = 'ssl';
+        $this->email->initialize($config);
+        $this->email->from("info@authenticity.id", 'Authenticity');
+        $this->email->to($to_email);
+        $this->email->subject('Authenticity : Tarotunes');
+
+        $pesan = $this->load->view('front/tarotunes/share-emails-template',$data,TRUE);
+        $this->email->message($pesan);
+        $se = $this->email->send();
+
+        if(!$se){
+            log_message('error', 'Tarotunes shareemails failed: '.$this->email->print_debugger(array('headers')));
+            echo json_encode(array('status' => false, 'message' => 'Gagal kirim email. Coba lagi nanti.'));
+            return;
+        }
+
+        echo json_encode(array('status' => true, 'message' => 'Email berhasil dikirim.'));
+        return;
 	}
 
     public function share_media() {

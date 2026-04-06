@@ -569,6 +569,7 @@ if (isset($_GET['req']) && $_GET['req'] !== '') {
 		if (form) {
 			form.addEventListener("submit", function (e) {
 				try {
+					const isResubmitted = form.dataset.moeResubmitted === "1";
 					const payload = {
 						fullname: form.username ? form.username.value : "",
 						email: form.email ? form.email.value : "",
@@ -598,14 +599,30 @@ if (isset($_GET['req']) && $_GET['req'] !== '') {
 					}
 					sessionStorage.setItem("moe_register_payload", JSON.stringify(payload));
 
-					if (typeof Moengage !== "undefined" && typeof Moengage.track_event === "function") {
+					const hasTrackEvent = typeof Moengage !== "undefined" && typeof Moengage.track_event === "function";
+					const hasTrack = typeof Moengage !== "undefined" && typeof Moengage.track === "function";
+					if (hasTrackEvent) {
 						Moengage.track_event(registrationEventName, payload);
+					} else if (hasTrack) {
+						Moengage.track(registrationEventName, payload);
+					} else {
+						console.warn("MoEngage SDK belum siap, event belum terkirim.");
 					}
 
 					// Jika ada ?debug_moe=1 di URL, tahan submit supaya payload bisa dibaca dengan jelas
 					if (isDebugMoe) {
 						e.preventDefault();
 						alert('Payload telah dicetak di DevTools Console (lihat \"MoEngage registration payload\")');
+						return;
+					}
+
+					// Beri waktu singkat agar SDK sempat kirim request sebelum redirect submit.
+					if (!isResubmitted) {
+						e.preventDefault();
+						form.dataset.moeResubmitted = "1";
+						setTimeout(function () {
+							form.submit();
+						}, 400);
 					}
 				} catch (e) {
 					if (window.console && console.error) {

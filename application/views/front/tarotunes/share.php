@@ -355,7 +355,7 @@
             </div>
             <div class="col-md-4 text-center">
             <?php if($memberId > 0){ ?>
-                <a href="" class="btn-download"><div onclick="kirimData(this,'<?php echo $sendEmailUrl; ?>')">Send E Mail</div></a>
+                <a href="" class="btn-download"><div onclick="kirimData(this,'<?php echo $sendEmailUrl; ?>')">Send Email</div></a>
             <?php } else { ?>
                 <a href="<?php echo base_url('login?to=tarotunes'); ?>" class="btn-download">Login to Send Email</a>
             <?php } ?>

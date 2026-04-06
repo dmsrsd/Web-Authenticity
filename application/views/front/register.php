@@ -90,7 +90,18 @@ if (isset($_GET['req']) && $_GET['req'] !== '') {
 						</div>
 						<div class='col-sm-6'>
 							<label>Mobile Phone Number <span class="text-danger">*</span></label>
-							<input type="text" data-country="ID" class="form-control bfh-phone" data-format="+62 (ddd) ddd-dddd" required maxlength="15" placeholder="+62xxxxxxxxxx" name="hp" id="hp" autocomplete="off" value="<?php echo $reg_hp; ?>">
+							<?php
+								$regHpDigits = preg_replace('/\D+/', '', (string) $reg_hp);
+								if (strpos($regHpDigits, '62') === 0) {
+									$regHpDigits = substr($regHpDigits, 2);
+								} elseif (strpos($regHpDigits, '0') === 0) {
+									$regHpDigits = ltrim($regHpDigits, '0');
+								}
+							?>
+							<div class="input-group">
+								<span class="input-group-addon">+62</span>
+								<input type="text" class="form-control" required maxlength="13" placeholder="8xxxxxxxxxx" name="hp" id="hp" inputmode="numeric" pattern="[0-9]*" autocomplete="off" value="<?php echo $regHpDigits; ?>">
+							</div>
 						</div>
 					</div>
 				</div>
@@ -489,6 +500,14 @@ if (isset($_GET['req']) && $_GET['req'] !== '') {
 			input.type = input.type === "password" ? "text" : "password";
 		}
 
+		function normalizePhoneTo62(rawValue) {
+			const digits = String(rawValue || "").replace(/\D/g, "");
+			if (!digits) return "";
+			if (digits.startsWith("62")) return digits;
+			if (digits.startsWith("0")) return "62" + digits.slice(1);
+			return "62" + digits;
+		}
+
 		// Event listener for password toggle button
 		if (togglePasswordButtonSignUp) {
 			togglePasswordButtonSignUp.addEventListener("click", function() {
@@ -556,6 +575,9 @@ if (isset($_GET['req']) && $_GET['req'] !== '') {
 		if (form) {
 			form.addEventListener("submit", function (e) {
 				try {
+					if (form.hp) {
+						form.hp.value = normalizePhoneTo62(form.hp.value);
+					}
 					const payload = {
 						fullname: form.username ? form.username.value : "",
 						email: form.email ? form.email.value : "",

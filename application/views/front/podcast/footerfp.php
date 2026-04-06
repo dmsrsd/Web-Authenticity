@@ -669,16 +669,20 @@ if (empty($this->datamember)) {
 <?php } 
 if(($this->uri->segment(1)==="profile") and ($this->uri->segment(2)=="")){ ?>
 	<script type="text/javascript">
+		<?php $memberData = isset($member) && is_array($member) ? $member : array(); ?>
 		Moengage.add_user_name(<?php echo json_encode($member['fullname'] ?? ''); ?>);       
 		Moengage.add_email(<?php echo json_encode($member['email'] ?? ''); ?>);           
 		Moengage.add_mobile(<?php echo json_encode($member['hp'] ?? ''); ?>);       
 
-		<?php $gender= ($member['gender'] === "male") ? "M" : "F"; ?>
+		<?php $gender= (($memberData['gender'] ?? '') === "male") ? "M" : "F"; ?>
 		Moengage.add_gender(<?php echo json_encode($gender); ?>);
 
 		<?php
-			$dobParts = explode('-', $member['dob']);
-			$dobDateJs = 'new Date(' . $dobParts[0] . ', ' . ((int)$dobParts[1] - 1) . ', ' . (int)$dobParts[2] . ')';
+			$dobParts = explode('-', (string)($memberData['dob'] ?? ''));
+			$year = isset($dobParts[0]) ? (int)$dobParts[0] : 1970;
+			$month = isset($dobParts[1]) ? max(((int)$dobParts[1] - 1), 0) : 0;
+			$day = isset($dobParts[2]) ? max((int)$dobParts[2], 1) : 1;
+			$dobDateJs = 'new Date(' . $year . ', ' . $month . ', ' . $day . ')';
 		?>
 		Moengage.add_birthday(<?php echo json_encode($dobDateJs); ?>);
 	</script>

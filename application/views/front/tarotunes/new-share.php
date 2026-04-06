@@ -1,7 +1,8 @@
 <?php 
     $requestUri = $_SERVER['REQUEST_URI'];
     $Url = base_url($requestUri);
-    if($_GET['type']==1){ 
+    $type = isset($type) ? (int) $type : (isset($_GET['type']) ? (int) $_GET['type'] : 1);
+    if($type === 1){ 
         $name="Opening Track";
         $gambar1= base_url('assets/tarotunes-html/images/card/'. $kartu_1['gambar']);
         $gambar2= base_url('assets/tarotunes-html/images/card/'. $kartu_2['gambar']);
@@ -12,7 +13,7 @@
         $desk1 = $kartu_1['down'];
         $desk2 = $kartu_2['down'];
         $desk3 = $kartu_3['down'];
-    } else if($_GET['type']==2){ 
+    } else if($type === 2){ 
         $name="Now Playing";
         $gambar1= base_url('assets/tarotunes-html/images/card/'. $kartu_4['gambar']);
         $gambar2= base_url('assets/tarotunes-html/images/card/'. $kartu_5['gambar']);
@@ -24,7 +25,7 @@
         $desk2 = $kartu_5['down'];
         $desk3 = $kartu_6['down'];
     } else { 
-        $name="Opening Track";
+        $name="Encore";
         $gambar1= base_url('assets/tarotunes-html/images/card/'. $kartu_7['gambar']);
         $gambar2= base_url('assets/tarotunes-html/images/card/'. $kartu_8['gambar']);
         $gambar3= base_url('assets/tarotunes-html/images/card/'. $kartu_9['gambar']);
@@ -35,6 +36,8 @@
         $desk2 = $kartu_8['down'];
         $desk3 = $kartu_9['down'];
     } 
+    $kartu = $kartu1;
+    $desk = $desk1;
 ?>
 <!DOCTYPE html>
 <html>

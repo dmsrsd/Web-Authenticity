@@ -83,6 +83,7 @@ class Tarotunes extends MY_Controller {
     public function share($id){
         //$data['member'] = $this->model_global->get_data(array('data' => 'row','table' => 'member a','where' => array( 'a.id_member' =>$this->datamember['id'])));
         $kartu = $this->model_global->get_data(array('data' => 'row','table' => 'tarrots_member a','where' => array( 'a.id_tarrots_member' =>$id)));
+        $type = (int) $this->input->get('type', true);
         if($kartu){
             $data['kartu_1'] = $this->model_global->get_data(array('data' => 'row', 'select' => 'nama_kartu , gambar , up , down', 'table' => 'tarrots_module a','where' => array( 'a.id_tarrots' =>$kartu['id_tarrots_1'])));
             $data['kartu_2'] = $this->model_global->get_data(array('data' => 'row', 'select' => 'nama_kartu , gambar , up , down', 'table' => 'tarrots_module a','where' => array( 'a.id_tarrots' =>$kartu['id_tarrots_2'])));
@@ -94,8 +95,9 @@ class Tarotunes extends MY_Controller {
             $data['kartu_8'] = $this->model_global->get_data(array('data' => 'row', 'select' => 'nama_kartu , gambar , up , down', 'table' => 'tarrots_module a','where' => array( 'a.id_tarrots' =>$kartu['id_tarrots_8'])));
             $data['kartu_9'] = $this->model_global->get_data(array('data' => 'row', 'select' => 'nama_kartu , gambar , up , down', 'table' => 'tarrots_module a','where' => array( 'a.id_tarrots' =>$kartu['id_tarrots_9'])));
             $data['kartu_10'] = $this->model_global->get_data(array('data' => 'row', 'select' => 'nama_kartu , gambar , up , down', 'table' => 'tarrots_module a','where' => array( 'a.id_tarrots' =>$kartu['id_tarrots_10'])));
+            $data['type'] = $type;
             //print_r($data); exit;
-            if($_GET['type']){
+            if(in_array($type, array(1, 2, 3), true)){
                 $this->load->view('front/tarotunes/share',$data);
             }else{
                 $this->load->view('front/tarotunes/show',$data);
@@ -106,6 +108,7 @@ class Tarotunes extends MY_Controller {
     public function download($id){
         //$data['member'] = $this->model_global->get_data(array('data' => 'row','table' => 'member a','where' => array( 'a.id_member' =>$this->datamember['id'])));
         $kartu = $this->model_global->get_data(array('data' => 'row','table' => 'tarrots_member a','where' => array( 'a.id_tarrots_member' =>$id)));
+        $type = (int) $this->input->get('type', true);
         if($kartu){
             $data['kartu_1'] = $this->model_global->get_data(array('data' => 'row', 'select' => 'nama_kartu , gambar , up , down', 'table' => 'tarrots_module a','where' => array( 'a.id_tarrots' =>$kartu['id_tarrots_1'])));
             $data['kartu_2'] = $this->model_global->get_data(array('data' => 'row', 'select' => 'nama_kartu , gambar , up , down', 'table' => 'tarrots_module a','where' => array( 'a.id_tarrots' =>$kartu['id_tarrots_2'])));
@@ -117,8 +120,9 @@ class Tarotunes extends MY_Controller {
             $data['kartu_8'] = $this->model_global->get_data(array('data' => 'row', 'select' => 'nama_kartu , gambar , up , down', 'table' => 'tarrots_module a','where' => array( 'a.id_tarrots' =>$kartu['id_tarrots_8'])));
             $data['kartu_9'] = $this->model_global->get_data(array('data' => 'row', 'select' => 'nama_kartu , gambar , up , down', 'table' => 'tarrots_module a','where' => array( 'a.id_tarrots' =>$kartu['id_tarrots_9'])));
             $data['kartu_10'] = $this->model_global->get_data(array('data' => 'row', 'select' => 'nama_kartu , gambar , up , down', 'table' => 'tarrots_module a','where' => array( 'a.id_tarrots' =>$kartu['id_tarrots_10'])));
+            $data['type'] = $type;
             //print_r($data); exit;
-            if($_GET['type']){
+            if(in_array($type, array(1, 2, 3), true)){
                 $this->load->view('front/tarotunes/new-share',$data);
             }else{
                 $this->load->view('front/tarotunes/show',$data);

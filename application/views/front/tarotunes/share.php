@@ -1,9 +1,10 @@
 <?php 
-    if($_GET['type']==1){ 
+    $type = isset($type) ? (int) $type : (isset($_GET['type']) ? (int) $_GET['type'] : 1);
+    if($type === 1){ 
         $gambar= base_url('assets/tarotunes-html/images/card/'. $kartu_1['gambar']);
         $kartu = $kartu_1['nama_kartu'];
         $desk = $kartu_1['down'];
-    } else if($_GET['type']==2){ 
+    } else if($type === 2){ 
         $gambar= base_url('assets/tarotunes-html/images/card/'. $kartu_4['gambar']);
         $kartu = $kartu_4['nama_kartu'];
         $desk = $kartu_4['down'];
@@ -33,7 +34,7 @@
         <meta property="og:title" content="<?php echo $kartu;  ?>"/>
         <meta property="og:description" content="<?php echo $desk;  ?>"/>
         <meta property="og:type" content="article"/>
-        <meta property="og:url" content="<?php echo base_url('tarotunes/share/'.$this->uri->segment(3).'?type='.$_GET['type']) ?>"/>
+        <meta property="og:url" content="<?php echo base_url('tarotunes/share/'.$this->uri->segment(3).'?type='.$type) ?>"/>
         <meta property="og:image" content="<?php echo $gambar;  ?>"> 
         <meta property="og:site_name" content="Authenticity">
         <meta name="twitter:card" content="summary_large_image">
@@ -276,7 +277,7 @@
             </div>
         </div>
         <div class="row row-card2 bg-white">
-            <?php if($_GET['type']==1){ ?> 
+            <?php if($type === 1){ ?> 
                 <div class="col-md-2">
                     <div class="row">
                         <div class="col-xs-4 col-md-12 detil-card">
@@ -298,7 +299,7 @@
                     <p><?php echo $kartu_3['up']; ?></p>
                     <p></p>
                 </div>
-            <?php } else if($_GET['type']==2){ ?>
+            <?php } else if($type === 2){ ?>
                 <div class="col-md-2">
                     <div class="row">
                         <div class="col-xs-4 col-md-12 detil-card">
@@ -349,10 +350,10 @@
                 <a href="<?php echo base_url('tarotunes/share/'.$this->uri->segment(3)); ?>" class="btn-download">Back</a>
             </div>
             <div class="col-md-4 text-center">
-            <a href="" class="btn-download"><div onclick="kirimData(this,'<?php echo base_url('tarotunes/shareemails/'.$this->uri->segment(3).'?type='.$_GET['type'].'&id='.$this->datamember['id']); ?>')">Send E Mail</div></a>
+            <a href="" class="btn-download"><div onclick="kirimData(this,'<?php echo base_url('tarotunes/shareemails/'.$this->uri->segment(3).'?type='.$type.'&id='.$this->datamember['id']); ?>')">Send E Mail</div></a>
             </div>
             <div class="col-md-4 text-center">
-                <a href="<?php echo base_url('tarotunes/download/'.$this->uri->segment(3).'?type='.$_GET['type']); ?>" class="btn-download">Share</a>
+                <a href="<?php echo base_url('tarotunes/download/'.$this->uri->segment(3).'?type='.$type); ?>" class="btn-download">Share</a>
                 <!-- <div class="btn-download text-center" onclick="sharePage()">Share</div> -->
             </div>
         </div>

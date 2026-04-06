@@ -306,18 +306,6 @@ if (isset($_GET['req']) && $_GET['req'] !== '') {
 <script src="<?php echo base_url() ?>assets/front/js/moment.js"></script>
 <script>
 	document.addEventListener("DOMContentLoaded", function() {
-		const cachedRegisterPayload = sessionStorage.getItem("moe_register_payload");
-		if (cachedRegisterPayload) {
-			try {
-				const parsedPayload = JSON.parse(cachedRegisterPayload);
-				console.log("MoEngage registration payload (restored):", parsedPayload);
-				if (console.table) console.table(parsedPayload);
-			} catch (err) {
-				console.warn("Failed to parse restored register payload:", err);
-			}
-			sessionStorage.removeItem("moe_register_payload");
-		}
-
 		const form = document.getElementById("step-form");
 		const steps = document.querySelectorAll(".step-wizard__page");
 		const stepIndicators = document.querySelectorAll(".step");
@@ -339,7 +327,6 @@ if (isset($_GET['req']) && $_GET['req'] !== '') {
 		const overlayAll = document.querySelector(".overlay-all");
 		const urlParams = new URLSearchParams(window.location.search);
 		const isDebugMoe = urlParams.get('debug_moe') === '1';
-		const registrationEventName = "Complete Registration Member";
 		const nextButton = document.querySelector(".next-button");
 		const prevButton = document.querySelector(".prev-button");
 		let allowSubmit = false;
@@ -565,11 +552,10 @@ if (isset($_GET['req']) && $_GET['req'] !== '') {
 			});
 		}
 
-		// Debug payload yang akan dikirim ke MoEngage saat klik SUBMIT
+		// Debug payload untuk inspeksi form submit (tanpa kirim event dari halaman register).
 		if (form) {
 			form.addEventListener("submit", function (e) {
 				try {
-					const isResubmitted = form.dataset.moeResubmitted === "1";
 					const payload = {
 						fullname: form.username ? form.username.value : "",
 						email: form.email ? form.email.value : "",
@@ -597,32 +583,11 @@ if (isset($_GET['req']) && $_GET['req'] !== '') {
 						console.log("MoEngage registration payload:", payload);
 						console.table ? console.table(payload) : null;
 					}
-					sessionStorage.setItem("moe_register_payload", JSON.stringify(payload));
-
-					const hasTrackEvent = typeof Moengage !== "undefined" && typeof Moengage.track_event === "function";
-					const hasTrack = typeof Moengage !== "undefined" && typeof Moengage.track === "function";
-					if (hasTrackEvent) {
-						Moengage.track_event(registrationEventName, payload);
-					} else if (hasTrack) {
-						Moengage.track(registrationEventName, payload);
-					} else {
-						console.warn("MoEngage SDK belum siap, event belum terkirim.");
-					}
 
 					// Jika ada ?debug_moe=1 di URL, tahan submit supaya payload bisa dibaca dengan jelas
 					if (isDebugMoe) {
 						e.preventDefault();
 						alert('Payload telah dicetak di DevTools Console (lihat \"MoEngage registration payload\")');
-						return;
-					}
-
-					// Beri waktu singkat agar SDK sempat kirim request sebelum redirect submit.
-					if (!isResubmitted) {
-						e.preventDefault();
-						form.dataset.moeResubmitted = "1";
-						setTimeout(function () {
-							form.submit();
-						}, 400);
 					}
 				} catch (e) {
 					if (window.console && console.error) {

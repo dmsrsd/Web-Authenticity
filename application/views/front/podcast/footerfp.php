@@ -696,8 +696,25 @@ if(($this->uri->segment(1)==="profile") and ($this->uri->segment(2)=="")){ ?>
 	$cityId = $member['id_tbl_kota'] ?? $member['id_kota'] ?? '';
 	$provinceName = $member['nama_provinsi'] ?? $member['provinsi'] ?? $provinceId;
 	$cityName = $member['nama_kota'] ?? $member['kota'] ?? $cityId;
+	if ((!$provinceName || $provinceName === $provinceId || !$cityName || $cityName === $cityId) && !empty($cityId)) {
+		$kotaLookup = $this->db->get_where('kota', array('id_kota' => $cityId))->row_array();
+		if (!empty($kotaLookup)) {
+			if (!empty($kotaLookup['kota'])) {
+				$cityName = $kotaLookup['kota'];
+			}
+			if (!empty($kotaLookup['provinsi'])) {
+				$provinceName = $kotaLookup['provinsi'];
+			}
+		}
+	}
 	if ($isFirstLoginAfterRegister) { ?>
 	<script>
+		if (typeof Moengage !== "undefined" && typeof Moengage.add_user_attribute === "function") {
+			Moengage.add_user_attribute("Province", <?php echo json_encode($provinceName); ?>);
+			Moengage.add_user_attribute("City", <?php echo json_encode($cityName); ?>);
+			Moengage.add_user_attribute("District", <?php echo json_encode($member['district'] ?? ''); ?>);
+			Moengage.add_user_attribute("rokok", <?php echo json_encode($member['rokok'] ?? ''); ?>);
+		}
 		Moengage.track_event("Registration Completed", {
 			"fullname": <?php echo json_encode($member['fullname'] ?? ''); ?>,
 			"mobile_number": <?php echo json_encode($member['hp'] ?? ''); ?>,

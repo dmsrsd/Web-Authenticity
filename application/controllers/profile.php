@@ -311,7 +311,7 @@ class Profile extends MY_Controller {
 		$member = $this->model_global->get_data(array('data' => 'row','table' => 'member a','where' => array( 'a.id_member' =>$this->datamember['id'])));
 		if($member){
 			//-- jika update pp
-			if($_FILES['pp'] && $_FILES['pp']['name']!=''){
+			if(!empty($_FILES['pp']['name'])){
 				if (!is_dir('uploads/pp')) {
 					mkdir('./uploads/pp', 0755, true);
 				}
@@ -335,13 +335,48 @@ class Profile extends MY_Controller {
 				$up['pp'] = $new_name;
 				$update_pp = $this->model_global->update($up, 'member', array('id_member' => $this->datamember['id']));
 			}
-		
-			$update_profile = $this->model_global->update($_POST, 'member', array('id_member' => $this->datamember['id']));
-			if($update_profile){
 
+			$fullname = trim((string) $this->input->post('fullname', true));
+			$email = trim((string) $this->input->post('email', true));
+			$gender = trim((string) $this->input->post('gender', true));
+			$instagram = trim((string) $this->input->post('instagram', true));
+			$hpRaw = trim((string) $this->input->post('hp', true));
+			$hpDigits = preg_replace('/\D+/', '', $hpRaw);
+			if (strpos($hpDigits, '62') !== 0) {
+				if (strpos($hpDigits, '0') === 0) {
+					$hpDigits = '62' . substr($hpDigits, 1);
+				} else if ($hpDigits !== '') {
+					$hpDigits = '62' . $hpDigits;
+				}
 			}
 
-			$this->session->set_flashdata('response', array('status' => 'success', 'message' => 'Your profile is updated.'));
+			if ($fullname === '' || $email === '' || $gender === '' || $instagram === '' || $hpDigits === '') {
+				$this->session->set_flashdata('response', array('status' => 'error', 'message' => 'Please complete all required profile fields.'));
+				redirect(base_url()."profile");
+				return;
+			}
+
+			if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+				$this->session->set_flashdata('response', array('status' => 'error', 'message' => 'Invalid email format.'));
+				redirect(base_url()."profile");
+				return;
+			}
+
+			$payload = array(
+				'fullname' => $fullname,
+				'email' => $email,
+				'gender' => $gender,
+				'hp' => $hpDigits,
+				'instagram' => $instagram,
+				'modified_date' => date('Y-m-d H:i:s')
+			);
+
+			$update_profile = $this->model_global->update($payload, 'member', array('id_member' => $this->datamember['id']));
+			if($update_profile){
+				$this->session->set_flashdata('response', array('status' => 'success', 'message' => 'Your profile is updated.'));
+			}else{
+				$this->session->set_flashdata('response', array('status' => 'error', 'message' => 'Failed to update profile.'));
+			}
 
 
 		}else{

@@ -687,16 +687,64 @@ if(($this->uri->segment(1)==="profile") and ($this->uri->segment(2)=="")){ ?>
 		Moengage.add_birthday(<?php echo json_encode($dobDateJs); ?>);
 	</script>
 
-<?php if ((isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '') === "https://www.authenticity.id/login"){ ?>
+<?php
+	$__moeRefLogin = isset($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'], base_url('login')) === 0;
+	$__moeFirstLogin = ($this->session->userdata('first_login') === 'yes');
+	if ($__moeRefLogin) {
+		if ($__moeFirstLogin) {
+			$this->session->unset_userdata('first_login');
+			$__m = isset($member) && is_array($member) ? $member : [];
+			$__dob = (string)($__m['dob'] ?? '');
+			$__dp = $__dob !== '' ? explode('-', $__dob) : array();
+			$__payload = array(
+				'event_version' => 'v2',
+				'fullname' => $__m['fullname'] ?? '',
+				'email' => $__m['email'] ?? '',
+				'gender' => $__m['gender'] ?? '',
+				'mobile_number' => $__m['hp'] ?? '',
+				'year_of_birth' => isset($__dp[0]) ? $__dp[0] : '',
+				'month_of_birth' => isset($__dp[1]) ? $__dp[1] : '',
+				'day_of_birth' => isset($__dp[2]) ? $__dp[2] : '',
+				'province_id' => (string)($__m['id_tbl_provinsi'] ?? ($__m['id_provinsi'] ?? '')),
+				'city_id' => (string)($__m['id_kota'] ?? ($__m['id_tbl_kota'] ?? '')),
+				'province_name' => $__m['provinsi'] ?? '',
+				'city_name' => $__m['kota'] ?? '',
+				'district' => $__m['district'] ?? '',
+				'instagram_account' => $__m['instagram'] ?? '',
+				'smoker' => $__m['issmoke'] ?? '',
+				'cigarette' => $__m['rokok'] ?? '',
+				'passion' => $__m['passion'] ?? '',
+				'sign_up_type' => $__m['dari'] ?? '',
+			);
+?>
+	<script>
+		(function () {
+			var p = <?php echo json_encode($__payload, JSON_UNESCAPED_UNICODE); ?>;
+			if (typeof Moengage !== "undefined" && typeof Moengage.add_user_attribute === "function") {
+				Moengage.add_user_attribute("Province", p.province_name || p.province_id || "");
+				Moengage.add_user_attribute("City", p.city_name || p.city_id || "");
+				Moengage.add_user_attribute("District", p.district || "");
+				Moengage.add_user_attribute("rokok", p.cigarette || "");
+			}
+			if (typeof Moengage !== "undefined" && typeof Moengage.track_event === "function") {
+				Moengage.track_event("First Login", p);
+			}
+		})();
+	</script>
+<?php
+		} else {
+?>
 	<script>
 		Moengage.track_event("Successful Login", {
 			"login_type": "normal",
 			"email": <?php echo json_encode($member['email'] ?? ''); ?>
 		});
-
 	</script>
-
-<?php } }
+<?php
+		}
+	}
+?>
+<?php }
 if($this->uri->segment(1)==="login"){ ?>
 <script>
 	Moengage.destroy_session();

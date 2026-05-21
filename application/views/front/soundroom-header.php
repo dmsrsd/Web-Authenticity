@@ -305,16 +305,26 @@ function cur2($ini, $now)
 					</li>
 					<li class="dropdown">
 						<?php
+							// $menu_label = 'Season';
+							// $season = isset($_GET['year']) ? $_GET['year'] : '';
+							// if($season != ''){
+							// 	$menu_label = 'Seasoning'.$season;
+							// }
+
 							$menu_label = 'Season';
 							$season = isset($_GET['year']) ? $_GET['year'] : '';
-							if($season != ''){
-								$menu_label = 'Season '.$season;
+							
+							// Cek apakah ada parameter display (force 2026)
+							$display_year = isset($_GET['display']) ? $_GET['display'] : $season;
+
+							if($display_year != ''){
+								$menu_label = 'Season '.$display_year;
 							}
 						?>
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?= $menu_label ?> </a>
                         <ul class="dropdown-menu">
+							<li><a href="<?= base_url(); ?>soundroom?year=2026&display=2026">2026</a></li>
                             <li><a href="#" class="sound-season" data-year="2025">2025</a></li>
-							
                             <li><a href="#" class="sound-season" data-year="2024">2024</a></li>
                             <li><a href="#" class="sound-season" data-year="2023">2023</a></li>
                             <li><a href="#" class="sound-season" data-year="2022">2022</a></li>

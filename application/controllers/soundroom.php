@@ -65,6 +65,9 @@ class Soundroom extends MY_Controller {
         }
 
         switch ($year) {
+			case '2026':
+        		$table = 'soundroom_2025';
+        		break;
 			case '2025':
                 $table = 'soundroom_2025';
                 break;

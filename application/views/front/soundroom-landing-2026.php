@@ -37,7 +37,7 @@
 
 <!-- Komponen List Band (Grid) -->
 <div class="container" style="padding: 50px 0;">
-    <h3 style="margin-bottom: 30px;">Participant</h3>
+    <h3 style="margin-bottom: 30px;">Participant Authenticity Soundroom 2026</h3>
     
     <div class="row">
         <?php if (!empty($bands)): ?>
@@ -46,7 +46,9 @@
                     <div class="band-card">
                         <?php 
                             $raw_image = $b['image'] ?? '';
+
                             $folder_path = 'uploads/soundroom/';
+                            
                             $img_src = !empty($raw_image) ? base_url($folder_path . urlencode($raw_image)) : 'https://plus.unsplash.com/premium_photo-1682855223699-edb85ffa57b3?q=80&w=1170&auto=format&fit=crop';
                         ?>
                         <img src="<?= $img_src; ?>" 

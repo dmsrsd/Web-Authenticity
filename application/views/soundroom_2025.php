@@ -19,9 +19,6 @@
 						<th width=''>Member</th>
 						<th width=''>Nama Band</th>
 						<th width='100'>Rank</th>
-						<!--<th width='100'>Vote</th>-->
-						<!--<th width='100'>Vote 3</th>-->
-						<!--<th width='200'>Deskripsi Singkat</th> -->
 						<th width='100'>Image</th>
 						<th width='100'>Sound</th>
 						<th width='70'>Status</th>

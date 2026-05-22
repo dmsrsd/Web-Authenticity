@@ -55,7 +55,9 @@ $active_record = TRUE;
 $db['default']['hostname'] = getenv('DB_HOST') ?: 'localhost';
 $db['default']['port']     = getenv('DB_PORT') ?: '3306';
 $db['default']['username'] = getenv('DB_USERNAME') ?: 'root';
-$db['default']['password'] = getenv('DB_PASSWORD') ?: 'admin123';
+// $db['default']['password'] = getenv('DB_PASSWORD') ?: 'admin123';
+$db['default']['password'] = getenv('DB_PASSWORD') ?: '';
+
 
 $db['default']['database'] = getenv('DB_DATABASE') ?: 'gridsf';
 $db['default']['dbdriver'] = 'mysqli';

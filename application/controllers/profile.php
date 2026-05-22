@@ -1,5 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 @session_start();
+
 class Profile extends MY_Controller {
 	function __construct() {
         parent::__construct();
@@ -9,12 +10,18 @@ class Profile extends MY_Controller {
 		$this->kategori = $this->model_global->get_data(array('select' => '*', 'table' => 'kategori','where' => array('status' => 1), 'order_by' => 'head_kategori asc'));
 
 	}
+
     public function upload_foto($file,$folder,$thumb=FALSE,$thumb_width){
+		
+		//$upload_dir = $this->config->item('upload_path');
+    	// $upload_dir = "uploads/";
+		$upload_dir = FCPATH . "uploads/"; // Tambahkan FCPATH!
+		// Pastikan folder tujuan ada
+		if (!is_dir($upload_dir . $folder)) {
+			mkdir($upload_dir . $folder, 0777, true);
+		}
+		
     	$file_image = "";
-
-    	//$upload_dir = $this->config->item('upload_path');
-    	$upload_dir = "uploads/";
-
 		$FILE_MIMES = array('image/jpeg','image/jpg','image/png','image/x-icon','image/gif');
 		$FILE_EXTS  = array('.jpeg','.jpg','.png','.ico','.gif');
 
@@ -115,11 +122,15 @@ class Profile extends MY_Controller {
 			}
 		}
     }
+
     public function upload_mp3($file,$folder){
 
+    	// $upload_dir ="uploads/";
+		$upload_dir = FCPATH . "uploads/"; // Tambahkan FCPATH!
+		if (!is_dir($upload_dir . $folder)) {
+        mkdir($upload_dir . $folder, 0777, true);
+    }
     	$file_image = "";
-
-    	$upload_dir ="uploads/";
 
 		// $FILE_MIMES = array('audio/mpeg');
 		// $FILE_EXTS  = array('.mp3');
@@ -187,6 +198,7 @@ class Profile extends MY_Controller {
 
 		}
     }
+
 	public function index_nosoundroom(){
 
 		if(empty($this->datamember)){
@@ -287,14 +299,30 @@ class Profile extends MY_Controller {
 			
 			// cek jumlah data event
 			$data['provinsi'] = $this->db->query("SELECT provinsi FROM kota GROUP BY provinsi ORDER BY provinsi asc")->result_array();
-			$data['data'] = $this->model_global->get_data(array('data' => 'row','table' => 'soundroom_2025', 'where' => array('status !=' => -1, 'created_by' => $this->datamember['id']), 'order_by' => 'id_soundroom desc'));
-			//$data['data'] = $this->model_global->get_data(array('data' => 'row','table' => 'soundroom_2025', 'where' => array('status' => 0, 'created_by' => 31431), 'order_by' => 'id_soundroom desc'));
+			// Ganti tabelnya ke 'soundroom_2026'
+			$data['data'] = $this->model_global->get_data(array(
+				'data' => 'row',
+				'table' => 'soundroom_2026', 
+				'where' => array('status !=' => -1, 'created_by' => $this->datamember['id']), 
+				'order_by' => 'id_soundroom desc'
+			));			
+			// /$data['data'] = $this->model_global->get_data(array('data' => 'row','table' => 'soundroom_2026', 'where' => array('status' => 0, 'created_by' => 31431), 'order_by' => 'id_soundroom desc'));
 			//dapatkan kota 
 			if($data['data']){
 				$data['prov_selected'] =  $this->model_global->get_data(array('data' => 'row','table' => 'kota', 'where' => array('id_kota' => $data['data']['id_kota'])));
 			}
 			//print_r($data['prov_selected']); exit;
 			//end jumlah data event
+
+			$band_data = $this->model_global->get_data([
+					'data' => 'row',
+					'table' => 'soundroom_2026', 
+					'where' => ['created_by' => $this->datamember['id']],
+					'order_by' => 'id_soundroom desc'
+			]);
+
+			$data['band'] = !empty($band_data) ? $band_data : [];
+
 			$this->load->view('front/podcast/header',$data);
 			$this->load->view('front/profile-band',$data);
 			$this->load->view('front/podcast/footerfp');
@@ -413,6 +441,7 @@ class Profile extends MY_Controller {
 			$this->load->view('front/edit',$data);
 		}
 	}
+
 	public function updatesoundroom(){
 		$this->load->library('form_validation');
 
@@ -454,7 +483,7 @@ class Profile extends MY_Controller {
 				//print_r($_POST); exit;
 				$pno=0;
 				$next = "false";
-				$cek3 = $this->model_global->get_data(array('data' => 'row','table' => 'soundroom_2025', 'where' => array('status !=' => -1, 'created_by' => $this->datamember['id']), 'order_by' => 'id_soundroom desc'));
+				$cek3 = $this->model_global->get_data(array('data' => 'row','table' => 'soundroom_2026', 'where' => array('status !=' => -1, 'created_by' => $this->datamember['id']), 'order_by' => 'id_soundroom desc'));
 				if($_POST['_id']!= $cek3['id_soundroom']){
 					//$m =  "Sorry, You have uploaded a song that has not been approved";
 					$m =  "Mohon maaf atas kendalanya, Saat ini team kami sedang melakukan investigasi terhadapat data-datamu, mohon tunggu";
@@ -555,7 +584,7 @@ class Profile extends MY_Controller {
 					'manggung' => $_POST['manggung'],
 					'youtube' => $_POST['youtube']
 				);
-				$update = $this->model_global->update($data_update, 'soundroom_2025', array('id_soundroom' => $_POST['_id']));
+				$update = $this->model_global->update($data_update, 'soundroom_2026', array('id_soundroom' => $_POST['_id']));
 				if($update){
 					$ret['status'] = "true";
 					$ret['message'] = "Your sound has been sent successfully. Please check your email for the shared data";
@@ -568,6 +597,7 @@ class Profile extends MY_Controller {
 			echo json_encode($ret);
 		}
 	}
+
 	public function changepp(){
 		$ret['status'] = "false";
 		$ret['m'] = "";
@@ -597,6 +627,7 @@ class Profile extends MY_Controller {
 		}
 		echo json_encode($ret);
 	}
+
 	public function submitedit(){
 		if(empty($this->datamember)){
 			$ret['status'] = "false";
@@ -674,6 +705,7 @@ class Profile extends MY_Controller {
 		echo json_encode($ret);
 
 	}
+
 	public function write(){
 		if(empty($this->datamember)){
 			redirect(base_url()."login");
@@ -684,8 +716,10 @@ class Profile extends MY_Controller {
 			$this->load->view('front/write',$data);
 		}
 	}
+
 	public function soundroom(){
-		$limit_date = '2025-07-04 00'; //tanggal selesai event
+		// $limit_date = '2025-07-04 00'; //tanggal selesai event
+		$limit_date = '2026-12-31 00';
 		$valid_date = date('Y-m-d H');
 		if($valid_date >= $limit_date){
 			redirect(base_url()."soundroom");
@@ -694,7 +728,7 @@ class Profile extends MY_Controller {
 		if(empty($this->datamember)){
 			redirect(base_url()."login");
 		}else{
-			$data['band_old'] = $this->model_global->get_data(array('data' => 'row','table' => 'soundroom_2025', 'where' => array('created_by' => $this->datamember['id']),'order_by' => 'id_soundroom desc'));
+			$data['band_old'] = $this->model_global->get_data(array('data' => 'row','table' => 'soundroom_2026', 'where' => array('created_by' => $this->datamember['id']),'order_by' => 'id_soundroom desc'));
 			//print_r($cek3);exit;
 			// if(!empty($cek3)){// sudah ikutian aku redirect ke playlistnya 
 			// 	redirect(base_url("soundroom/share/".$cek3['id_soundroom']."?year=2025"));
@@ -707,15 +741,115 @@ class Profile extends MY_Controller {
 			// $data['provinsi'] = $this->model_global->get_data(array('select' => '*', 'table' => 'kota','group_by' => 'provinsi', 'order_by' => 'provinsi asc'));
 
 			$data['provinsi'] = $this->db->query("SELECT provinsi FROM kota GROUP BY provinsi ORDER BY provinsi asc")->result_array();
-			// echo '<pre>';
-			// var_dump($data['provinsi']);
-			// echo '</pre>';
-			// die();
 
 			$this->load->view('front/soundroom-header',$data);
 			$this->load->view('front/uploadsoundroom',$data);
 		}
 	}
+
+	public function soundroom2026(){
+			$limit_date = '2026-12-31 00';
+			$valid_date = date('Y-m-d H');
+			
+			if($valid_date >= $limit_date){
+				redirect(base_url()."soundroom");
+			}
+
+			if(empty($this->datamember)){
+				redirect(base_url()."login");
+			} else {
+				$data['website'] = $this->website;
+				$data['kategori'] = $this->kategori;
+				$data['provinsi'] = $this->db->query("SELECT provinsi FROM kota GROUP BY provinsi ORDER BY provinsi asc")->result_array();
+
+				// 1. LAKUKAN QUERY DI SINI
+				$band_data = $this->model_global->get_data([
+					'data' => 'row',
+					'table' => 'soundroom_2026', 
+					'where' => ['created_by' => $this->datamember['id']],
+					'order_by' => 'id_soundroom desc'
+				]);
+
+				// 2. BARU MASUKKAN HASIL QUERY KE VARIABEL $data
+				$data['band'] = !empty($band_data) ? $band_data : [];
+
+				$this->load->view('front/soundroom-header', $data);
+				$this->load->view('front/uploadsoundroom_2026', $data);
+			}
+	}
+
+	public function submitsound2026() {
+		$this->load->library('form_validation');
+
+		// 1. Validasi Input
+		$this->form_validation->set_rules('judul', 'Judul', 'required');
+		$this->form_validation->set_rules('gendre', 'Genre', 'required');
+		$this->form_validation->set_rules('id_provinsi', 'Provinsi', 'required');
+		$this->form_validation->set_rules('id_kota', 'Kota', 'required');
+		$this->form_validation->set_rules('pic', 'Nama PIC', 'required');
+		$this->form_validation->set_rules('contact', 'Contact', 'required');
+
+		if ($this->form_validation->run() == FALSE || empty($_FILES['sound']['name'])) {
+			echo json_encode(['status' => 'false', 'message' => 'Pastikan data lengkap dan file musik terpilih!']);
+			return;
+		}
+
+		if (empty($this->datamember)) {
+			redirect(base_url("login"));
+		}
+
+		// 2. Cek apakah sudah pernah submit (Double Submit Prevention)
+		$cek_sudah_submit = $this->model_global->get_data([
+			'data' => 'row', 'table' => 'soundroom_2026', 
+			'where' => ['created_by' => $this->datamember['id']]
+		]);
+
+		if (!empty($cek_sudah_submit)) {
+			echo json_encode(['status' => 'false', 'message' => 'Halo, kamu sudah submit untuk Soundroom 2026!']);
+			return;
+		}
+
+		// 3. Proses File
+		$img_path = $this->upload_foto($_FILES['image'], "soundroom", FALSE, "");
+		$snd_path = $this->upload_mp3($_FILES['sound'], "soundroom");
+
+		if (empty($img_path) || empty($snd_path)) {
+			echo json_encode(['status' => 'false', 'message' => 'Gagal upload file. Periksa ukuran/format file!']);
+			return;
+		}
+
+		// 4. Persiapkan Data
+		$data_insert = [
+			'judul'        => $this->input->post('judul'),
+			'slug'         => $this->input->post('slug'),
+			'gendre'       => $this->input->post('gendre'),
+			'id_kota'      => $this->input->post('id_kota'),
+			'pic'          => $this->input->post('pic'),
+			'contact'      => $this->input->post('contact'),
+			'instagram'    => $this->input->post('instagram'),
+			'spotify'      => $this->input->post('spotify'),
+			'youtube'      => $this->input->post('youtube'),
+			'manggung'     => $this->input->post('manggung'),
+			'created_by'   => $this->datamember['id'],
+			'approve'      => '0',
+			'status'       => '1',
+			'created_date' => date('Y-m-d H:i:s'),
+			'tahun_season' => '2026',
+			'image'        => $img_path,
+			'thumbnail'    => $img_path,
+			'sound'        => $snd_path
+		];
+
+		// 5. Insert ke Database
+		$insert_id = $this->model_global->insertId($data_insert, 'soundroom_2026');
+
+		if ($insert_id) {
+			echo json_encode(['status' => 'true', 'message' => 'Karya lo berhasil di-submit untuk Soundroom 2026!']);
+		} else {
+			echo json_encode(['status' => 'false', 'message' => 'Database error saat menyimpan data.']);
+		}
+	}
+	
 	public function posterchallenge(){
 		redirect(base_url()."poster-challenge");
 		if(empty($this->datamember)){
@@ -728,6 +862,7 @@ class Profile extends MY_Controller {
 			$this->load->view('front/uploadposterchallenge',$data);
 		}
 	}
+
 	public function submitarticle(){
 		/*$ret['status'] = "true";
 		$ret['message'] = "cek tags";
@@ -841,6 +976,7 @@ class Profile extends MY_Controller {
 			echo json_encode($ret);
 		}
 	}
+
 	public function submitposter(){
 		/*$ret['status'] = "true";
 		$ret['message'] = "cek tags";
@@ -937,6 +1073,7 @@ class Profile extends MY_Controller {
 			echo json_encode($ret);
 		}
 	}
+
 	public function submitsound(){
 
 		$this->load->library('form_validation');
@@ -973,7 +1110,7 @@ class Profile extends MY_Controller {
 		// cek duplicate data
 		/*
 		$cek = $this->db
-			->from('soundroom_2025')
+			->from('soundroom_2026')
 			->where('contact', $_POST['contact'])
 			->or_where('spotify', $_POST['spotify'])
 			->or_where('instagram', $_POST['instagram'])
@@ -1035,7 +1172,7 @@ class Profile extends MY_Controller {
 				$_POST['status'] = "1";
 				$_POST["created_date"] = date('Y-m-d H:i:s');
 				// $cek2 = $this->model_global->get_data(array('data' => 'row','table' => 'soundroom', 'where' => array('slug' => $_POST['slug'])));
-				//$cek2 = $this->model_global->get_data(array('data' => 'row','table' => 'soundroom_2025', 'where' => array('slug' => $_POST['slug'], 'approve !='=>'2')));
+				//$cek2 = $this->model_global->get_data(array('data' => 'row','table' => 'soundroom_2026', 'where' => array('slug' => $_POST['slug'], 'approve !='=>'2')));
                 //sengaja dibuat biar selalu data ga ketemu
 				$cek2 = $this->model_global->get_data(array('data' => 'row','table' => 'soundroom', 'where' => array('approve' => $_POST['slug'])));
 				$next = "false";
@@ -1054,12 +1191,12 @@ class Profile extends MY_Controller {
 
 					}
 				}else{
-					//$cek3 = $this->model_global->get_data(array('data' => 'row','table' => 'soundroom_2025', 'where' => array('created_by' => $this->datamember['id'])));
+					//$cek3 = $this->model_global->get_data(array('data' => 'row','table' => 'soundroom_2026', 'where' => array('created_by' => $this->datamember['id'])));
 					//sengaja dibuat biar selalu data ga ketemu
-					$cek3 = $this->model_global->get_data(array('data' => 'row','table' => 'soundroom_2025', 'where' => array('slug' => $this->datamember['id'])));
+					$cek3 = $this->model_global->get_data(array('data' => 'row','table' => 'soundroom_2026', 'where' => array('slug' => $this->datamember['id'])));
 					if(!empty($cek3)){
-						$pending = $this->model_global->get_data(array('data' => 'row','table' => 'soundroom_2025', 'where' => array('approve'=>'0','created_by' => $this->datamember['id'])));
-						$sudah = $this->model_global->get_data(array('data' => 'row','table' => 'soundroom_2025', 'where' => array('approve'=>'1','created_by' => $this->datamember['id'])));
+						$pending = $this->model_global->get_data(array('data' => 'row','table' => 'soundroom_2026', 'where' => array('approve'=>'0','created_by' => $this->datamember['id'])));
+						$sudah = $this->model_global->get_data(array('data' => 'row','table' => 'soundroom_2026', 'where' => array('approve'=>'1','created_by' => $this->datamember['id'])));
 						if(!empty($pending)){
 							//$m =  "Sorry, You have uploaded a song that has not been approved";
 							$m =  "Mohon maaf atas kendalanya, ini dikarenakan kamu sudah submit sebelumnya. Saat ini team kami sedang melakukan investigasi terhadapat data-datamu, mohon tunggu";
@@ -1166,7 +1303,7 @@ class Profile extends MY_Controller {
 						echo json_encode($ret);
 						return;
 					}
-					$insert_id = $this->model_global->insertId($_POST, 'soundroom_2025');
+					$insert_id = $this->model_global->insertId($_POST, 'soundroom_2026');
 					if($insert_id){
 						$cek = $this->model_global->get_data(array('data' => 'row','table' => 'member', 'where' => array('id_member' => $this->datamember['id'])));
 						$ret['status'] = "true";
@@ -1232,6 +1369,7 @@ class Profile extends MY_Controller {
 			echo json_encode($ret);
 		}
 	}
+
 	public function getredeem(){
 		$ret['status'] = "false";
 		$ret['message'] = "";
@@ -1272,6 +1410,7 @@ class Profile extends MY_Controller {
 		}
 		echo json_encode($ret);
 	}
+
 	public function out(){
 		@session_start();
 		//$this->session->sess_destroy();
@@ -1296,12 +1435,12 @@ class Profile extends MY_Controller {
 		if(empty($this->datamember)){
 			redirect(base_url()."login?to=profile/vote?year=2025");
 		}else{
-			//$data['band_old'] = $this->model_global->get_data(array('data' => 'row','table' => 'soundroom_2025', 'where' => array('created_by' => $this->datamember['id']),'order_by' => 'id_soundroom desc'));
+			//$data['band_old'] = $this->model_global->get_data(array('data' => 'row','table' => 'soundroom_2026', 'where' => array('created_by' => $this->datamember['id']),'order_by' => 'id_soundroom desc'));
 			//$list_band = $this->db->query("SELECT id_soundroom FROM vote_2025 ORDER BY urutan asc")->result_array();
 			$data['soundroom'] = $this->model_global->get_data(array(
 				'select' => 'a.*, b.kota,b.provinsi, c.id_vote, c.jml_vote',
 				'table' => 'vote_2025 c',
-				'join' => array('soundroom_2025 a','a.id_soundroom = c.id_soundroom'),
+				'join' => array('soundroom_2026 a','a.id_soundroom = c.id_soundroom'),
 				'join2' => array('kota b','b.id_kota = a.id_kota'),
 				'order_by' => 'c.urutan asc'
 			));

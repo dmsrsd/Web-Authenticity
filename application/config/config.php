@@ -38,21 +38,19 @@ $config["upload_path"] = "uploads/";
 | 2. Otomatis: localhost / staging → pakai host; production → https://www.authenticity.id/
 |
 */
-$env_base = getenv('APP_BASE_URL');
-if ($env_base !== false && $env_base !== '') {
-	if (substr($env_base, -1) !== '/') {
-		$env_base .= '/';
-	}
-	$config['base_url'] = $env_base;
-} else {
-	// Otomatis: localhost / staging → pakai host; production → https://www.authenticity.id/
-	$host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '';
-	$is_local = (bool) preg_match('/^(localhost|127\.0\.0\.1)(:\d+)?$/i', $host);
-	$is_staging = (bool) preg_match('/^staging\.authenticity\.id$/i', $host);
-	$config['base_url'] = ($is_local || $is_staging)
-		? ('http://' . $host . '/')
-		: 'https://www.authenticity.id/';
-}
+// Otomatis: localhost / staging → pakai host; production → https://www.authenticity.id/
+// $host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '';
+// $is_local = (bool) preg_match('/^(localhost|127\.0\.0\.1)(:\d+)?$/i', $host);
+// $is_staging = (bool) preg_match('/^staging\.authenticity\.id$/i', $host);
+// $config['base_url'] = ($is_local || $is_staging)
+// 	? ('http://' . $host . '/')
+// 	: 'https://www.authenticity.id/';
+
+$host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '';
+$directory = str_replace(basename($_SERVER['SCRIPT_NAME']), "", $_SERVER['SCRIPT_NAME']);
+
+$config['base_url'] = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https://" : "http://";
+$config['base_url'] .= $host . $directory;
 
 /*
 |--------------------------------------------------------------------------

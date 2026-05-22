@@ -76,7 +76,8 @@
 							<?php
 
 							if($season == '2025'){
-							$limit_date = '2025-07-04 00'; //tanggal selesai event
+							// $limit_date = '2025-07-04 00'; //tanggal selesai event
+							$limit_date = '2027-07-04 00'; //tanggal selesai event
 							$valid_date = date('Y-m-d H');
 							if ($valid_date < $limit_date) { ?>
 								<?php if (empty($this->datamember)) { ?>

@@ -351,9 +351,9 @@ function cur2($ini, $now)
 						<li>
 							<a href="<?= base_url() ?>profile" class="text-warning">Hi, <?= ucwords($this->datamember['fullname']); ?></a>
 						</li>
-						<li>
-							<a href="<?= base_url() ?>profile/out" class="text-warning">Sign Out</a>
-						</li>
+					<li>
+						<a href="<?= base_url() ?>profile/out">Sign Out</a>
+					</li>
 					<?php } ?>
 					<li>
 						<a href="javascript:void();" class="menu-cari nav-search">

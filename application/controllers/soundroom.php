@@ -1400,6 +1400,44 @@ class Soundroom extends MY_Controller {
 
 	public function landing_2026() {
 		$data['website'] = $this->website;
+		
+		// 1. Load library pagination
+		$this->load->library('pagination');
+
+		// 2. Konfigurasi Pagination
+		// Pastikan base_url sesuai dengan route controller/method kamu
+		$config['base_url'] = base_url('soundroom/landing_2026'); 
+		$config['total_rows'] = $this->db->count_all('soundroom_2026');
+		$config['per_page'] = 8; // Karena grid kita 4 kolom, angka kelipatan 4 (8, 12, 16) sangat disarankan
+		$config['uri_segment'] = 3; // Sesuaikan jika segment URL kamu berbeda
+
+		// Styling agar pagination cocok dengan Bootstrap (sesuai UI tema kamu)
+		$config['full_tag_open'] = '<ul class="pagination">';
+		$config['full_tag_close'] = '</ul>';
+		$config['num_tag_open'] = '<li>';
+		$config['num_tag_close'] = '</li>';
+		$config['cur_tag_open'] = '<li class="active"><a>';
+		$config['cur_tag_close'] = '</a></li>';
+		$config['prev_tag_open'] = '<li>';
+		$config['prev_tag_close'] = '</li>';
+		$config['next_tag_open'] = '<li>';
+		$config['next_tag_close'] = '</li>';
+
+		$this->pagination->initialize($config);
+
+		// 3. Ambil data dengan limit berdasarkan halaman (offset)
+		$page = (int)$this->uri->segment(3);
+		$no = $page + 1;
+
+		$data['no'] = $no;
+		
+		$this->db->order_by('id_soundroom', 'DESC');
+		$this->db->limit($config['per_page'], $page);
+		$data['bands'] = $this->db->get('soundroom_2026')->result_array();
+		
+		// 4. Kirim link pagination ke view
+		$data['links'] = $this->pagination->create_links();
+		
 		$this->load->view('front/soundroom-header', $data);
 		$this->load->view('front/soundroom-landing-2026', $data);
 		$this->load->view('front/podcast/footerfp');

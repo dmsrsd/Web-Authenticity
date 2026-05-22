@@ -706,10 +706,6 @@ class Profile extends MY_Controller {
 			// $data['provinsi'] = $this->model_global->get_data(array('select' => '*', 'table' => 'kota','group_by' => 'provinsi', 'order_by' => 'provinsi asc'));
 
 			$data['provinsi'] = $this->db->query("SELECT provinsi FROM kota GROUP BY provinsi ORDER BY provinsi asc")->result_array();
-			// echo '<pre>';
-			// var_dump($data['provinsi']);
-			// echo '</pre>';
-			// die();
 
 			$this->load->view('front/soundroom-header',$data);
 			$this->load->view('front/uploadsoundroom',$data);

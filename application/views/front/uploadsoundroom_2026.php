@@ -28,15 +28,16 @@
 				<div class="col-md-8">
 					<div class="panel-banner">
 						<div class="panel-banner__img">
-							<img src='<?= base_url(); ?>/assets/front/img/soundroom/logo.png'>
+							<!-- TAMBAHKAN BANNER 2026 NANTI -->
 						</div>
-						<h1>Panggung udah siap nih! Submit karya musik lo di Authenticity Soundroom sekarang!</h1>
+						<h1>Panggung udah siap nih! Submit karya musik lo di Authenticity Soundroom 2026 sekarang!</h1>
+						<input type="hidden" name="tahun_season" value="2026">
 						<div class="panel-banner__title">
 							<img src='<?= base_url(); ?>assets/front/img/soundroom/btn-register.png'>
 						</div>
 					</div>
 					<div class="panel panel-default box-login-1 mt-0 pt-5" style="box-shadow: 1px 3px 13px rgba(0, 0, 0, 0.25);">
-						<form role="form" id="frmWrite" action="<?= base_url() ?>profile/submitsoundroom" method="post" data-parsley-validate enctype="multipart/form-data">
+						<form role="form" id="frmWrite" action="<?= base_url() ?>profile/submitsound2026" method="post" data-parsley-validate enctype="multipart/form-data">
 							<div class="panel-body pt-5">
 								<input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>" style="display: none">
 								<div id="lblStatusLogin">
@@ -299,7 +300,7 @@
 				dataType: "json",
 				contentType: false,
 				processData: false,
-				url: "<?php echo base_url(); ?>profile/submitsound",
+				url: "<?php echo base_url(); ?>profile/submitsound2026",
 				beforeSend: function() {
 					$('.overlay-all').show();
 					$('#btnWrite').prop("disabled", true);
@@ -348,18 +349,6 @@
 			resize: false,
 			toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
 			extended_valid_elements: "script[src|async|defer|type|charset]"
-			/*
-			plugins: [
-				"advlist autolink lists link image charmap print preview hr anchor pagebreak",
-				"searchreplace wordcount visualblocks visualchars code fullscreen",
-				"insertdatetime media nonbreaking save table contextmenu directionality",
-				"emoticons template paste textcolor filemanager"
-			],
-			toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
-			toolbar2: "print preview media | forecolor backcolor emoticons",
-			image_advtab: true,
-			relative_urls: false
-			*/
 		});
 		$('#id_provinsi').change(function() {
 			var prov = $(this).val();
@@ -395,59 +384,6 @@
 			});
 
 		});
-		/*$('#id_kota').selectize({
-			maxItems: 1,
-			create: false,
-			valueField: 'id_kota',
-			labelField: 'kota',
-			searchField: ['kota','provinsi'],
-			render: {
-				option: function (item, escape) {
-					return '<div>' +
-						'<span class="title">' +
-							'<span class="by">' + escape(item.provinsi) + '. ' + escape(item.kota) + '</span>' +
-						'</span>' +
-					'</div>';
-				}
-			},
-			load: function (query, callback) {
-				var dtPost = {};
-				//if (query.length <2) return callback();
-				dtPost.search = encodeURIComponent(query);
-				dtPost.<?php echo $this->security->get_csrf_token_name(); ?> = "<?php echo $this->security->get_csrf_hash(); ?>";
-				dtPost.id = "";
-				var dataform = new FormData();
-				dataform.append('id', "");
-				dataform.append('search', encodeURIComponent(query));
-				dataform.append('<?php echo $this->security->get_csrf_token_name(); ?>', '<?php echo $this->security->get_csrf_hash(); ?>');
-
-				$.ajax({
-					url: '<?= base_url() ?>home/combocity',
-					type: "POST",
-					dataType: "json",
-					contentType: false,
-					processData: false,
-					data: dataform,
-					error: function () {
-						callback();
-					},
-					success: function (res) {
-						//callback(res.repositories.slice(0, 10));
-						callback(res.data);
-					}
-				});
-			}
-		});
-		$('#tags').selectize({
-			delimiter: ',',
-			persist: false,
-			create: function(input) {
-				return {
-					value: input,
-					text: input
-				}
-			}
-		});*/
 		$('form #judul').keyup(function() {
 			slug = $(this).val().toLowerCase().replace(/ +/g, '-').replace('--', '-').replace(/[^a-z0-9\-\.]+/g, '').substring(0, $(this).val().length > 100 ? 100 : $(this).val().length);
 			$('form #slug').val(slug);

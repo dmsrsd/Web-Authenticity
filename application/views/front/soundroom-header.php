@@ -35,7 +35,10 @@ function cur2($ini, $now)
 	  app_id: moeAppID,
 	  debug_logs: 0
 	});
-	</script>
+</script>
+
+<!-- Menggunakan CDN agar jQuery pasti ter-load -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 
 
@@ -269,31 +272,39 @@ function cur2($ini, $now)
 					<i class="fa fa-search"></i>
 				</button>
 				<div class="navbar-brand">
-					<a href='<?= base_url(); ?>soundroom'>
-						<?php
-							$season = isset($_GET['year']) ? $_GET['year'] : '';
-							//$logo_img = 'assets/front/img/soundroom/logo.png';
-							$logo_img = 'assets/front/soundroom/logo-pestapora-2024.png';
-							switch ($season) {
-								case '2024':
-									$logo_img = 'assets/front/soundroom/logo-pestapora-2024.png';
-									break;
-								case '2019':
-									$logo_img = 'assets/front/img/AUTHENTICITY_SOUNDROOM_2019.png';
-									break;
-								case '2022':
-									$logo_img = 'assets/front/img/soundroom-pestapora-x.png';
-									break;
+				<a href='<?= base_url('soundroom'); ?>'>
+					<?php
+						// 1. Ambil tahun dari URL params
+						$season = isset($_GET['year']) ? $_GET['year'] : '';
+						$display = isset($_GET['display']) ? $_GET['display'] : $season;
+						
+						// 2. TAMBAHAN: Cek apakah kita sedang berada di route 'soundroom-2026'
+						$current_uri = $this->uri->uri_string(); 
+						$is_route_2026 = (strpos($current_uri, 'soundroom-2026') !== false);
+						
+						// 3. Gabungkan pengecekan: Jika dari params OR dari URL route
+						$is_2026 = ($display == '2026' || $is_route_2026);
+					?>
 
-								default:
-									$logo_img = 'assets/front/img/soundroom/logo.png';
-									break;
+					<?php if ($is_2026): ?>
+						<span style="color: #fff; font-weight: bold; font-size: 20px; text-transform: uppercase; line-height: 50px;">
+							Soundroom 2026
+						</span>
+					<?php else: ?>
+						<?php
+							$logo_img = 'assets/front/img/soundroom/logo.png';
+							if ($season == '2024') {
+								$logo_img = 'assets/front/soundroom/logo-pestapora-2024.png';
+							} elseif ($season == '2019') {
+								$logo_img = 'assets/front/img/AUTHENTICITY_SOUNDROOM_2019.png';
+							} elseif ($season == '2022') {
+								$logo_img = 'assets/front/img/soundroom-pestapora-x.png';
 							}
 						?>
-						<!-- <img src='<?= base_url(); ?>assets/front/img/soundroom/logo.png'> -->
-						<img src="<?= base_url().$logo_img; ?>">
-					</a>
-				</div>
+						<img src="<?= base_url($logo_img); ?>">
+					<?php endif; ?>
+				</a>
+			</div>
 			</div>
 
 			<div id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height: 1px;">
@@ -323,12 +334,11 @@ function cur2($ini, $now)
 						?>
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?= $menu_label ?> </a>
                         <ul class="dropdown-menu">
-							<li><a href="<?= base_url(); ?>soundroom?year=2026&display=2026">2026</a></li>
+							<li><a href="#" class="sound-season" data-year="2026">2026</a></li>
                             <li><a href="#" class="sound-season" data-year="2025">2025</a></li>
                             <li><a href="#" class="sound-season" data-year="2024">2024</a></li>
                             <li><a href="#" class="sound-season" data-year="2023">2023</a></li>
                             <li><a href="#" class="sound-season" data-year="2022">2022</a></li>
-                            <!--<li><a href="#" class="sound-season" data-year="2019">2019</a></li>-->
                         </ul>
 					</li>
 					<?php if (empty($this->datamember)) { ?>
@@ -356,3 +366,28 @@ function cur2($ini, $now)
 		</div>
 	</nav>
 	<div class='min-heights'>
+
+
+<script>
+    // Pastikan jQuery sudah dimuat
+    jQuery(document).ready(function($) {
+        $('.sound-season').on('click', function(e) {
+            e.preventDefault();
+            var year = $(this).data('year');
+            
+            // Debugging: lihat di console
+            console.log("Season diklik: " + year); 
+
+            if (year == '2026') {
+                // Gunakan path absolut yang bersih
+                window.location.href = base + 'soundroom-2026';
+            } else {
+                if (typeof loadSeasonData === 'function') {
+                    loadSeasonData(year);
+                } else {
+                    console.error("Fungsi loadSeasonData tidak ditemukan!");
+                }
+            }
+        });
+    });
+</script>

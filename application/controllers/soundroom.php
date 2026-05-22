@@ -8,6 +8,7 @@ class Soundroom extends MY_Controller {
 		$this->kategori = $this->model_global->get_data(array('select' => '*', 'table' => 'kategori','where' => array('status' => 1), 'order_by' => 'head_kategori asc'));
 
 	}
+
 	public function share($id){
         $year = isset($_GET['year']) ? $_GET['year'] : '2023';
 
@@ -234,6 +235,7 @@ class Soundroom extends MY_Controller {
 		$this->load->view('front/soundroom-header',$data);
 		$this->load->view('front/soundroom-microsite-winner',$data);
 	}
+
 	public function search(){
         $year = isset($_GET['year']) ? $_GET['year'] : '2023';
 
@@ -518,7 +520,6 @@ class Soundroom extends MY_Controller {
 		echo json_encode($ret);
 	}
 
-
 	public function getBand(){
         $year = isset($_POST['year']) ? $_POST['year'] : '2024';
 
@@ -627,6 +628,7 @@ class Soundroom extends MY_Controller {
 		echo json_encode($ret);
 
 	}
+
 	public function getPlayList_2019(){
 		$ret['firstaudio'] = "";
 		$ret['firstband'] = "";
@@ -1023,6 +1025,7 @@ class Soundroom extends MY_Controller {
 		}
 		echo json_encode($ret);
 	}
+
 	public function mechanism(){
 		$data['website'] = $this->website;
 		$data['subtitle'] = " | Soundroom ";
@@ -1030,6 +1033,7 @@ class Soundroom extends MY_Controller {
 		$this->load->view('front/soundroom-header',$data);
 		$this->load->view('front/soundroom-microsite-mechanism',$data);
 	}
+
 	public function video(){
 		$data['website'] = $this->website;
 		$data['subtitle'] = " | Soundroom ";
@@ -1040,6 +1044,7 @@ class Soundroom extends MY_Controller {
 		$this->load->view('front/soundroom-header',$data);
 		$this->load->view('front/soundroom-microsite-video',$data);
 	}
+
 	public function vote(){
 		$data['website'] = $this->website;
 		$data['subtitle'] = " | Soundroom ";
@@ -1058,6 +1063,7 @@ class Soundroom extends MY_Controller {
 		$this->load->view('front/soundroom-header',$data);
 		$this->load->view('front/soundroom-microsite-vote',$data);
 	}
+
 	public function indexold(){
 		$data['website'] = $this->website;
 		$data['subtitle'] = " | Soundroom ";
@@ -1075,6 +1081,7 @@ class Soundroom extends MY_Controller {
 		$this->load->view('front/podcast/header',$data);
 		$this->load->view('front/soundroom',$data);
 	}
+
 	public function dua(){
 		$data['website'] = $this->website;
 		$data['subtitle'] = " | Soundroom ";
@@ -1194,6 +1201,7 @@ class Soundroom extends MY_Controller {
 		}
 		echo json_encode($ret);
 	}
+
 	public function read($slug){
 		$data['website'] = $this->website;
 		$data['kategori'] = $this->kategori;
@@ -1218,6 +1226,7 @@ class Soundroom extends MY_Controller {
 			$this->load->view('front/soundroom',$data);
 		}
 	}
+
 	public function getpoint(){
 		$ret['status'] = "false";
 		$ret['message'] = "";
@@ -1269,7 +1278,7 @@ class Soundroom extends MY_Controller {
 	}
 
 	//-- tambahan 2022
-		public function filter_byprovinsi(){
+	public function filter_byprovinsi(){
 			$ret["status"] = "false";
 			$arr_kota = array();
 
@@ -1346,8 +1355,10 @@ class Soundroom extends MY_Controller {
 			echo json_encode($ret);
 		}
 
-    public function check_music_metadata()
-    {
+    
+	
+	public function check_music_metadata(){
+
         $file = isset($_GET['file']) ? $_GET['file'] : '';
         $version = isset($_GET['version']) ? $_GET['version'] : '2';
         $file = (string) $file;
@@ -1391,4 +1402,11 @@ class Soundroom extends MY_Controller {
         echo 'KO';
         exit;
     }
+
+	public function landing_2026() {
+		$data['website'] = $this->website;
+		$this->load->view('front/soundroom-header', $data);
+		$this->load->view('front/soundroom-landing-2026', $data);
+		$this->load->view('front/podcast/footerfp');
+	}
 }

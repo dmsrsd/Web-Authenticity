@@ -5,6 +5,9 @@
 				<div class="container">
 					<div class="row justify-content-center">
 						<div class="col-lg-8 col-md-10">
+
+	
+
 							<div class="card card--shadow">
 								<form action="<?php echo base_url(); ?>profile/updateprofile" method="post" data-parsley-validate enctype="multipart/form-data">
 									<input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>" style="display: none">
@@ -32,6 +35,7 @@
 										</div>
 										<div class="col-lg">
 											<h3>My Profile</h3>
+											
 											<div class="form-group">
 												<label>Full Name</label>
 												<?php 
@@ -83,184 +87,193 @@
 								<img src="<?php echo base_url() ?>assets/front/img/profile/bg.png" alt="BG" class="img-full" />
 							</div>
 						</div>
-						<?php if(isset($data['id_soundroom']) && $data['id_soundroom'] != ''): ?>
-						<div class="col-lg-8 col-md-10 mt-3">
-							<div class="card card--shadow pt-3">
-								<div class="panel-body">
-									<div class='row'>
-										<div class='col-sm-12'>
-											<h3>My Band</h3>
-											<?php if($_GET['info']) { ?>
-												<div class="alert alert-info text-center" role="alert">
-													<?php echo $_GET['info']; ?>
-												</div>
-											<?php } ?>
-											<div class="panel panel-default box-login-1 mt-0 pt-5" style="box-shadow: 1px 3px 13px rgba(0, 0, 0, 0.25);">
-												<form role="form" id="frmWrite" action="<?= base_url() ?>profile/updatesoundroom" method="post" data-parsley-validate enctype="multipart/form-data">
-													<input type="hidden" name="created_by" value="<?=$data['created_by']?>" />
-													<input type="hidden" name="_id" value="<?=$data['id_soundroom']?>" />
-													<input type="hidden" name="img_awal" value="<?=$data['image']?>" />
-													<input type="hidden" name="img_awal_thumbnail" value="<?=$data['thumbnail']?>" />
-													<input type="hidden" name="img_awal_sound" value="<?=$data['sound']?>" />
-													<div class="panel-body pt-5">
-														<input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>" style="display: none">
-														<div id="lblStatusLogin">
-															<?php $response = $this->session->flashdata('response');
-															if (isset($response["status"]) && $response["status"] == "error") : ?>
-																<div class="alert alert-danger" style='padding:10px;'>
-																	<?= $response["message"] ?>
-																</div>
-															<?php endif; ?>
-															<?php $response = $this->session->flashdata('response');
-															if (isset($response["status"]) && $response["status"] == "success") : ?>
-																<div class="alert alert-success" style='padding:10px;'>
-																	<?= $response["message"] ?>
-																</div>
-															<?php endif; ?>
-														</div>
-														<div class="form-group">
-															<label for="txtSahkoposti">Nama Band*</label>
-															<input type="judul" class="form-control " id="judul" maxlength="150" placeholder="Nama Band" name="judul" required value='<?=(isset($data['judul']) ? $data['judul'] : '')?>'>
-														</div>
-														<div class="form-group">
-															<label for="genre">Genre *</label>
-															<select class="form-control" name="gendre" id="genre">
-																<option value="">Pilih data</option>
-																<option <?=(($data['gendre']=="rock") ? 'selected' : '')?> value="rock">Rock</option>
-																<option <?=(($data['gendre']=="hiphop") ? 'selected' : '')?> value="hiphop">HipHop</option>
-																<option <?=(($data['gendre']=="metal") ? 'selected' : '')?> value="metal">Metal</option>
-																<option <?=(($data['gendre']=="pop") ? 'selected' : '')?> value="pop">Pop</option>
-																<option <?=(($data['gendre']=="r&b") ? 'selected' : '')?> value="r&b">R&B</option>
-																<option <?=(($data['gendre']=="blues") ? 'selected' : '')?> value="blues">Blues</option>
-																<option <?=(($data['gendre']=="alternative") ? 'selected' : '')?> value="alternative">Alternative</option>
-																<option <?=(($data['gendre']=="electronic") ? 'selected' : '')?> value="electronic">Electronic</option>
-																<option <?=(($data['gendre']=="others") ? 'selected' : '')?> value="others">Others</option>
-															</select>
-														</div>
-														<div class="form-group">
-															<div class='row'>
-																<div class='col-sm-6'>
-																	<label for="fullname">Province*</label>
-																	<select class='form-control rokok' name='id_provinsi' id="id_provinsi">
-																		<option value=''>--</option>
-																		<?php
-																		if (isset($provinsi) && count($provinsi) > 0) {
-																			foreach ($provinsi as $row) {
-																				if ($row['provinsi'] != "-") {
-																					echo "<option ".(($prov_selected['provinsi']==$row['provinsi']) ? 'selected' : '')." value='$row[provinsi]'>$row[provinsi]</option>";
+
+						<!-- INI BUAT UPLOAD MUSIC -->
+						<?php if($band && isset($band['id_soundroom'])): ?>
+							
+							<div class="col-lg-8 col-md-10 mt-3">
+								<div class="card card--shadow pt-3">
+									<div class="panel-body">
+										<div class='row'>
+											<div class='col-sm-12'>
+												<h3>My Band</h3>
+												<?php if(!empty($_GET['info'])) { ?>
+													<div class="alert alert-info text-center" role="alert">
+														<?php echo $_GET['info']; ?>
+													</div>
+												<?php } ?>
+												<div class="panel panel-default box-login-1 mt-0 pt-5" style="box-shadow: 1px 3px 13px rgba(0, 0, 0, 0.25);">
+													<form role="form" id="frmWrite" action="<?= base_url() ?>profile/updatesoundroom" method="post" data-parsley-validate enctype="multipart/form-data">
+														<input type="hidden" name="created_by" value="<?=$data['created_by']?>" />
+														<input type="hidden" name="_id" value="<?=$data['id_soundroom']?>" />
+														<input type="hidden" name="img_awal" value="<?=$data['image']?>" />
+														<input type="hidden" name="img_awal_thumbnail" value="<?=$data['thumbnail']?>" />
+														<input type="hidden" name="img_awal_sound" value="<?=$data['sound']?>" />
+														<div class="panel-body pt-5">
+															<input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>" style="display: none">
+															<div id="lblStatusLogin">
+																<?php $response = $this->session->flashdata('response');
+																if (isset($response["status"]) && $response["status"] == "error") : ?>
+																	<div class="alert alert-danger" style='padding:10px;'>
+																		<?= $response["message"] ?>
+																	</div>
+																<?php endif; ?>
+																<?php $response = $this->session->flashdata('response');
+																if (isset($response["status"]) && $response["status"] == "success") : ?>
+																	<div class="alert alert-success" style='padding:10px;'>
+																		<?= $response["message"] ?>
+																	</div>
+																<?php endif; ?>
+															</div>
+															<div class="form-group">
+																<label for="txtSahkoposti">Nama Band*</label>
+																<input type="judul" class="form-control " id="judul" maxlength="150" placeholder="Nama Band" name="judul" required value='<?=(isset($data['judul']) ? $data['judul'] : '')?>'>
+															</div>
+															<div class="form-group">
+																<label for="genre">Genre *</label>
+																<select class="form-control" name="gendre" id="genre">
+																	<option value="">Pilih data</option>
+																	<option <?=(($data['gendre']=="rock") ? 'selected' : '')?> value="rock">Rock</option>
+																	<option <?=(($data['gendre']=="hiphop") ? 'selected' : '')?> value="hiphop">HipHop</option>
+																	<option <?=(($data['gendre']=="metal") ? 'selected' : '')?> value="metal">Metal</option>
+																	<option <?=(($data['gendre']=="pop") ? 'selected' : '')?> value="pop">Pop</option>
+																	<option <?=(($data['gendre']=="r&b") ? 'selected' : '')?> value="r&b">R&B</option>
+																	<option <?=(($data['gendre']=="blues") ? 'selected' : '')?> value="blues">Blues</option>
+																	<option <?=(($data['gendre']=="alternative") ? 'selected' : '')?> value="alternative">Alternative</option>
+																	<option <?=(($data['gendre']=="electronic") ? 'selected' : '')?> value="electronic">Electronic</option>
+																	<option <?=(($data['gendre']=="others") ? 'selected' : '')?> value="others">Others</option>
+																</select>
+															</div>
+															<div class="form-group">
+																<div class='row'>
+																	<div class='col-sm-6'>
+																		<label for="fullname">Province*</label>
+																		<select class='form-control rokok' name='id_provinsi' id="id_provinsi">
+																			<option value=''>--</option>
+																			<?php
+																			if (isset($provinsi) && count($provinsi) > 0) {
+																				foreach ($provinsi as $row) {
+																					if ($row['provinsi'] != "-") {
+																						echo "<option ".(($prov_selected['provinsi']==$row['provinsi']) ? 'selected' : '')." value='$row[provinsi]'>$row[provinsi]</option>";
+																					}
 																				}
 																			}
-																		}
-																		?>
-																	</select>
-																	<!--<input type="text" maxlength="2" tabindex='7' name="id_provinsi" id="id_provinsi" autocomplete="off">-->
-																</div>
-																<div class='col-sm-6'>
-																	<label for="fullname">City*</label>
-																	<select class='form-control rokok' name='id_kota' id="id_kota">
-																		<?php
-																			if ($prov_selected) {
-																				echo "<option value='$prov_selected[id_kota]'>$prov_selected[kota]</option>";
-																			}
-																		?>
-																	</select>
-																	<!--<input type="text" maxlength="2" tabindex='7' name="id_provinsi" id="id_provinsi" autocomplete="off">-->
-																</div>
-
-															</div>
-														</div>
-
-														<div class="form-group">
-															<label for="pic">Nama PIC Band*</label>
-															<input type="text" class="form-control " id="pic" maxlength="150" placeholder="Nama PIC" name="pic" required value='<?=(isset($data['pic']) ? $data['pic'] : '')?>'>
-														</div>
-														<div class="form-group">
-															<label for="contact">Band Contact*</label>
-															<input type="text" class="form-control " id="contact" maxlength="150" placeholder="No HP" name="contact" required value='<?=(isset($data['contact']) ? $data['contact'] : '')?>'>
-														</div>
-														<div class="form-group">
-															<label for="instagram">Instagram Account</label>
-															<input type="text" class="form-control " id="instagram" maxlength="150" placeholder="Instagram link" name="instagram" value='<?=(isset($data['instagram']) ? $data['instagram'] : '')?>'>
-														</div>
-														<div class="form-group">
-															<label for="spotify">Spotify Link <i>(optional)</i></label>
-															<input type="text" class="form-control " id="spotify" maxlength="150" placeholder="Spotify link" name="spotify" value='<?=(isset($data['spotify']) ? $data['spotify'] : '')?>'>
-														</div>
-														<div class="form-group">
-															<label for="youtube">Youtube Channel Link <i>(optional)</i></label>
-															<input type="text" class="form-control " id="youtube" maxlength="150" placeholder="Youtube link" name="youtube" value='<?=(isset($data['youtube']) ? $data['youtube'] : '')?>' >
-														</div>
-
-														<!--
-														<div class="form-group">
-															<label for="txtSahkoposti">Deskripsi</label>
-															<textarea rows='15' class="form-control tinymce-editor"  name="deskripsi"></textarea>
-														</div>
-														<div class="form-group">
-															<label for="txtSahkoposti">Sound Cover</label>
-															<img id="prev-thumbnail" src="<?= base_url(); ?>uploads/no_image.png" alt="your thumbnail" class='img-responsive' style='cursor:pointer;'/>
-															<input name="thumbnail" id="thumbnail" type="file" class="form-control"  accept="image/x-png,image/gif,image/jpeg">
-															<em>*) Max. size image (1MB), 180px X 180px</em>
-														</div>
-														-->
-														<div class="form-group">
-															<label>Upload Foto Profil Band*</label>
-															<div class="form-group--upload">
-																<label for="image">
-																	<?php if($data['image'] != ''): ?>
-																		<img src='<?php echo base_url();?>uploads/soundroom/<?php echo $data['image'];?>' height='150' class='img'>
-																	<?php else:?>
-																		<img id="prev-image" src="<?= base_url(); ?>assets/front/img/upload-icon.png" alt="your image" class='img-responsive' style='cursor:pointer;' />
-																	<?php endif?>
-																	<input name="image" id="image" type="file" class="form-control" accept="image/x-png,image/gif,image/jpeg,image/tiff">
-																	<span>or Drag and Drop files here</span>
-																</label>
-															</div>
-															<em>* Maksimal file size 1MB. 180px x 180px. Format file : jpeg, png, atau tiff</em>
-														</div>
-														<div class="form-group">
-															<label>Upload Sound Demo*</label>
-															<div class="form-group--upload">
-																<label for="sound">
-																	<?php if(isset($data['id_soundroom']) && $data['id_soundroom'] != '' && $data['sound'] != ''): ?>
-																		<a href='<?php echo base_url();?>uploads/soundroom/<?php echo $data['sound'];?>' target='_blank'><?php echo $data['sound'];?></a>
-																	<?php else:?>
-																		<img src="<?= base_url(); ?>assets/front/img/upload-icon.png" alt="your image" class='img-responsive' style='cursor:pointer;' />
-																	<?php endif?>
-																	<input name="sound" id="sound" type="file" class="form-control" accept=".mp3, .wav">
-																	<span>or Drag and Drop files here</span>
-																</label>
-															</div>
-															<em>* Maksimal file size 6MB. Format file : mp3 / wav</em>
-														</div>
-														<div class="form-group">
-															<em>* harus diisi</em>
-															<br>
-															<input type="checkbox" class="" id="tnc" name="tnc" value="1" checked>
-															<!-- <em>Kami bersedia musik yang kami unggah di sini, dapat digunakan untuk Clasmild dan diputar di Authenticity</em> -->
-															<em>Saya adalah perokok dewasa berumur 18 tahun ke atas. Saya setuju musik dan foto saya dan/atau group saya, digunakan untuk keperluan Authenticity.id dan akan diputar dan ditayangkan di website, media sosial Authenticity, dan aset online/offline lainnya.</em>
-														</div>
-													</div>
-
-													<div class="panel-footer pb-5" style='background-color:#FFFFFF; border: none; padding-top: 0;'>
-														<div class="row">
-															<div class="col-sm-12">
-																<div class="btn-log1">
-																	<button type="submit" id='btnWrite' name='submit' value='1' class="btn btn-primary text-uppercase">
-																		Update
-																	</button>
+																			?>
+																		</select>
+																		<!--<input type="text" maxlength="2" tabindex='7' name="id_provinsi" id="id_provinsi" autocomplete="off">-->
+																	</div>
+																	<div class='col-sm-6'>
+																		<label for="fullname">City*</label>
+																		<select class='form-control rokok' name='id_kota' id="id_kota">
+																			<?php
+																				if ($prov_selected) {
+																					echo "<option value='$prov_selected[id_kota]'>$prov_selected[kota]</option>";
+																				}
+																			?>
+																		</select>
+																		<!--<input type="text" maxlength="2" tabindex='7' name="id_provinsi" id="id_provinsi" autocomplete="off">-->
+																	</div>
+	
 																</div>
 															</div>
+	
+															<div class="form-group">
+																<label for="pic">Nama PIC Band*</label>
+																<input type="text" class="form-control " id="pic" maxlength="150" placeholder="Nama PIC" name="pic" required value='<?=(isset($data['pic']) ? $data['pic'] : '')?>'>
+															</div>
+															<div class="form-group">
+																<label for="contact">Band Contact*</label>
+																<input type="text" class="form-control " id="contact" maxlength="150" placeholder="No HP" name="contact" required value='<?=(isset($data['contact']) ? $data['contact'] : '')?>'>
+															</div>
+															<div class="form-group">
+																<label for="instagram">Instagram Account</label>
+																<input type="text" class="form-control " id="instagram" maxlength="150" placeholder="Instagram link" name="instagram" value='<?=(isset($data['instagram']) ? $data['instagram'] : '')?>'>
+															</div>
+															<div class="form-group">
+																<label for="spotify">Spotify Link <i>(optional)</i></label>
+																<input type="text" class="form-control " id="spotify" maxlength="150" placeholder="Spotify link" name="spotify" value='<?=(isset($data['spotify']) ? $data['spotify'] : '')?>'>
+															</div>
+															<div class="form-group">
+																<label for="youtube">Youtube Channel Link <i>(optional)</i></label>
+																<input type="text" class="form-control " id="youtube" maxlength="150" placeholder="Youtube link" name="youtube" value='<?=(isset($data['youtube']) ? $data['youtube'] : '')?>' >
+															</div>
+																<div class="form-group">
+																<label for="manggung">Tempat Manggung*</label>
+																<input type="text" class="form-control" id="manggung" name="manggung" required 
+																	value="<?= $band['manggung'] ?? '' ?>">
+															</div>
+	
+															<!--
+															<div class="form-group">
+																<label for="txtSahkoposti">Deskripsi</label>
+																<textarea rows='15' class="form-control tinymce-editor"  name="deskripsi"></textarea>
+															</div>
+															<div class="form-group">
+																<label for="txtSahkoposti">Sound Cover</label>
+																<img id="prev-thumbnail" src="<?= base_url(); ?>uploads/no_image.png" alt="your thumbnail" class='img-responsive' style='cursor:pointer;'/>
+																<input name="thumbnail" id="thumbnail" type="file" class="form-control"  accept="image/x-png,image/gif,image/jpeg">
+																<em>*) Max. size image (1MB), 180px X 180px</em>
+															</div>
+															-->
+															
+															<div class="form-group">
+																<label>Upload Foto Profil Band*</label>
+																<div class="form-group--upload">
+																	<label for="image">
+																		<?php if($data['image'] != ''): ?>
+																			<img src='<?php echo base_url();?>uploads/soundroom/<?php echo $data['image'];?>' height='150' class='img'>
+																		<?php else:?>
+																			<img id="prev-image" src="<?= base_url(); ?>assets/front/img/upload-icon.png" alt="your image" class='img-responsive' style='cursor:pointer;' />
+																		<?php endif?>
+																		<input name="image" id="image" type="file" class="form-control" accept="image/x-png,image/gif,image/jpeg,image/tiff">
+																		<span>or Drag and Drop files here</span>
+																	</label>
+																</div>
+																<em>* Maksimal file size 1MB. 180px x 180px. Format file : jpeg, png, atau tiff</em>
+															</div>
+															<div class="form-group">
+																<label>Upload Sound Demo*</label>
+																<div class="form-group--upload">
+																	<label for="sound">
+																		<?php if(isset($data['id_soundroom']) && $data['id_soundroom'] != '' && $data['sound'] != ''): ?>
+																			<a href='<?php echo base_url();?>uploads/soundroom/<?php echo $data['sound'];?>' target='_blank'><?php echo $data['sound'];?></a>
+																		<?php else:?>
+																			<img src="<?= base_url(); ?>assets/front/img/upload-icon.png" alt="your image" class='img-responsive' style='cursor:pointer;' />
+																		<?php endif?>
+																		<input name="sound" id="sound" type="file" class="form-control" accept=".mp3, .wav">
+																		<span>or Drag and Drop files here</span>
+																	</label>
+																</div>
+																<em>* Maksimal file size 6MB. Format file : mp3 / wav</em>
+															</div>
+															<div class="form-group">
+																<em>* harus diisi</em>
+																<br>
+																<input type="checkbox" class="" id="tnc" name="tnc" value="1" checked>
+																<!-- <em>Kami bersedia musik yang kami unggah di sini, dapat digunakan untuk Clasmild dan diputar di Authenticity</em> -->
+																<em>Saya adalah perokok dewasa berumur 18 tahun ke atas. Saya setuju musik dan foto saya dan/atau group saya, digunakan untuk keperluan Authenticity.id dan akan diputar dan ditayangkan di website, media sosial Authenticity, dan aset online/offline lainnya.</em>
+															</div>
 														</div>
-													</div>
-												</form>
-											</div>
-										</div>										
+	
+														<div class="panel-footer pb-5" style='background-color:#FFFFFF; border: none; padding-top: 0;'>
+															<div class="row">
+																<div class="col-sm-12">
+																	<div class="btn-log1">
+																		<button type="submit" id='btnWrite' name='submit' value='1' class="btn btn-primary text-uppercase">
+																			Update
+																		</button>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</form>
+												</div>
+											</div>										
+										</div>
 									</div>
+									<img src="<?php echo base_url() ?>assets/front/img/profile/bg.png" alt="BG" class="img-full" />
 								</div>
-								<img src="<?php echo base_url() ?>assets/front/img/profile/bg.png" alt="BG" class="img-full" />
 							</div>
-						</div>
 						<?php endif; ?>
 					</div>
 				</div>
@@ -425,7 +438,7 @@
                         backdrop: 'static',
                         keyboard: false
                     });
-                    $('.error-message').text('Halo, data yang kamu submit belum lengkap. Dimohon untuk melengkapi semua data sesuai persyaratan yang sudah ada');
+                    $('.error-message').text('Halo, data Season 2026 yang kamu submit belum lengkap. Dimohon untuk melengkapi semua data sesuai persyaratan yang sudah ada');
 				}
 			});
 		});

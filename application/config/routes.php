@@ -185,3 +185,5 @@ $route['db_override'] = 'home/respon_400';
 $route['genearl_override'] = 'home/respon_400';
 $route['php_override'] = 'home/respon_400';
 $route['translate_uri_dashes'] = FALSE;
+
+$route['soundroom-2026'] = 'soundroom/landing_2026';

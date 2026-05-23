@@ -51,8 +51,6 @@ function cur2($ini, $now)
 
 
 <!-- MOENGAGE END -->
-
-
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -274,24 +272,25 @@ function cur2($ini, $now)
 				<div class="navbar-brand">
 				<a href='<?= base_url('soundroom'); ?>'>
 					<?php
-						// 1. Ambil tahun dari URL params
-						$season = isset($_GET['year']) ? $_GET['year'] : '';
-						$display = isset($_GET['display']) ? $_GET['display'] : $season;
+						// 1. Prioritaskan variabel dari Controller, jika tidak ada, baru cek $_GET
+						$season = isset($page_season) ? $page_season : (isset($_GET['year']) ? $_GET['year'] : '');
 						
-						// 2. TAMBAHAN: Cek apakah kita sedang berada di route 'soundroom-2026'
+						// 2. Logika pengecekan URL (tetap dipertahankan untuk backup)
 						$current_uri = $this->uri->uri_string(); 
 						$is_route_2026 = (strpos($current_uri, 'soundroom-2026') !== false);
 						
-						// 3. Gabungkan pengecekan: Jika dari params OR dari URL route
-						$is_2026 = ($display == '2026' || $is_route_2026);
+						// 3. Menentukan apakah 2026
+						$is_2026 = ($season == '2026' || $is_route_2026);
 					?>
 
 					<?php if ($is_2026): ?>
+						<!-- MASUKAN ASSET SOUNDROOM 2026 JIKA NANTI ADA -->
 						<span style="color: #fff; font-weight: bold; font-size: 20px; text-transform: uppercase; line-height: 50px;">
 							Soundroom 2026
 						</span>
 					<?php else: ?>
 						<?php
+							// Logika logo untuk tahun lainnya
 							$logo_img = 'assets/front/img/soundroom/logo.png';
 							if ($season == '2024') {
 								$logo_img = 'assets/front/soundroom/logo-pestapora-2024.png';

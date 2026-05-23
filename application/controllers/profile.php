@@ -772,9 +772,10 @@ class Profile extends MY_Controller {
 
 				// 2. BARU MASUKKAN HASIL QUERY KE VARIABEL $data
 				$data['band'] = !empty($band_data) ? $band_data : [];
+				$data['page_season'] = '2026';
 
 				$this->load->view('front/soundroom-header', $data);
-				$this->load->view('front/uploadsoundroom_2026', $data);
+				$this->load->view('front/uploadsoundroom_2026', $data); 
 			}
 	}
 
@@ -1319,17 +1320,6 @@ class Profile extends MY_Controller {
 						$config['smtp_timeout'] = '7';
 						$config['smtp_user'] = 'gridsf@gramedia-majalah.com';
 						$config['smtp_pass'] = 'zcup oxoy yfug waqs';
-						// $config['smtp_host'] = 'smtp.zoho.com';
-						// $config['smtp_port'] = '465'; // 8025, 587 and 25 can also be used. Use Port 465 for SSL.
-						// $config['smtp_timeout'] = '7';
-						// $config['smtp_user'] = 'noreply@simplyauthentic.id';
-						// $config['smtp_pass'] = 'Simple-Tapi-t4k-simpels';
-						//sendinblue
-						// $config['smtp_host'] = 'smtp-relay.sendinblue.com';
-						// $config['smtp_port'] = '465'; // 8025, 587 and 25 can also be used. Use Port 465 for SSL.
-						// $config['smtp_timeout'] = '7';
-						// $config['smtp_user'] = 'admin@simplyauthentic.id';
-						// $config['smtp_pass'] = '13rBws6z9I7WvtDq';
 						$config['charset'] = 'utf-8';
 						$config['mailtype'] = 'html';
 						$config['newline'] = "\r\n";
@@ -1480,10 +1470,7 @@ class Profile extends MY_Controller {
 				$ave = $this->model_global->insertId($data_arr, 'vote_member_2025');
 				$m =  "Thank you. You have voted for this contestant";
 				$ret['status'] = "true";
-				//print_r($data_arr); exit; // Debug: cetak data lalu hentikan
-				//update jml_vote
 				$jml_vote = $this->db->query("SELECT * FROM vote_member_2025 Where id_vote='".$_POST['pilih']."'")->num_rows();
-				//update jumlah vote
 				$this->db->set('jml_vote', $jml_vote);
 				$this->db->where('id_vote', $_POST['pilih']);
 				$this->db->update('vote_2025');

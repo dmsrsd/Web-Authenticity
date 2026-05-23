@@ -25,6 +25,7 @@
 	display: none;
 } */
 </style>
+
 <div class="page-soundroom page-soundroom--winner new-bs" style="padding-top: initial;">
 	<div class="container-fluid px-0">
 		<div class="row align-items-start gx-0">

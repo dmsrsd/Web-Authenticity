@@ -321,18 +321,31 @@ function cur2($ini, $now)
 							// 	$menu_label = 'Seasoning'.$season;
 							// }
 
-							$menu_label = 'Season';
-							$season = isset($_GET['year']) ? $_GET['year'] : '';
+							$current_uri = $this->uri->uri_string();
+    
+							// Tentukan season berdasarkan prioritas
+							$active_season = isset($page_season) ? $page_season : '';
 							
-							// Cek apakah ada parameter display (force 2026)
-							$display_year = isset($_GET['display']) ? $_GET['display'] : $season;
+							if (empty($active_season)) {
+								$active_season = isset($_GET['year']) ? $_GET['year'] : '';
+							}
+							
+							// Backup: Jika masih kosong tapi URL mengandung '2026', set manual
+							if (empty($active_season) && strpos($current_uri, 'soundroom-2026') !== false) {
+								$active_season = '2026';
+							}
 
-							if($display_year != ''){
-								$menu_label = 'Season '.$display_year;
+							// 2. Tentukan label menu
+							$menu_label = 'Season';
+							if (!empty($active_season)) {
+								$menu_label = 'Season ' . $active_season;
 							}
 						?>
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?= $menu_label ?> </a>
-                        <ul class="dropdown-menu">
+						<!-- <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?= $menu_label ?> </a> -->
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+							<?= $menu_label ?> 
+						</a>
+						<ul class="dropdown-menu">
 							<li><a href="#" class="sound-season" data-year="2026">2026</a></li>
                             <li><a href="#" class="sound-season" data-year="2025">2025</a></li>
                             <li><a href="#" class="sound-season" data-year="2024">2024</a></li>

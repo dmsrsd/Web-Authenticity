@@ -68,7 +68,7 @@ class Soundroom extends MY_Controller {
 
         switch ($year) {
 			case '2026':
-        		$table = 'soundroom_2025';
+        		$table = 'soundroom_2026';
         		break;
 			case '2025':
                 $table = 'soundroom_2025';
@@ -93,24 +93,8 @@ class Soundroom extends MY_Controller {
 		$data['kategori'] = $this->kategori;
 		$data['soundroom'] = array();
 		$data['galtot'] = count($data['soundroom']);
-		/*
-		//-- soundroom-2019
-		$data['soundroomtop'] = $this->model_global->get_data(array(
-			'select' => 'a.*, b.kota,b.provinsi',
-			'table' => 'soundroom a',
-			'join' => array('kota b','b.id_kota = a.id_kota'),
-			'where' => array('a.status'=>1,'a.approve'=>1,'a.top5'=>1),
-			'order_by' => 'a.votes5 desc',
-			'limit' => '5'
-		));
-		$data['soundroom'] = $this->model_global->get_data(array(
-			'select' => 'a.*, b.kota,b.provinsi',
-			'table' => 'soundroom a',
-			'join' => array('kota b','b.id_kota = a.id_kota'),
-			'where' => array('a.status'=>1,'a.approve'=>1),
-			'order_by' => 'a.votes desc',
-		));
-		*/
+		$data['page_season'] = $year;
+
 		$data['soundroomtop'] = $this->model_global->get_data(array(
 			'select' => 'a.*, b.kota,b.provinsi',
 			'table' => $table.' a',
@@ -129,9 +113,6 @@ class Soundroom extends MY_Controller {
 				'order_by' => 'a.top10 desc, a.rank asc',
 				'paging' => '12,0'
 			));
-			// if($_GET['debug']){
-			// 	print_r($data['soundroomtop']); exit;
-			// }
 		}else{
 			$data['soundroom'] = $this->model_global->get_data(array(
 				'select' => 'a.*, b.kota,b.provinsi',
@@ -147,8 +128,6 @@ class Soundroom extends MY_Controller {
 		$data['galpage'] = ceil($data['galtot']/12);
 
 		$data['video'] = $this->model_global->get_data(array('data' => 'row','table' => 'video', 'where' => array( 'top' =>1,'status'=>1)));
-		// $data['provinsi'] = $this->model_global->get_data(array('select' => '*', 'table' => 'kota','group_by' => 'provinsi', 'order_by' => 'provinsi asc'));
-		// $data['provinsi'] = $this->model_global->get_data(array('select ' => 'DISTINCT(provinsi)', 'table' => 'kota', 'order_by' => 'provinsi asc'));
 		$this->db->distinct();
 		$this->db->select('provinsi');
 		$this->db->order_by('provinsi', 'asc');
@@ -158,13 +137,22 @@ class Soundroom extends MY_Controller {
 	}
 
 	public function winner(){
-        $year = isset($_GET['year']) ? $_GET['year'] : '2023';
+        // $year = isset($_GET['year']) ? $_GET['year'] : '2023';
+		
+        // if (!in_array($year, ['2025','2024','2023', '2022', '2019'])) {
+			//     $year = '2023';
+			// }
 
-        if (!in_array($year, ['2025','2024','2023', '2022', '2019'])) {
-            $year = '2023';
-        }
+		$year = isset($_GET['year']) ? $_GET['year'] : '2026';
 
+		if (!in_array($year, ['2026', '2025','2024','2023', '2022', '2019'])) {
+        	$year = '2026';
+    	}
+			
         switch ($year) {
+			case '2026': 
+				$table = 'soundroom_2026'; 
+				break;
 			case '2025':
                 $table = 'soundroom_2025';
                 break;
@@ -188,24 +176,7 @@ class Soundroom extends MY_Controller {
 		$data['kategori'] = $this->kategori;
 		$data['soundroom'] = array();
 		$data['galtot'] = count($data['soundroom']);
-		/*
-		//-- soundroom-2019
-		$data['soundroomtop'] = $this->model_global->get_data(array(
-			'select' => 'a.*, b.kota,b.provinsi',
-			'table' => 'soundroom a',
-			'join' => array('kota b','b.id_kota = a.id_kota'),
-			'where' => array('a.status'=>1,'a.approve'=>1,'a.top5'=>1),
-			'order_by' => 'a.votes5 desc',
-			'limit' => '5'
-		));
-		$data['soundroom'] = $this->model_global->get_data(array(
-			'select' => 'a.*, b.kota,b.provinsi',
-			'table' => 'soundroom a',
-			'join' => array('kota b','b.id_kota = a.id_kota'),
-			'where' => array('a.status'=>1,'a.approve'=>1),
-			'order_by' => 'a.votes desc',
-		));
-		*/
+		$data['page_season'] = $year;
 
 		$data['soundroomtop'] = $this->model_global->get_data(array(
 			'select' => 'a.*, b.kota,b.provinsi',
@@ -238,13 +209,22 @@ class Soundroom extends MY_Controller {
 	}
 
 	public function search(){
-        $year = isset($_GET['year']) ? $_GET['year'] : '2023';
+        // $year = isset($_GET['year']) ? $_GET['year'] : '2023';
 
-        if (!in_array($year, ['2025','2024','2023', '2022', '2019'])) {
-            $year = '2023';
-        }
+        // if (!in_array($year, ['2025','2024','2023', '2022', '2019'])) {
+        //     $year = '2023';
+        // }
+
+		$year = isset($_GET['year']) ? $_GET['year'] : '2026';
+
+		if (!in_array($year, ['2026', '2025','2024','2023', '2022', '2019'])) {
+			$year = '2026';
+		}
 
         switch ($year) {
+			case '2026':
+                $table = 'soundroom_2026';
+                break;
 			case '2025':
                 $table = 'soundroom_2025';
                 break;
@@ -266,6 +246,8 @@ class Soundroom extends MY_Controller {
         $data['video'] = array();
 		$data['website'] = $this->website;
 		$data['subtitle'] = " | Soundroom Search ";
+		$data['page_season'] = $year;
+
 		if(isset($_POST['txtsearch'])){
 			$data['search'] = $_POST['txtsearch'];
 
@@ -303,7 +285,6 @@ class Soundroom extends MY_Controller {
 		}
 
 		$ret['status'] = "false";
-		// $ret['new_page'] = "false";
 		$limit = 12;
 		$offset = $limit * $data_page;
 
@@ -314,6 +295,9 @@ class Soundroom extends MY_Controller {
         }
 
         switch ($year) {
+			case '2026':
+				$table = 'soundroom_2026';
+				break;
 			case '2025':
                 $table = 'soundroom_2025';
                 break;
@@ -361,7 +345,13 @@ class Soundroom extends MY_Controller {
 		$this->db->where('s.approve', 1);
 		$this->db->where('s.status', 1);
 
-		if ($year == '2023' || $year == '2025') {
+		// if ($year == '2023' || $year == '2025') {
+		// 	$this->db->order_by('s.top3 desc, s.rank asc');
+		// } else {
+		// 	$this->db->order_by('s.top3 desc');
+		// }
+
+		if ($year == '2023' || $year == '2025' || $year == '2026') {
 			$this->db->order_by('s.top3 desc, s.rank asc');
 		} else {
 			$this->db->order_by('s.top3 desc');
@@ -388,10 +378,6 @@ class Soundroom extends MY_Controller {
 
 		$this->db->limit($limit, $offset);
 		$soundroom = $this->db->get();
-		// var_dump($soundroom->num_rows());
-		// die();
-
-
 
 		//-- paging --
 		$galpage = ceil($galtot/12);
@@ -402,7 +388,6 @@ class Soundroom extends MY_Controller {
 		}
 
 		$soundroom_more = $soundroom->result_array();
-		// var_dump( count($soundroom_more) ); die();
 
 		$top15 = range(9, 15);
 		$top7 = range(2, 8);

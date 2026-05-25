@@ -949,6 +949,7 @@
 		dataform.append('year', $('#season-year').val());
 		dataform.append('genre', $('#genre').val());
 
+
 		$.ajax({
 			url: '<?= base_url() ?>soundroom/getPlayList',
 			type: "POST",
@@ -966,6 +967,7 @@
 				console.error('Response: ', xhr.responseText); // Log the response text
 			},
 			success: function(e) {
+				// console.log("Data dari server:", e);
 				if (e.status == "true") {
 					$('#listtableplay').html(e.html);
 					if (ke != '0') {

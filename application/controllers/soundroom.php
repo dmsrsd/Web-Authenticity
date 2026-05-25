@@ -802,6 +802,7 @@ class Soundroom extends MY_Controller {
 				$filename = isset($row['sound']) ? (string) $row['sound'] : '';
 				$path = "uploads/soundroom/".$filename;
 				$fullpath = FCPATH.$path;
+
 				$duration = '-';
 				if($filename !== '' && is_file($fullpath)){
                     if ($lib_version == 1) {

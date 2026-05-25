@@ -669,9 +669,9 @@ class Soundroom extends MY_Controller {
 	public function getPlayList(){
         $year = isset($_POST['year']) ? $_POST['year'] : '2025';
 
-        if (!in_array($year, ['2026','2025','2024','2023', '2022', '2019'])) {
-            $year = '2023';
-        }
+		if (!in_array($year, ['2026', '2025','2024','2023', '2022', '2019'])) {
+			$year = '2023';
+		}
 
         switch ($year) {
 			case '2026':
@@ -704,6 +704,7 @@ class Soundroom extends MY_Controller {
 		// $where['a.approve']=1;
 		// $where['a.status']=1;
 		// $where['a.approve']=1;
+
 		$kota = isset($_POST['kota']) ? $_POST['kota'] : 'ALL';
 		if($kota !== "ALL" && $kota !== ""){
 			$where['b.id_kota'] = $kota;
@@ -717,6 +718,7 @@ class Soundroom extends MY_Controller {
 			$next = 1;
 			$paging = "12,0";
 		}
+
 		/*
 		$soundroom = $this->model_global->get_data(array(
 			'select' => 'a.*, b.kota,b.provinsi',
@@ -750,11 +752,13 @@ class Soundroom extends MY_Controller {
 		if(count($arr_kota)>0){
 			$this->db->where_in('s.id_kota', $arr_kota);
 		}
+
         if (isset($_POST['artist']) && $_POST['artist'] != '') {
             $this->db->like('s.judul', $_POST['artist']);
         }
 		$this->db->where('s.approve', 1);
 		$this->db->where('s.status', 1);
+
 		if(isset($_POST['genre']) && $_POST['genre'] != '' && $year == '2023' ){
 			$this->db->where('s.gendre', $_POST['genre']);
 		}
@@ -766,16 +770,14 @@ class Soundroom extends MY_Controller {
 			$this->db->where('s.gendre', $_POST['genre']);
 		}
 
-		if ($year == '2023') {
-			$this->db->order_by('s.top3 desc, s.rank asc');
-		} elseif ($year == '2024') {
+		if ($year == '2023' || $year == '2024') {
 			$this->db->order_by('s.top3 desc, s.rank asc');
 		} elseif ($year == '2025' || $year == '2026') {
-			//$this->db->group_by('sjudul');
 			$this->db->order_by('s.top3 desc, s.rank asc');
 		} else {
 			$this->db->order_by('s.top3 desc');
 		}
+
 		//tambahan karena ga kuat load semua data
 		//$this->db->limit(500, 0); 
 		$soundroom = $this->db->get()->result_array();

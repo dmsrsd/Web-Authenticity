@@ -37,7 +37,7 @@
 
 					if ($season == '2026') {
 						// Menggunakan URL gambar dari internet untuk 2026
-						echo "<img src='https://images.pexels.com/photos/16118368/pexels-photo-16118368.jpeg?_gl=1*1how77e*_ga*MTY4OTc4NTI0Mi4xNzc5Njc2NjQ4*_ga_8JE65Q40S6*czE3Nzk2NzY2NDckbzEkZzEkdDE3Nzk2NzY2NTkkajQ4JGwwJGgw' alt='Soundroom 2026'>";
+						echo "<img src='https://i.pinimg.com/736x/b4/27/ba/b427bace554f0b20981178fe849bc442.jpg' alt='Soundroom 2026'>";
 					} 
 					else if ($season == '2025') {
 						echo "<img src='" . base_url() . "assets/front/img/soundroom/bg-soundroom-new-2025.png' alt='Soundroom 2025'>";
@@ -948,6 +948,7 @@
 		dataform.append('artist', $('#search-artist').val());
 		dataform.append('year', $('#season-year').val());
 		dataform.append('genre', $('#genre').val());
+
 		$.ajax({
 			url: '<?= base_url() ?>soundroom/getPlayList',
 			type: "POST",

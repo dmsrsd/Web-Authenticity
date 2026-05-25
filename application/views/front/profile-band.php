@@ -88,9 +88,8 @@
 							</div>
 						</div>
 
-						<!-- INI BUAT UPLOAD MUSIC -->
+						<!-- INI BUAT UPDATE BAND -->
 						<?php if($band && isset($band['id_soundroom'])): ?>
-							
 							<div class="col-lg-8 col-md-10 mt-3">
 								<div class="card card--shadow pt-3">
 									<div class="panel-body">

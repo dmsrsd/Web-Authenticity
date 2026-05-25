@@ -315,12 +315,6 @@ function cur2($ini, $now)
 					</li>
 					<li class="dropdown">
 						<?php
-							// $menu_label = 'Season';
-							// $season = isset($_GET['year']) ? $_GET['year'] : '';
-							// if($season != ''){
-							// 	$menu_label = 'Seasoning'.$season;
-							// }
-
 							$current_uri = $this->uri->uri_string();
     
 							// Tentukan season berdasarkan prioritas
@@ -331,8 +325,17 @@ function cur2($ini, $now)
 							}
 							
 							// Backup: Jika masih kosong tapi URL mengandung '2026', set manual
-							if (empty($active_season) && strpos($current_uri, 'soundroom-2026') !== false) {
+							// if (empty($active_season) && strpos($current_uri, 'soundroom-2026') !== false) {
+							// 	$active_season = '2026';
+							// }
+
+							// Pastikan pengecekan dilakukan lebih awal dan lebih spesifik
+							if (strpos($current_uri, 'soundroom2026') !== false) {
 								$active_season = '2026';
+							} elseif (isset($_GET['year'])) {
+								$active_season = $_GET['year'];
+							} else {
+								$active_season = isset($page_season) ? $page_season : '';
 							}
 
 							// 2. Tentukan label menu
@@ -381,7 +384,6 @@ function cur2($ini, $now)
 
 
 <script>
-    // Pastikan jQuery sudah dimuat
     jQuery(document).ready(function($) {
         $('.sound-season').on('click', function(e) {
             e.preventDefault();
@@ -391,8 +393,11 @@ function cur2($ini, $now)
             console.log("Season diklik: " + year); 
 
             if (year == '2026') {
-                // Gunakan path absolut yang bersih
-                window.location.href = base + 'soundroom-2026';
+                // Gunakan path absolut yang bersih\
+				// LANDING PAGE CUSTOM
+                // window.location.href = base + 'soundroom-2026';
+				// MICROSITE EXISTING
+				window.location.href = base + 'soundroom?year=' + year;
             } else {
                 if (typeof loadSeasonData === 'function') {
                     loadSeasonData(year);

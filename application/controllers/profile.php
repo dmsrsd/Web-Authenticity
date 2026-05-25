@@ -718,8 +718,8 @@ class Profile extends MY_Controller {
 	}
 
 	public function soundroom(){
-		// $limit_date = '2025-07-04 00'; //tanggal selesai event
-		$limit_date = '2026-12-31 00';
+		$limit_date = '2025-07-04 00';
+		// $limit_date = '2026-12-31 00';
 		$valid_date = date('Y-m-d H');
 		if($valid_date >= $limit_date){
 			redirect(base_url()."soundroom");
@@ -1078,7 +1078,9 @@ class Profile extends MY_Controller {
 	public function submitsound(){
 
 		$this->load->library('form_validation');
-		$limit_date = '2025-07-04 00'; //tanggal selesai event
+		// $limit_date = '2025-07-04 00';
+		$limit_date = '2026-12-31 00';
+
 		$valid_date = date('Y-m-d H');
 		if($valid_date >= $limit_date){
 			redirect(base_url()."soundroom");
@@ -1416,7 +1418,7 @@ class Profile extends MY_Controller {
 
 	//mulai tambahan vote 2-6-2025
 	public function vote(){
-		$limit_date = '2025-12-01 00'; //tanggal selesai event
+		$limit_date = '2025-12-01 00';
 		$valid_date = date('Y-m-d H');
 		if($valid_date >= $limit_date){
 			redirect(base_url()."soundroom");
@@ -1444,6 +1446,7 @@ class Profile extends MY_Controller {
 			$this->load->view('front/votesoundroom',$data);
 		}
 	}
+	
 	public function submitvote(){
 		$limit_date = '2025-12-01 00'; //tanggal selesai event
 		$valid_date = date('Y-m-d H');
@@ -1485,6 +1488,7 @@ class Profile extends MY_Controller {
 		echo json_encode($ret);
 		return;
 	}
+
 	public function updatevote(){
 		$id_vote = $_GET['id_vote'];
 		$jml_vote = $this->db->query("SELECT * FROM vote_member_2025 Where id_vote='".$id_vote."'")->num_rows();

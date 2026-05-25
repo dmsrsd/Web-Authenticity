@@ -12,11 +12,14 @@ class Soundroom extends MY_Controller {
 	public function share($id){
         $year = isset($_GET['year']) ? $_GET['year'] : '2023';
 
-        if (!in_array($year, ['2025','2024', '2023', '2022', '2019'])) {
+        if (!in_array($year, ['2026', '2025','2024', '2023', '2022', '2019'])) {
             $year = '2023';
         }
 
         switch ($year) {
+			case '2026':
+                $table = 'soundroom_2026';
+                break;
             case '2025':
                 $table = 'soundroom_2025';
                 break;
@@ -34,12 +37,7 @@ class Soundroom extends MY_Controller {
                 break;
         }
 		
-		// $data['soundroom'] = $this->model_global->get_data(array(
-		// 	'data' => 'row',
-		// 	'table' => $table,
-		// 	'where' => array('id_soundroom'=> $id),
-		// 	'limit' => '1'
-		// ));
+
 		$data['soundroom'] = $this->model_global->get_data(array(
 			'data' => 'row',
 			'select' => 'a.*, b.kota,b.provinsi',
@@ -57,12 +55,12 @@ class Soundroom extends MY_Controller {
 		$year = isset($_GET['year']) ? $_GET['year'] : '2025';
 
 		// jika tahun tidak termasuk list yang diizinkan, redirect ke 2025
-		if(!in_array($year, ['2025','2024','2023','2022'])){
-			redirect(base_url()."soundroom?year=2025"); // redirect default ke tahun 2025
+		if(!in_array($year, ['2026', '2025','2024','2023','2022'])){
+				redirect(base_url()."soundroom?year=2025");
 			return;
 		}
 
-        if (!in_array($year, ['2025','2024', '2023', '2022', '2019'])) {
+        if (!in_array($year, ['2026','2025','2024', '2023', '2022', '2019'])) {
             $year = '2023';
         }
 
@@ -104,7 +102,8 @@ class Soundroom extends MY_Controller {
 			'order_by' => $year == '2023' ? 'a.rank asc' : 'a.top3 asc',
 			'limit' => '3'
 		));
-		if ($year >= 2025){
+		
+		if ($year == '2026' || $year == '2025') {
 			$data['soundroom'] = $this->model_global->get_data(array(
 				'select' => 'a.*, b.kota,b.provinsi',
 				'table' => $table.' a',
@@ -137,12 +136,6 @@ class Soundroom extends MY_Controller {
 	}
 
 	public function winner(){
-        // $year = isset($_GET['year']) ? $_GET['year'] : '2023';
-		
-        // if (!in_array($year, ['2025','2024','2023', '2022', '2019'])) {
-			//     $year = '2023';
-			// }
-
 		$year = isset($_GET['year']) ? $_GET['year'] : '2026';
 
 		if (!in_array($year, ['2026', '2025','2024','2023', '2022', '2019'])) {
@@ -290,9 +283,9 @@ class Soundroom extends MY_Controller {
 
         $year = isset($_POST['year']) ? $_POST['year'] : '2024';
 
-        if (!in_array($year, ['2025','2024','2023', '2022', '2019'])) {
-            $year = '2023';
-        }
+		if (!in_array($year, ['2026', '2025','2024','2023', '2022', '2019'])) {
+			$year = '2023';
+		}
 
         switch ($year) {
 			case '2026':
@@ -345,12 +338,6 @@ class Soundroom extends MY_Controller {
 		$this->db->where('s.approve', 1);
 		$this->db->where('s.status', 1);
 
-		// if ($year == '2023' || $year == '2025') {
-		// 	$this->db->order_by('s.top3 desc, s.rank asc');
-		// } else {
-		// 	$this->db->order_by('s.top3 desc');
-		// }
-
 		if ($year == '2023' || $year == '2025' || $year == '2026') {
 			$this->db->order_by('s.top3 desc, s.rank asc');
 		} else {
@@ -370,7 +357,7 @@ class Soundroom extends MY_Controller {
 		$this->db->where('s.approve', 1);
 		$this->db->where('s.status', 1);
 
-		if ($year == '2023' || $year == '2025') {
+		if ($year == '2023' || $year == '2025' || $year == '2026') {
 			$this->db->order_by('s.top3 desc, s.rank asc');
 		} else {
 			$this->db->order_by('s.top3 desc');
@@ -420,7 +407,7 @@ class Soundroom extends MY_Controller {
 					}
 				}
 				if ($year >= '2024') { //buat if jika 2024 ke atas bisa share
-					if ($year == '2025' && isset($row['top10']) && $row['top10'] == 1) {
+					if (($year == '2025' || $year == '2026') && isset($row['top10']) && $row['top10'] == 1) {
 						$html .= "<div class='badge-winner'><img src='". base_url() ."assets/front/img/soundroom/badge-10.png'></div>";
 					}
 					$url_share = base_url()."soundroom/share/".$row['id_soundroom']."?year=".$year."&utm_source=sroom24&utm_medium=sroom24visitor&utm_campaign=sr24".$row['judul']."&utm_id=sroom24visitor&utm_term=sroom24visitor";
@@ -503,11 +490,14 @@ class Soundroom extends MY_Controller {
 	public function getBand(){
         $year = isset($_POST['year']) ? $_POST['year'] : '2024';
 
-        if (!in_array($year, ['2025','2024','2023', '2022', '2019'])) {
+        if (!in_array($year, ['2026','2025','2024','2023', '2022', '2019'])) {
             $year = '2023';
         }
 
         switch ($year) {
+			case '2026':
+                $table = 'soundroom_2026';
+                break;
 			case '2025':
                 $table = 'soundroom_2025';
                 break;
@@ -679,11 +669,14 @@ class Soundroom extends MY_Controller {
 	public function getPlayList(){
         $year = isset($_POST['year']) ? $_POST['year'] : '2025';
 
-        if (!in_array($year, ['2025','2024','2023', '2022', '2019'])) {
+        if (!in_array($year, ['2026','2025','2024','2023', '2022', '2019'])) {
             $year = '2023';
         }
 
         switch ($year) {
+			case '2026':
+                $table = 'soundroom_2026';
+                break;
 			case '2025':
                 $table = 'soundroom_2025';
                 break;
@@ -768,7 +761,8 @@ class Soundroom extends MY_Controller {
 		if(isset($_POST['genre']) && $_POST['genre'] != '' && $year == '2024' ){
 			$this->db->where('s.gendre', $_POST['genre']);
 		}
-		if(isset($_POST['genre']) && $_POST['genre'] != '' && $year == '2025' ){
+
+		if(isset($_POST['genre']) && $_POST['genre'] != '' && ($year == '2025' || $year == '2026')){
 			$this->db->where('s.gendre', $_POST['genre']);
 		}
 
@@ -776,7 +770,7 @@ class Soundroom extends MY_Controller {
 			$this->db->order_by('s.top3 desc, s.rank asc');
 		} elseif ($year == '2024') {
 			$this->db->order_by('s.top3 desc, s.rank asc');
-		} elseif ($year == '2025') {
+		} elseif ($year == '2025' || $year == '2026') {
 			//$this->db->group_by('sjudul');
 			$this->db->order_by('s.top3 desc, s.rank asc');
 		} else {
@@ -1335,9 +1329,7 @@ class Soundroom extends MY_Controller {
 			echo json_encode($ret);
 		}
 
-    
-	
-	public function check_music_metadata(){
+		public function check_music_metadata(){
 
         $file = isset($_GET['file']) ? $_GET['file'] : '';
         $version = isset($_GET['version']) ? $_GET['version'] : '2';
@@ -1427,4 +1419,5 @@ class Soundroom extends MY_Controller {
 		$this->load->view('front/soundroom-landing-2026', $data);
 		$this->load->view('front/podcast/footerfp');
 	}
+
 }

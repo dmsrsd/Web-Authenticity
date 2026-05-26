@@ -7,6 +7,7 @@ class Dashboard extends AdminController {
 		$this->template['datasession'] = $c["userinfo"];
 		//$this->load->library('dompdf_gen');
     }
+
 	function url_get_contents ($Url) {
 		if (!function_exists('curl_init')){
 			die('CURL is not installed!');
@@ -21,15 +22,12 @@ class Dashboard extends AdminController {
 
 	public function cekcekan(){
 		if(function_exists('fsockopen')) {
-
-		echo "fsockopen function is enabled";
-
+			echo "fsockopen function is enabled";
 		}else {
-
-		echo "fsockopen is not enabled";
-
+			echo "fsockopen is not enabled";
 		}
 	}
+
 	public function index(){
 		$c = $this->session->all_userdata();
 		$this->template['website'] = $this->model_global->get_data(array('data' => 'row','table' => 'website', 'where' => array('id_website' => 1)));
@@ -84,6 +82,7 @@ class Dashboard extends AdminController {
 		$this->template['data'] = $this->model_global->get_data(array('select' => '*', 'table' => 'darbotz','where' => array('status !=' => -1), 'order_by' => 'id_darbotz desc'));
 		$this->render('darbotz');
 	}
+
 	public function darbotz_new(){
 		$this->template['website'] = $this->model_global->get_data(array('data' => 'row','table' => 'website', 'where' => array('id_website' => 1)));
 		$this->template["judul"] = "Insert Darbotz  ";
@@ -93,6 +92,7 @@ class Dashboard extends AdminController {
 		}
 		$this->render('darbotz-new');
 	}
+
 	public function darbotz_product(){
 		$this->template['website'] = $this->model_global->get_data(array('data' => 'row','table' => 'website', 'where' => array('id_website' => 1)));
 		$this->template["judul"] = "Product ";
@@ -109,6 +109,7 @@ class Dashboard extends AdminController {
 		$this->template['data'] = $this->model_global->get_data(array('select' => '*', 'table' => 'headkategori', 'order_by' => 'head_kategori desc'));
 		$this->render('headkategori');
 	}
+
 	public function headkategori_new(){
 		$this->template['website'] = $this->model_global->get_data(array('data' => 'row','table' => 'website', 'where' => array('id_website' => 1)));
 		$this->template["judul"] = "Insert Slide ";
@@ -118,12 +119,14 @@ class Dashboard extends AdminController {
 		}
 		$this->render('headkategori-new');
 	}
+
 	public function store(){
 		$this->template['website'] = $this->model_global->get_data(array('data' => 'row','table' => 'website', 'where' => array('id_website' => 1)));
 		$this->template["judul"] = "Store ";
 		$this->template['data'] = $this->model_global->get_data(array('select' => '*', 'table' => 'store','where' => array('status !=' => -1), 'order_by' => 'id_store desc'));
 		$this->render('store');
 	}
+
 	public function store_new(){
 		$this->template['website'] = $this->model_global->get_data(array('data' => 'row','table' => 'website', 'where' => array('id_website' => 1)));
 		$this->template["judul"] = "Insert Store ";
@@ -133,12 +136,14 @@ class Dashboard extends AdminController {
 		}
 		$this->render('store-new');
 	}
+
 	public function slide(){
 		$this->template['website'] = $this->model_global->get_data(array('data' => 'row','table' => 'website', 'where' => array('id_website' => 1)));
 		$this->template["judul"] = "Slide ";
 		$this->template['data'] = $this->model_global->get_data(array('select' => '*', 'table' => 'slide','where' => array('status !=' => -1,'kategori'=>1), 'order_by' => 'id_slide desc'));
 		$this->render('slide');
 	}
+
 	public function slide_new(){
 		$this->template['website'] = $this->model_global->get_data(array('data' => 'row','table' => 'website', 'where' => array('id_website' => 1)));
 		$this->template["judul"] = "Insert Slide ";
@@ -282,6 +287,7 @@ class Dashboard extends AdminController {
 		$this->template['data'] = $this->model_global->get_data(array('select' => '*', 'table' => 'slide_district_campaign','where' => array('status !=' => -1,'kategori'=>4), 'order_by' => 'id_slide desc'));
 		$this->render('slidedistrictcampaign');
 	}
+
 	public function slidedistrictcampaign_new(){
 		$this->template['website'] = $this->model_global->get_data(array('data' => 'row','table' => 'website', 'where' => array('id_website' => 1)));
 		$this->template["judul"] = "Insert Slide ";
@@ -337,11 +343,13 @@ class Dashboard extends AdminController {
 		$this->template['data'] = $this->model_global->get_data(array('select' => '*', 'table' => 'ever_meta', 'order_by' => 'page asc'));
 		$this->render('meta');
 	}
+
 	public function meta_new(){
 		$this->template["judul"] = "Edit Meta";
 		$this->template['data'] = $this->model_global->get_data(array('data' => 'row','table' => 'ever_meta', 'where' => array( 'id_meta' => $_GET['_id'])));
 		$this->render('meta-new');
 	}
+
 	public function foto(){
 		$this->template['website'] = $this->model_global->get_data(array('data' => 'row','table' => 'website', 'where' => array('id_website' => 1)));
 		$this->template["judul"] = "Foto";
@@ -354,6 +362,7 @@ class Dashboard extends AdminController {
 		));
 		$this->render('foto');
 	}
+
 	public function foto_new(){
 		$this->template['website'] = $this->model_global->get_data(array('data' => 'row','table' => 'website', 'where' => array('id_website' => 1)));
 		$this->template["judul"] = "Insert Foto";
@@ -370,6 +379,7 @@ class Dashboard extends AdminController {
 		$this->template['data'] = $this->model_global->get_data(array('select' => '*', 'table' => 'video','where' => array('status !=' => -1), 'order_by' => 'id_video desc'));
 		$this->render('video');
 	}
+
 	public function video_new(){
 		$this->template['website'] = $this->model_global->get_data(array('data' => 'row','table' => 'website', 'where' => array('id_website' => 1)));
 		$this->template["judul"] = "Insert Video ";
@@ -379,7 +389,6 @@ class Dashboard extends AdminController {
 		}
 		$this->render('video-new');
 	}
-
 
     public function invoice(){
 		$id = $_GET['id'];
@@ -555,6 +564,7 @@ class Dashboard extends AdminController {
 		$ret['qr'] = $code;
 		echo json_encode($ret);
 	}
+
 	public function ticket(){
 		$this->template['website'] = $this->model_global->get_data(array('data' => 'row','table' => 'website', 'where' => array('id_website' => 1)));
 		$this->template["judul"] = "Ticket ";
@@ -565,6 +575,7 @@ class Dashboard extends AdminController {
 		}
 		$this->render('ticket');
 	}
+
 	public function ticket_new(){
 		$this->template['website'] = $this->model_global->get_data(array('data' => 'row','table' => 'website', 'where' => array('id_website' => 1)));
 		$this->template["judul"] = "Insert Ticket ";
@@ -589,6 +600,7 @@ class Dashboard extends AdminController {
 		));
 		$this->render('redeem');
 	}
+
 	public function resendregis(){
 		$remote = $_SERVER['REMOTE_ADDR'];
 		if($remote =="::1"){
@@ -658,8 +670,8 @@ class Dashboard extends AdminController {
 
 
 		echo json_encode($ret);
-
 	}
+
 	public function orderresendwatext(){
 		$id = $_POST['iod'];
 		$ret['status'] = "true";
@@ -690,8 +702,8 @@ class Dashboard extends AdminController {
 		}
 
 		echo json_encode($ret);
-
 	}
+
 	public function orderresendwaqr(){
 		$remote = $_SERVER['REMOTE_ADDR'];
 		if($remote =="::1"){
@@ -726,6 +738,7 @@ class Dashboard extends AdminController {
 		echo json_encode($ret);
 
 	}
+
 	public function orderresendemail(){
 		$remote = $_SERVER['REMOTE_ADDR'];
 		if($remote =="::1"){
@@ -848,6 +861,7 @@ class Dashboard extends AdminController {
 		echo json_encode($ret);
 
 	}
+
 	public function orderdetil(){
 		$id = $_POST['iod'];
 		$ret['status'] = "true";
@@ -941,6 +955,7 @@ class Dashboard extends AdminController {
 
 		echo json_encode($ret);
 	}
+
 	public function ordershow(){
 		$idticket = $_GET['ticket'];
 		$type = $_GET['type'];
@@ -976,6 +991,7 @@ class Dashboard extends AdminController {
 		));
 		$this->render('ordershow');
 	}
+
 	public function order(){
 		$this->template["judul"] = "Order";
 		$this->template['website'] = $this->model_global->get_data(array('data' => 'row','table' => 'website', 'where' => array('id_website' => 1)));
@@ -1000,6 +1016,7 @@ class Dashboard extends AdminController {
 		}
 		$this->render('order');
 	}
+
 	public function historypointajax(){
 		$search = isset($_POST['search']['value']) ? $this->db->escape_like_str($_POST['search']['value']) : '';
 		$limit = (int) (isset($_POST['length']) ? $_POST['length'] : 10);
@@ -1041,6 +1058,7 @@ class Dashboard extends AdminController {
 		header('Content-Type: application/json');
 		echo json_encode($callback);
 	}
+
 	public function historypoint(){
 		$this->template["judul"] = "History Point";
 		$this->template['website'] = $this->model_global->get_data(array('data' => 'row','table' => 'website', 'where' => array('id_website' => 1)));
@@ -1055,6 +1073,7 @@ class Dashboard extends AdminController {
 		$this->template['data'] = $this->model_global->get_data(array('select' => '*', 'table' => 'jenis_point', 'order_by' => 'id_jenis_point asc'));
 		$this->render('point');
 	}
+
 	public function point_new(){
 		$this->template['website'] = $this->model_global->get_data(array('data' => 'row','table' => 'website', 'where' => array('id_website' => 1)));
 		$this->template["judul"] = "Insert Point";
@@ -1064,12 +1083,14 @@ class Dashboard extends AdminController {
 		}
 		$this->render('point-new');
 	}
+
 	public function eo(){
 		$this->template['website'] = $this->model_global->get_data(array('data' => 'row','table' => 'website', 'where' => array('id_website' => 1)));
 		$this->template["judul"] = "EO";
 		$this->template['data'] = $this->model_global->get_data(array('select' => '*', 'table' => 'eo','where' => array('status !=' => -1), 'order_by' => 'nama asc'));
 		$this->render('eo');
 	}
+
 	public function eo_new(){
 		$this->template['website'] = $this->model_global->get_data(array('data' => 'row','table' => 'website', 'where' => array('id_website' => 1)));
 		$this->template["judul"] = "Insert EO";
@@ -1079,12 +1100,14 @@ class Dashboard extends AdminController {
 		}
 		$this->render('eo-new');
 	}
+
 	public function kategori(){
 		$this->template['website'] = $this->model_global->get_data(array('data' => 'row','table' => 'website', 'where' => array('id_website' => 1)));
 		$this->template["judul"] = "Kategori";
 		$this->template['data'] = $this->model_global->get_data(array('select' => '*', 'table' => 'kategori','where' => array('status !=' => -1), 'order_by' => 'head_kategori asc'));
 		$this->render('kategori');
 	}
+
 	public function kategori_new(){
 		$this->template['website'] = $this->model_global->get_data(array('data' => 'row','table' => 'website', 'where' => array('id_website' => 1)));
 		$this->template["judul"] = "Insert Kategori";
@@ -1094,6 +1117,7 @@ class Dashboard extends AdminController {
 		}
 		$this->render('kategori-new');
 	}
+
 	public function designcompetition(){
 		$this->template["judul"] = "Poster Challenge";
 		$this->template['website'] = $this->model_global->get_data(array('data' => 'row','table' => 'website', 'where' => array('id_website' => 1)));
@@ -1106,6 +1130,7 @@ class Dashboard extends AdminController {
 		));
 		$this->render('designcompetition');
 	}
+
 	public function designcompetition_new(){
 		$this->template["judul"] = "Insert Poster Challenge";
 		$this->template['website'] = $this->model_global->get_data(array('data' => 'row','table' => 'website', 'where' => array('id_website' => 1)));
@@ -1117,6 +1142,7 @@ class Dashboard extends AdminController {
 		}
 		$this->render('designcompetition-new');
 	}
+
 	public function newcampaign(){
 		$this->template["judul"] = "New Campaign";
 		$this->template['website'] = $this->model_global->get_data(array('data' => 'row','table' => 'website', 'where' => array('id_website' => 1)));
@@ -1129,6 +1155,7 @@ class Dashboard extends AdminController {
 		));
 		$this->render('newcampaign');
 	}
+
 	public function newcampaign_new(){
 		$this->template["judul"] = "Insert New Campaign";
 		$this->template['website'] = $this->model_global->get_data(array('data' => 'row','table' => 'website', 'where' => array('id_website' => 1)));
@@ -1140,6 +1167,7 @@ class Dashboard extends AdminController {
 		}
 		$this->render('newcampaign-new');
 	}
+
 	public function posterchallenge(){
 		$this->template["judul"] = "Poster Challenge";
 		$this->template['website'] = $this->model_global->get_data(array('data' => 'row','table' => 'website', 'where' => array('id_website' => 1)));
@@ -1152,6 +1180,7 @@ class Dashboard extends AdminController {
 		));
 		$this->render('posterchallenge');
 	}
+
 	public function posterchallenge_new(){
 		$this->template["judul"] = "Insert Poster Challenge";
 		$this->template['website'] = $this->model_global->get_data(array('data' => 'row','table' => 'website', 'where' => array('id_website' => 1)));
@@ -1163,6 +1192,7 @@ class Dashboard extends AdminController {
 		}
 		$this->render('posterchallenge-new');
 	}
+
 	public function soundroom_2022(){
 		$this->template["judul"] = "Soundroom";
 		$this->template['website'] = $this->model_global->get_data(array('data' => 'row','table' => 'website', 'where' => array('id_website' => 1)));
@@ -1182,6 +1212,7 @@ class Dashboard extends AdminController {
 		));
 		$this->render('soundroom');
 	}
+
 	public function soundroom_2019(){
 		$this->template["judul"] = "Soundroom 2019";
 		$this->template['website'] = $this->model_global->get_data(array('data' => 'row','table' => 'website', 'where' => array('id_website' => 1)));
@@ -1201,6 +1232,7 @@ class Dashboard extends AdminController {
 		));
 		$this->render('soundroom_2019');
 	}
+
     public function soundroom_2023(){
         $this->template["judul"] = "Soundroom 2023";
         $this->template['website'] = $this->model_global->get_data(array('data' => 'row','table' => 'website', 'where' => array('id_website' => 1)));
@@ -1240,6 +1272,7 @@ class Dashboard extends AdminController {
         ));
         $this->render('soundroom_2024');
     }
+
 	public function soundroom_2025(){
         $this->template["judul"] = "Soundroom 2025";
         $this->template['website'] = $this->model_global->get_data(array('data' => 'row','table' => 'website', 'where' => array('id_website' => 1)));
@@ -1259,24 +1292,92 @@ class Dashboard extends AdminController {
         ));
         $this->render('soundroom_2025');
     }
+
+	public function soundroom_2026(){
+        $this->template["judul"] = "Soundroom 2026";
+        $this->template['website'] = $this->model_global->get_data(array(
+            'data' => 'row',
+            'table' => 'website', 
+            'where' => array('id_website' => 1)
+        ));
+        
+        // Mengambil semua data soundroom 2026
+        $this->template['data'] = $this->model_global->get_data(array(
+            'select' => 'a.*, b.fullname as member',
+            'table' => 'soundroom_2026 a',
+            'join' => array('member b', 'b.id_member = a.created_by'),
+            'where' => array('a.status !=' => -1, 'a.created_by !=' => "1"),
+            'order_by' => 'a.votes desc'
+        ));
+        
+        // Mengambil data top 10 soundroom 2026
+        $this->template['data3'] = $this->model_global->get_data(array(
+            'select' => 'a.*, b.fullname as member',
+            'table' => 'soundroom_2026 a',
+            'join' => array('member b', 'b.id_member = a.created_by'),
+            'where' => array('a.status !=' => -1, 'a.created_by !=' => "1", "a.top10" => "1"),
+            'order_by' => 'a.rank asc'
+        ));
+        
+        $this->render('soundroom_2026');
+    }
+
+	// public function soundroom_new(){
+	// 	$this->template["judul"] = "Insert Soundroom";
+	// 	$this->template['website'] = $this->model_global->get_data(array('data' => 'row','table' => 'website', 'where' => array('id_website' => 1)));
+	// 	if(isset($_GET['_id']) && $_GET['_id'] != ''){
+    //         $table = 'soundroom';
+
+    //         if (isset($_GET['_year']) && $_GET['_year'] == '2023') {
+    //             $table = 'soundroom_2023';
+    //         } elseif (isset($_GET['_year']) && $_GET['_year'] == '2024') {
+    //             $table = 'soundroom_2024';
+    //         }  elseif (isset($_GET['_year']) && $_GET['_year'] == '2025') {
+    //             $table = 'soundroom_2025';
+    //         }
+
+	// 		$this->template["judul"] = "Edit Soundroom";
+	// 		$this->template['data'] = $this->model_global->get_data(array('data' => 'row','table' => $table, 'where' => array('status !=' => -1, 'id_soundroom' => $_GET['_id'])));
+	// 		$this->template['member'] = $this->model_global->get_data(array('data' => 'row','table' => 'member', 'where' => array('id_member' => $this->template['data']['created_by'])));
+
+	// 	}
+	// 	$this->render('soundroom-new');
+	// }
+
 	public function soundroom_new(){
 		$this->template["judul"] = "Insert Soundroom";
 		$this->template['website'] = $this->model_global->get_data(array('data' => 'row','table' => 'website', 'where' => array('id_website' => 1)));
-		if(isset($_GET['_id']) && $_GET['_id'] != ''){
-            $table = 'soundroom';
+		
+		// Inisialisasi default agar tidak error di view
+		$this->template['member'] = ['fullname' => '', 'email' => '', 'hp' => ''];
+		$this->template['data'] = [];
 
-            if (isset($_GET['_year']) && $_GET['_year'] == '2023') {
-                $table = 'soundroom_2023';
-            } elseif (isset($_GET['_year']) && $_GET['_year'] == '2024') {
-                $table = 'soundroom_2024';
-            }  elseif (isset($_GET['_year']) && $_GET['_year'] == '2025') {
-                $table = 'soundroom_2025';
-            }
+		if(isset($_GET['_id']) && $_GET['_id'] != ''){
+			$table = 'soundroom';
+			// Tambahkan logic 2026 di sini agar ID bisa terbaca di tabel 2026
+			if (isset($_GET['_year'])) {
+				$year = $_GET['_year'];
+				if ($year == '2023') $table = 'soundroom_2023';
+				elseif ($year == '2024') $table = 'soundroom_2024';
+				elseif ($year == '2025') $table = 'soundroom_2025';
+				elseif ($year == '2026') $table = 'soundroom_2026';
+			}
 
 			$this->template["judul"] = "Edit Soundroom";
-			$this->template['data'] = $this->model_global->get_data(array('data' => 'row','table' => $table, 'where' => array('status !=' => -1, 'id_soundroom' => $_GET['_id'])));
-			$this->template['member'] = $this->model_global->get_data(array('data' => 'row','table' => 'member', 'where' => array('id_member' => $this->template['data']['created_by'])));
-
+			$this->template['data'] = $this->model_global->get_data(array(
+                'data' => 'row',
+                'table' => $table, 
+                'where' => array('status !=' => -1, 'id_soundroom' => $_GET['_id']),
+                'order_by' => 'created_date DESC' 
+            ));
+			
+			// Cek jika data soundroom ditemukan, baru ambil data member
+			if (!empty($this->template['data'])) {
+				$member_data = $this->model_global->get_data(array('data' => 'row','table' => 'member', 'where' => array('id_member' => $this->template['data']['created_by'])));
+				if (!empty($member_data)) {
+					$this->template['member'] = $member_data;
+				}
+			}
 		}
 		$this->render('soundroom-new');
 	}
@@ -1367,6 +1468,7 @@ class Dashboard extends AdminController {
 		));
 		$this->render('write');
 	}
+
 	public function write_new(){
 		$this->template["judul"] = "Insert Member's Article";
 		$this->template['website'] = $this->model_global->get_data(array('data' => 'row','table' => 'website', 'where' => array('id_website' => 1)));
@@ -1379,6 +1481,7 @@ class Dashboard extends AdminController {
 		}
 		$this->render('write-new');
 	}
+
 	public function artikel(){
 		$head = isset($_GET['k']) ? $_GET['k'] : 'music';
 		if (!isset($this->template['headkategori'][$head])) {
@@ -1397,6 +1500,7 @@ class Dashboard extends AdminController {
 		));
 		$this->render('artikel');
 	}
+
 	public function artikel_new(){
 		$head = isset($_GET['k']) ? $_GET['k'] : 'music';
 		if (!isset($this->template['headkategori'][$head])) {
@@ -1414,6 +1518,7 @@ class Dashboard extends AdminController {
 		}
 		$this->render('artikel-new');
 	}
+
 	public function redeempoint(){
 		$this->template["judul"] = "Redeem Point";
 		$this->template['website'] = $this->model_global->get_data(array('data' => 'row','table' => 'website', 'where' => array('id_website' => 1)));
@@ -1426,6 +1531,7 @@ class Dashboard extends AdminController {
 		));
 		$this->render('redeempoint');
 	}
+
 	public function redeempoint_new(){
 		$this->template["judul"] = "Insert Redeem Point";
 		$this->template['website'] = $this->model_global->get_data(array('data' => 'row','table' => 'website', 'where' => array('id_website' => 1)));
@@ -1435,6 +1541,7 @@ class Dashboard extends AdminController {
 		}
 		$this->render('redeempoint-new');
 	}
+
 	public function kontributor(){
 		$this->template["judul"] = "Kontributor";
 		$this->template['website'] = $this->model_global->get_data(array('data' => 'row','table' => 'website', 'where' => array('id_website' => 1)));
@@ -1447,6 +1554,7 @@ class Dashboard extends AdminController {
 		));
 		$this->render('kontributor');
 	}
+
 	public function kontributor_new(){
 		$this->template["judul"] = "Insert Kontributor";
 		$this->template['website'] = $this->model_global->get_data(array('data' => 'row','table' => 'website', 'where' => array('id_website' => 1)));
@@ -1456,6 +1564,7 @@ class Dashboard extends AdminController {
 		}
 		$this->render('kontributor-new');
 	}
+
 	public function memberajax(){
 		if(isset($_GET['n'])){
 			$ac = " and active!=1";

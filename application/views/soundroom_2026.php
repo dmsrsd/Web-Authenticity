@@ -45,13 +45,13 @@
 						</td>
 						<td><?=isset($row['sound']) ? "<a href='".base_url()."uploads/soundroom/".$row['sound']."' target='_blank'>".$row['sound']."</a>" : ''?></td>
 						<td align='center'>
-							<a href='javascript:void(0);' class="label label-success" id='st-<?php echo $row['id_soundroom'];?>' onclick="change_status('st-<?php echo $row['id_soundroom'];?>','<?=isset($row['status']) ?  $status[$row['status']] : '-'?>','<?=$row['id_soundroom']?>','<?=base_url()?>cms/logic/delete_ajax/soundroom_2025/<?=$row['id_soundroom']?>')">
+							<a href='javascript:void(0);' class="label label-success" id='st-<?php echo $row['id_soundroom'];?>' onclick="change_status('st-<?php echo $row['id_soundroom'];?>','<?=isset($row['status']) ?  $status[$row['status']] : '-'?>','<?=$row['id_soundroom']?>','<?=base_url()?>cms/logic/delete_ajax/soundroom_2026/<?=$row['id_soundroom']?>')">
 								<?php echo isset($row['status']) ?  $status[$row['status']] : '-'?>
 							</a>
 						</td>
 						<td align='center'>
-							<a href="<?=$url?>soundroom-new?_id=<?=$row['id_soundroom']?>&_year=2025" class='btn btn-xs btn-success  '><i class="fa fa-edit "></i></a>
-							<a class='btn btn-xs btn-danger' onclick="return confirm('Are you sure you want to delete this item?');" href="<?=base_url()?>cms/logic/delete/soundroom_2025/<?=$row['id_soundroom']?>?part=write" class="text-danger"><i class="fa fa-trash-o"></i></a>
+							<a href="<?=$url?>soundroom-new?_id=<?=$row['id_soundroom']?>&_year=2026" class='btn btn-xs btn-success  '><i class="fa fa-edit "></i></a>
+							<a class='btn btn-xs btn-danger' onclick="return confirm('Are you sure you want to delete this item?');" href="<?=base_url()?>cms/logic/delete/soundroom_2026/<?=$row['id_soundroom']?>?part=write" class="text-danger"><i class="fa fa-trash-o"></i></a>
 						</td>
 					</tr>
 					<?php $no++; endforeach; endif; ?>
@@ -77,7 +77,6 @@
 						<th width=''>Member Band</th>
 						<th width=''>Nama Band</th>
 						<th width='100'>Sosmed</th>
-						<!--<th width='200'>Deskripsi Singkat</th> -->
 						<th width='100'>Image</th>
 						<th width='100'>Sound</th>
 						<th width='100'>Submit Date</th>
@@ -147,13 +146,13 @@
 						<td><?=isset($row['created_date']) ? $row['created_date'] : ''?></td>
 						<td><?=isset($row['approve']) ? $approve[$row['approve']] : ''?></td>
 						<td align='center'>
-							<a href='javascript:void(0);' class="label label-success" id='st-<?php echo $row['id_soundroom'];?>' onclick="change_status('st-<?php echo $row['id_soundroom'];?>','<?=isset($row['status']) ?  $status[$row['status']] : '-'?>','<?=$row['id_soundroom']?>','<?=base_url()?>cms/logic/delete_ajax/soundroom_2025/<?=$row['id_soundroom']?>')">
+							<a href='javascript:void(0);' class="label label-success" id='st-<?php echo $row['id_soundroom'];?>' onclick="change_status('st-<?php echo $row['id_soundroom'];?>','<?=isset($row['status']) ?  $status[$row['status']] : '-'?>','<?=$row['id_soundroom']?>','<?=base_url()?>cms/logic/delete_ajax/soundroom_2026/<?=$row['id_soundroom']?>')">
 								<?php echo isset($row['status']) ?  $status[$row['status']] : '-'?>
 							</a>
 						</td>
 						<td align='center'>
-							<a href="<?=$url?>soundroom-new?_id=<?=$row['id_soundroom']?>&_year=2025" class='btn btn-xs btn-success  '><i class="fa fa-edit "></i></a>
-							<a class='btn btn-xs btn-danger' onclick="return confirm('Are you sure you want to delete this item?');" href="<?=base_url()?>cms/logic/delete/soundroom_2025/<?=$row['id_soundroom']?>?part=write" class="text-danger"><i class="fa fa-trash-o"></i></a>
+							<a href="<?=$url?>soundroom-new?_id=<?=$row['id_soundroom']?>&_year=2026" class='btn btn-xs btn-success  '><i class="fa fa-edit "></i></a>
+							<a class='btn btn-xs btn-danger' onclick="return confirm('Are you sure you want to delete this item?');" href="<?=base_url()?>cms/logic/delete/soundroom_2026/<?=$row['id_soundroom']?>?part=write" class="text-danger"><i class="fa fa-trash-o"></i></a>
 						</td>
 					</tr>
 					<?php $no++; endforeach; endif; ?>

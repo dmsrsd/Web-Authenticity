@@ -738,24 +738,36 @@ class Logic extends AdminController {
             }
         }
     }
+
 	public function soundroomProses(){
 		//unset($_POST['submit']);
         $table = 'soundroom';
         $year = '';
 
-        if (isset($_GET['_year']) && $_GET['_year'] == '2025') {
-            $year = '2025';
-            $table = 'soundroom_2025';
-		} elseif (isset($_GET['_year']) && $_GET['_year'] == '2024') {
-            $year = '2024';
-            $table = 'soundroom_2024';
-		} elseif (isset($_GET['_year']) && $_GET['_year'] == '2023') {
-            $year = '2023';
-            $table = 'soundroom_2023';
-		} elseif (isset($_GET['_year']) && $_GET['_year'] == '2019') {
-			$year = '2019';
-			$table = 'soundroom_2019';
-		}
+		if (isset($_GET['_year'])) {
+				switch ($_GET['_year']) {
+					case '2026':
+						$year = '2026';
+						$table = 'soundroom_2026';
+						break;
+					case '2025':
+						$year = '2025';
+						$table = 'soundroom_2025';
+						break;
+					case '2024':
+						$year = '2024';
+						$table = 'soundroom_2024';
+						break;
+					case '2023':
+						$year = '2023';
+						$table = 'soundroom_2023';
+						break;
+					case '2019':
+						$year = '2019';
+						$table = 'soundroom_2019';
+						break;
+				}
+			}
 
         if(isset($_POST['action']) && $_POST['action'] == 'edit'){
             $id = $_POST['_id'];
@@ -956,6 +968,7 @@ class Logic extends AdminController {
             }
         }
     }
+
 	public function writeProses(){
 		//unset($_POST['submit']);
         if(isset($_POST['action']) && $_POST['action'] == 'edit'){
@@ -2382,6 +2395,7 @@ class Logic extends AdminController {
     		redirect(base_url());
     	}
     }
+
     public function delete($table,$id){
     	//$delete = $this->model_global->delete($table, array('id_'.$table => $id));
 		switch($table){
@@ -2451,19 +2465,38 @@ class Logic extends AdminController {
                     unlink("uploads/soundroom/" . $data['thumbnail']);
                 }
             break;
+			case "soundroom_2026";
+                $data = $this->model_global->get_data(array('data' => 'row','table' => 'soundroom_2026', 'where' => array('id_soundroom' => $id)));
+
+                if(file_exists("uploads/soundroom/".$data['sound'])){
+                    unlink("uploads/soundroom/".$data['sound']);
+                }
+                if(file_exists("uploads/soundroom/".$data['image'])){
+                    unlink("uploads/soundroom/".$data['image']);
+                }
+                if(file_exists("uploads/soundroom/".$data['thumbnail'])){
+                    unlink("uploads/soundroom/" . $data['thumbnail']);
+                }
+            break;
             case "slidepodcast";
                $table = 'slide';
             break;
 		}
 
 		$id_field = 'id_'.$table;
-		if($table == 'slide_district_campaign'){
-			$id_field = 'id_slide';
-		} elseif($table == 'soundroom_2025'){
-            $id_field = 'id_soundroom';
-		} elseif($table == 'soundroom_2024'){
-            $id_field = 'id_soundroom';
-        } elseif($table == 'soundroom_2023'){
+		// if($table == 'slide_district_campaign'){
+		// 	$id_field = 'id_slide';
+		// } elseif($table == 'soundroom_2025'){
+        //     $id_field = 'id_soundroom';
+		// } elseif($table == 'soundroom_2024'){
+        //     $id_field = 'id_soundroom';
+        // } elseif($table == 'soundroom_2023'){
+        //     $id_field = 'id_soundroom';
+        // }
+		
+        if($table == 'slide_district_campaign'){
+            $id_field = 'id_slide';
+        } elseif(in_array($table, ['soundroom_2026', 'soundroom_2025', 'soundroom_2024', 'soundroom_2023'])){
             $id_field = 'id_soundroom';
         }
 

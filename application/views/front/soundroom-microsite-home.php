@@ -271,6 +271,7 @@
 							echo "<div class='badge-winner'><img class='golden' src='". base_url() ."assets/front/img/soundroom/badge-golden.svg'></div>";
 						}
 					}
+
 					if ($row['top10'] == 1) {
 						if ($row['rank'] < 7) {
 							echo "<div class='badge-winner'><img src='". base_url() ."assets/front/img/soundroom/badge-6.png'></div>";
@@ -278,6 +279,7 @@
 							echo "<div class='badge-winner'><img src='". base_url() ."assets/front/img/soundroom/badge-10.png'></div>";
 						}
 					}
+					
 					$url_share = base_url()."soundroom/share/".$row['id_soundroom']."?year=".$year."&utm_source=sroom25&utm_medium=sroom25visitor&utm_campaign=sr25".$row['judul']."&utm_id=sroom25visitor&utm_term=sroom25visitor";
 					
 					if ($season >= '2024'){
@@ -341,6 +343,7 @@
 					</div>";
 				} ?>
 			</div>
+
 			<?php if ($galpage > 1) { ?>
 				<div class="text-center">
 					<a class="btn btn-outline-primary btn-loadmore" href="javascript:void(0);" onclick='get_more();' data-page='1'>Load more</a>

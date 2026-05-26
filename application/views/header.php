@@ -108,7 +108,7 @@ Moengage = moe({
             ){
 				$activestore = "active";
 			}
-			if($now=="soundroom" || $now=="soundroom-new" || $now=="video" || $now=="video-new" || $now=="soundroom-2019" || $now=="soundroom-2022" || $now=="soundroom-2023" || $now=="soundroom-2024"|| $now=="soundroom-2025"){
+			if($now=="soundroom" || $now=="soundroom-new" || $now=="video" || $now=="video-new" || $now=="soundroom-2019" || $now=="soundroom-2022" || $now=="soundroom-2023" || $now=="soundroom-2024"|| $now=="soundroom-2025" || $now=="soundroom-2026"){
 				$activesoundroom = "active";
 			}
 			if($now=="slidepodcast" || $now=="slidepodcast-new" || $now=="podcast" || $now=="podcast-new" ){
@@ -124,6 +124,7 @@ Moengage = moe({
 
 
 		?>
+
         <nav class="navbar-default navbar-side" role="navigation">
             <div class="sidebar-collapse">
                 <ul class="nav" id="main-menu">
@@ -177,6 +178,7 @@ Moengage = moe({
                         <li class='<?php echo $activesoundroom;?>'>
                             <a href="#"><i class="fa fa-play"></i> Soundroom<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
+                                <li><a href="<?=$url?>soundroom-2026"><i class="fa fa-play"></i> Soundroom 2026</a></li>
                                 <li><a href="<?=$url?>soundroom-2025"><i class="fa fa-play"></i> Soundroom 2025</a></li>
                                 <li><a href="<?=$url?>soundroom-2024"><i class="fa fa-play"></i> Soundroom 2024</a></li>
                                 <li><a href="<?=$url?>soundroom-2023"><i class="fa fa-play"></i> Soundroom 2023</a></li>

@@ -335,14 +335,6 @@ if (empty($this->datamember)) {
 				<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Playlist</a>
 						<ul class="dropdown-menu">
-							<!-- <li><a href="/?sectionId=sectionDistrik" data-dynamic-id="sectionDistrik">Distrik</a></li>
-							<li><a href="/?sectionId=sectionBackstage" data-dynamic-id="sectionBackstage">Backstage</a></li>
-							<li><a href="/?sectionId=sectionLuarClas" data-dynamic-id="sectionLuarClas">Luar Clas</a></li>
-							<li><a href="/?sectionId=sectionJournal" data-dynamic-id="sectionJournal">Journal</a></li>
-							<li><a href="/?sectionId=sectionInSession" data-dynamic-id="sectionInSession">In Session</a></li>
-							<li><a href="/?sectionId=sectionSoundroom" data-dynamic-id="sectionSoundroom">Soundroom</a></li>
-							<li><a href="/?sectionId=sectionOotd" data-dynamic-id="sectionOotd">OOTD</a></li>
-							<li><a href="/?sectionId=sectionSpace" data-dynamic-id="sectionSpace">Space</a></li> -->
 							<li><a href="<?php echo site_url('podcast/naik-kelas'); ?>">Podcast Naik Clas</a></li>
 							<?php foreach ($playlist_menu as $row) { ?>
 								<li><a href="<?php echo site_url('?sectionId=section-'.$row['slug'].'#section-'.$row['slug'].'-heading');?>" data-dynamic-id="section-<?php echo ($row['slug']); ?>"><?php echo ($row['section_name']); ?></a></li>
@@ -381,7 +373,7 @@ if (empty($this->datamember)) {
 								<li><a href="<?php echo site_url('category/arts/all'); ?>">Classified Art</a></li>
 						</ul>
 					</li>
-					<li><a href="<?php echo site_url('soundroom?year=2025'); ?>">Soundroom</a></li>
+					<li><a href="<?php echo site_url('soundroom?year=2026'); ?>">Soundroom</a></li>
 					<?php if (empty($this->datamember)) { ?>
 						<li class="navbar-nav__auth">
 							<a href="<?= base_url() ?>login">Login/Sign Up</a>
@@ -394,6 +386,6 @@ if (empty($this->datamember)) {
 						<a href="#" class="navbar-nav__search"><i class='fa fa-search'></i></a>
 					</li>
 				</ul>
-			</div><!-- /.navbar-collapse -->
+			</div>
 		</div><!-- /.container-fluid -->
 	</nav>

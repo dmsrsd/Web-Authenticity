@@ -33,7 +33,9 @@
 			<div class="page-soundroom__banner" style="margin: 100px 10px 20px 10px;">
 				<?php
 					// Mengambil tahun dari URL
-					$season = isset($_GET['year']) ? $_GET['year'] : '2023';
+					// $season = isset($_GET['year']) ? $_GET['year'] : '2026';
+
+					$season = $year;
 
 					if ($season == '2026') {
 						// Menggunakan URL gambar dari internet untuk 2026

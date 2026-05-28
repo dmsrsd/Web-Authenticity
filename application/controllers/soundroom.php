@@ -52,16 +52,16 @@ class Soundroom extends MY_Controller {
 
 	public function index(){
 		// tentukan tahun dari query string, default 2025
-		$year = isset($_GET['year']) ? $_GET['year'] : '2025';
+		$year = isset($_GET['year']) ? $_GET['year'] : '2026';
 
 		// jika tahun tidak termasuk list yang diizinkan, redirect ke 2025
 		if(!in_array($year, ['2026', '2025','2024','2023','2022'])){
-				redirect(base_url()."soundroom?year=2025");
+				redirect(base_url()."soundroom?year=2026");
 			return;
 		}
 
         if (!in_array($year, ['2026','2025','2024', '2023', '2022', '2019'])) {
-            $year = '2023';
+            $year = '2026';
         }
 
         switch ($year) {

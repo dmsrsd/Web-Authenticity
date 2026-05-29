@@ -10,6 +10,7 @@ class Login extends MY_Controller {
 		$this->kategori = $this->model_global->get_data(array('select' => '*', 'table' => 'kategori','where' => array('status' => 1), 'order_by' => 'head_kategori asc'));
 
 	}
+
 	public function index(){
 		@session_start();
 		$data['website'] = $this->website;
@@ -42,10 +43,14 @@ class Login extends MY_Controller {
 				if($_GET['se']=="wxwKQMOtmjWd9G2qsbNlDQb9E52PgrVQwUId9UlUz2ZcIQDANCj2HSs66aq29SjREGdc1Uf8PcfvvwlcGtw"){
 					redirect(base_url()."rewards/se/".$_GET['se']);
 				}else{
-					redirect(base_url()."profile");
+					// redirect(base_url()."profile");
+					// REDIRECT KE SOUNDROOM 2026
+					redirect(base_url()."soundroom?year=2026");
 				}
 			}else{
-				redirect(base_url()."profile");
+				// redirect(base_url()."profile");
+				// REDIRECT KE SOUNDROOM 2026
+				redirect(base_url()."soundroom?year=2026");
 			}
 
 		}
@@ -101,7 +106,9 @@ class Login extends MY_Controller {
 								if($to!=""){
 									redirect(base_url().$to);
 								}else{
-									redirect(base_url().'profile');
+									// redirect(base_url().'profile');
+									// REDIRECT KE SOUNDROOM 2026
+									redirect(base_url()."soundroom?year=2026");
 								}
 							}
 					}

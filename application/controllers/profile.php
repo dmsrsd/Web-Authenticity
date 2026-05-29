@@ -1419,7 +1419,7 @@ class Profile extends MY_Controller {
 
 				// Data Tambahan
 				$_POST['created_by'] = $this->datamember['id'];
-				$_POST['approve'] = "1"; // Set default approve jika perlu (atau 0 untuk pending)
+				$_POST['approve'] = "0"; 
 				$_POST['status'] = "1";
 				$_POST["created_date"] = date('Y-m-d H:i:s');
 

@@ -85,24 +85,26 @@
 								}
 								?>
 							</h2>-->
+								<?php if ($season == '2026'): ?>
+									<?php 
+									$limit_date = '2026-12-30 00'; 
+									$valid_date = date('Y-m-d H');
+									?>
+									
+									<?php if ($valid_date < $limit_date): ?>
+										
+										<?php if (empty($this->datamember)): ?>
+											<a href="<?php echo site_url("login?to=profile/soundroom?year=".$season) ?>">
+												<img src="<?= base_url() ?>assets/front/img/soundroom/btn-cta.png">
+											</a>
+										<?php else: ?>
+											<a href="<?= base_url('profile/soundroom' . $season) ?>" class="btn btn-primary btn-lg" style="margin-top: 20px; border-radius: 50px; padding: 12px 30px;">
+												Ikutan Soundroom <?= $season ?> Sekarang !
+											</a>
+										<?php endif; ?>
 
-							<?php
-							if($season == '2026'){
-							$limit_date = '2027-07-04 00'; 
-							$valid_date = date('Y-m-d H');
-							if ($valid_date < $limit_date) { ?>
-								<?php if (empty($this->datamember)) { ?>
-									<a href='<?php echo site_url("login?to=profile/soundroom?year=".$season) ?>'>
-										<img src='<?= base_url() ?>assets/front/img/soundroom/btn-cta.png'>
-									</a>
-								<?php } else { ?>
-									<a href="<?= base_url('profile/soundroom2026') ?>" class="btn btn-primary btn-lg" style="margin-top: 20px; border-radius: 50px; padding: 12px 30px;">
-										Ikutan Soundroom 2026 Sekarang !
-									</a>
-								<?php } ?>
-
-							<?php } }?>
-							
+									<?php endif; ?>
+								<?php endif; ?>
 						</div>
 					</div> 
 				</div>

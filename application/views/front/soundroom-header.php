@@ -285,9 +285,7 @@ function cur2($ini, $now)
 
 					<?php if ($is_2026): ?>
 						<!-- MASUKAN ASSET SOUNDROOM 2026 JIKA NANTI ADA -->
-						<span style="color: #fff; font-weight: bold; font-size: 20px; text-transform: uppercase; line-height: 50px;">
-							Soundroom 2026
-						</span>
+						<img src="assets/front/soundroom/SOUNDROOM-B-Regular.png" alt="Soundroom 2026" style="max-height: 80px;">
 					<?php else: ?>
 						<?php
 							// Logika logo untuk tahun lainnya
@@ -298,6 +296,8 @@ function cur2($ini, $now)
 								$logo_img = 'assets/front/img/AUTHENTICITY_SOUNDROOM_2019.png';
 							} elseif ($season == '2022') {
 								$logo_img = 'assets/front/img/soundroom-pestapora-x.png';
+							}elseif ($season == '2026') {
+								$logo_img = 'assets/front/soundroom/SOUNDROOM-B-Regular.png';
 							}
 						?>
 						<img src="<?= base_url($logo_img); ?>">

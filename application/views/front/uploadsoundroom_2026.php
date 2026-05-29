@@ -30,7 +30,7 @@
 						<div class="panel-banner__img">
 							<!-- TAMBAHKAN BANNER 2026 NANTI -->
 						</div>
-						<h1>Panggung udah siap nih! Submit karya musik lo di Authenticity Soundroom 2026 sekarang!</h1>
+						<h1>Submit band lo, bawa sound lo ke stage dan tunjukin energi ‘Ini Asli Gue’ lewat musik lo!</h1>
 						<input type="hidden" name="tahun_season" value="2026">
 						<div class="panel-banner__title">
 							<img src='<?= base_url(); ?>assets/front/img/soundroom/btn-register.png'>
@@ -123,15 +123,13 @@
 									<label for="youtube">Youtube Channel Link <i>(optional)</i></label>
 									<input type="text" class="form-control " id="youtube" maxlength="150" placeholder="https://Youtube link" name="youtube">
 								</div>
-								<div class="form-group">
+								<!-- <div class="form-group">
 									<label for="manggung">Dari beberapa konser ini, lo kira-kira paling pengen manggung di mana?*</label>
 									<select class="form-control" name="manggung" id="manggung">
 										<option value="">Pilih data</option>
-										<!--<option value="The Sounds Project">The Sounds Project</option>-->
 										<option value="Pestapora">Pestapora</option>
-										<!-- <option value="Lalala Festival" disabled>Lalala Festival</option> -->
 									</select>
-								</div>
+								</div> -->
 								<!--
 								<div class="form-group">
 									<label for="txtSahkoposti">Deskripsi</label>

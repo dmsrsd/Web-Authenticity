@@ -718,8 +718,8 @@ class Profile extends MY_Controller {
 	}
 
 	public function soundroom(){
-		$limit_date = '2025-07-04 00';
-		// $limit_date = '2026-12-31 00';
+		// $limit_date = '2025-07-04 00';
+		$limit_date = '2026-12-31 00';
 		$valid_date = date('Y-m-d H');
 		if($valid_date >= $limit_date){
 			redirect(base_url()."soundroom");
@@ -779,77 +779,77 @@ class Profile extends MY_Controller {
 			}
 	}
 
-	public function submitsound2026() {
-		$this->load->library('form_validation');
+	// public function submitsound2026() {
+	// 	$this->load->library('form_validation');
 
-		// 1. Validasi Input
-		$this->form_validation->set_rules('judul', 'Judul', 'required');
-		$this->form_validation->set_rules('gendre', 'Genre', 'required');
-		$this->form_validation->set_rules('id_provinsi', 'Provinsi', 'required');
-		$this->form_validation->set_rules('id_kota', 'Kota', 'required');
-		$this->form_validation->set_rules('pic', 'Nama PIC', 'required');
-		$this->form_validation->set_rules('contact', 'Contact', 'required');
+	// 	// 1. Validasi Input
+	// 	$this->form_validation->set_rules('judul', 'Judul', 'required');
+	// 	$this->form_validation->set_rules('gendre', 'Genre', 'required');
+	// 	$this->form_validation->set_rules('id_provinsi', 'Provinsi', 'required');
+	// 	$this->form_validation->set_rules('id_kota', 'Kota', 'required');
+	// 	$this->form_validation->set_rules('pic', 'Nama PIC', 'required');
+	// 	$this->form_validation->set_rules('contact', 'Contact', 'required');
 
-		if ($this->form_validation->run() == FALSE || empty($_FILES['sound']['name'])) {
-			echo json_encode(['status' => 'false', 'message' => 'Pastikan data lengkap dan file musik terpilih!']);
-			return;
-		}
+	// 	if ($this->form_validation->run() == FALSE || empty($_FILES['sound']['name'])) {
+	// 		echo json_encode(['status' => 'false', 'message' => 'Pastikan data lengkap dan file musik terpilih!']);
+	// 		return;
+	// 	}
 
-		if (empty($this->datamember)) {
-			redirect(base_url("login"));
-		}
+	// 	if (empty($this->datamember)) {
+	// 		redirect(base_url("login"));
+	// 	}
 
-		// 2. Cek apakah sudah pernah submit (Double Submit Prevention)
-		$cek_sudah_submit = $this->model_global->get_data([
-			'data' => 'row', 'table' => 'soundroom_2026', 
-			'where' => ['created_by' => $this->datamember['id']]
-		]);
+	// 	// 2. Cek apakah sudah pernah submit (Double Submit Prevention)
+	// 	$cek_sudah_submit = $this->model_global->get_data([
+	// 		'data' => 'row', 'table' => 'soundroom_2026', 
+	// 		'where' => ['created_by' => $this->datamember['id']]
+	// 	]);
 
-		if (!empty($cek_sudah_submit)) {
-			echo json_encode(['status' => 'false', 'message' => 'Halo, kamu sudah submit untuk Soundroom 2026!']);
-			return;
-		}
+	// 	if (!empty($cek_sudah_submit)) {
+	// 		echo json_encode(['status' => 'false', 'message' => 'Halo, kamu sudah submit untuk Soundroom 2026!']);
+	// 		return;
+	// 	}
 
-		// 3. Proses File
-		$img_path = $this->upload_foto($_FILES['image'], "soundroom", FALSE, "");
-		$snd_path = $this->upload_mp3($_FILES['sound'], "soundroom");
+	// 	// 3. Proses File
+	// 	$img_path = $this->upload_foto($_FILES['image'], "soundroom", FALSE, "");
+	// 	$snd_path = $this->upload_mp3($_FILES['sound'], "soundroom");
 
-		if (empty($img_path) || empty($snd_path)) {
-			echo json_encode(['status' => 'false', 'message' => 'Gagal upload file. Periksa ukuran/format file!']);
-			return;
-		}
+	// 	if (empty($img_path) || empty($snd_path)) {
+	// 		echo json_encode(['status' => 'false', 'message' => 'Gagal upload file. Periksa ukuran/format file!']);
+	// 		return;
+	// 	}
 
-		// 4. Persiapkan Data
-		$data_insert = [
-			'judul'        => $this->input->post('judul'),
-			'slug'         => $this->input->post('slug'),
-			'gendre'       => $this->input->post('gendre'),
-			'id_kota'      => $this->input->post('id_kota'),
-			'pic'          => $this->input->post('pic'),
-			'contact'      => $this->input->post('contact'),
-			'instagram'    => $this->input->post('instagram'),
-			'spotify'      => $this->input->post('spotify'),
-			'youtube'      => $this->input->post('youtube'),
-			'manggung'     => $this->input->post('manggung'),
-			'created_by'   => $this->datamember['id'],
-			'approve'      => '0',
-			'status'       => '1',
-			'created_date' => date('Y-m-d H:i:s'),
-			'tahun_season' => '2026',
-			'image'        => $img_path,
-			'thumbnail'    => $img_path,
-			'sound'        => $snd_path
-		];
+	// 	// 4. Persiapkan Data
+	// 	$data_insert = [
+	// 		'judul'        => $this->input->post('judul'),
+	// 		'slug'         => $this->input->post('slug'),
+	// 		'gendre'       => $this->input->post('gendre'),
+	// 		'id_kota'      => $this->input->post('id_kota'),
+	// 		'pic'          => $this->input->post('pic'),
+	// 		'contact'      => $this->input->post('contact'),
+	// 		'instagram'    => $this->input->post('instagram'),
+	// 		'spotify'      => $this->input->post('spotify'),
+	// 		'youtube'      => $this->input->post('youtube'),
+	// 		'manggung'     => $this->input->post('manggung'),
+	// 		'created_by'   => $this->datamember['id'],
+	// 		'approve'      => '0',
+	// 		'status'       => '1',
+	// 		'created_date' => date('Y-m-d H:i:s'),
+	// 		'tahun_season' => '2026',
+	// 		'image'        => $img_path,
+	// 		'thumbnail'    => $img_path,
+	// 		'sound'        => $snd_path
+	// 	];
 
-		// 5. Insert ke Database
-		$insert_id = $this->model_global->insertId($data_insert, 'soundroom_2026');
+	// 	// 5. Insert ke Database
+	// 	$insert_id = $this->model_global->insertId($data_insert, 'soundroom_2026');
 
-		if ($insert_id) {
-			echo json_encode(['status' => 'true', 'message' => 'Karya lo berhasil di-submit untuk Soundroom 2026!']);
-		} else {
-			echo json_encode(['status' => 'false', 'message' => 'Database error saat menyimpan data.']);
-		}
-	}
+	// 	if ($insert_id) {
+	// 		echo json_encode(['status' => 'true', 'message' => 'Karya lo berhasil di-submit untuk Soundroom 2026!']);
+	// 	} else {
+	// 		echo json_encode(['status' => 'false', 'message' => 'Database error saat menyimpan data.']);
+	// 	}
+	// }
 	
 	public function posterchallenge(){
 		redirect(base_url()."poster-challenge");
@@ -1075,288 +1075,451 @@ class Profile extends MY_Controller {
 		}
 	}
 
-	public function submitsound(){
+	// public function submitsound(){
 
+	// 	$this->load->library('form_validation');
+	// 	// $limit_date = '2025-07-04 00';
+	// 	$limit_date = '2026-12-31 00';
+
+	// 	$valid_date = date('Y-m-d H');
+	// 	if($valid_date >= $limit_date){
+	// 		redirect(base_url()."soundroom");
+	// 	}
+
+	// 	//manual validasi jika required field tidak terisi
+	// 	$this->form_validation->set_rules('judul', 'Judul', 'required');
+	// 	$this->form_validation->set_rules('gendre', 'Genre', 'required');
+	// 	$this->form_validation->set_rules('id_provinsi', 'Provinsi', 'required');
+	// 	$this->form_validation->set_rules('id_kota', 'Kota', 'required');
+	// 	$this->form_validation->set_rules('pic', 'Nama PIC', 'required');
+	// 	$this->form_validation->set_rules('contact', 'Contact', 'required');
+	// 	if ($this->form_validation->run() == FALSE)
+	// 	{
+
+	// 		$m =  "Pastikan data lo udah lengkap!";
+	// 		$ret['status'] = "false";
+	// 		$ret['message'] = $m;
+	// 		echo json_encode($ret);
+	// 		return;
+	// 	}
+
+	// 	if (!isset($_FILES['sound']) || (isset($_FILES['sound']) && empty($_FILES['sound']['name']))) {
+    //         $m =  "Pastikan file musik udah lo pilih!";
+	// 		$ret['status'] = "false";
+	// 		$ret['message'] = $m;
+	// 		echo json_encode($ret);
+	// 		return;
+	// 	}
+	// 	// cek duplicate data
+	// 	/*
+	// 	$cek = $this->db
+	// 		->from('soundroom_2026')
+	// 		->where('contact', $_POST['contact'])
+	// 		->or_where('spotify', $_POST['spotify'])
+	// 		->or_where('instagram', $_POST['instagram'])
+	// 		->get()
+	// 		->row_array();
+
+	// 	if ($cek) {
+	// 		$m = "Halo, Band kamu sudah terdaftar!";
+	// 		$ret['status'] = "false";
+	// 		$ret['message'] = $m;
+	// 		echo json_encode($ret);
+	// 		return;
+	// 	}
+	// 	*/
+
+
+	// 	// switch ($variable) {
+	// 	// 	case 'value':
+	// 	// 		# code...
+	// 	// 		break;
+
+	// 	// 	default:
+	// 	// 		# code...
+	// 	// 		break;
+	// 	// }
+    //     $tnc = isset($_POST['tnc']) ? $_POST['tnc'] : '0';
+
+    //     if ((int) $tnc !== 1) {
+    //         // echo json_encode(array('status' => 'false', 'message' => 'harap cek syarat yang ada!'));
+	// 		echo json_encode(array('status' => 'false', 'message' => 'OPPS! Ceklis dulu syarat dan ketentuannya :)'));
+    //         return;
+    //     }
+
+	// 	/*$ret['status'] = "true";
+	// 	$ret['message'] = "cek tags";
+	// 	echo json_encode($ret);
+	// 	die();*/
+	// 	if(empty($this->datamember)){
+	// 		redirect(base_url()."login");
+	// 	}else{
+	// 		if(isset($_POST['submit'])){
+	// 			unset($_POST['id_provinsi']);
+	// 			unset($_POST['submit']);
+	// 			//print_r($_POST);
+	// 			$pno=0;
+	// 			/*
+	// 			$personil = "";
+	// 			foreach($_POST['personil'] as $key){
+	// 				$personil.= $key."-".$_POST['position'][$pno].",";
+	// 				$pno++;
+	// 			}
+	// 			unset($_POST['personil']);unset($_POST['position']);
+	// 			$personil = rtrim($personil,",");
+	// 			$_POST['personil'] = $personil ;
+	// 			*/
+	// 			$ret['status'] = "false";
+	// 			$_POST['created_by'] = $this->datamember['id'];
+	// 			$_POST['approve'] = "1";
+	// 			$_POST['status'] = "1";
+	// 			$_POST["created_date"] = date('Y-m-d H:i:s');
+	// 			// $cek2 = $this->model_global->get_data(array('data' => 'row','table' => 'soundroom', 'where' => array('slug' => $_POST['slug'])));
+	// 			//$cek2 = $this->model_global->get_data(array('data' => 'row','table' => 'soundroom_2026', 'where' => array('slug' => $_POST['slug'], 'approve !='=>'2')));
+    //             //sengaja dibuat biar selalu data ga ketemu
+	// 			$cek2 = $this->model_global->get_data(array('data' => 'row','table' => 'soundroom', 'where' => array('approve' => $_POST['slug'])));
+	// 			$next = "false";
+    //             $sound = "false";
+	// 			if(!empty($cek2)){
+	// 				if($cek2["approve"]=="2"){
+	// 					$ret['status'] = "false";
+	// 					$ret['message'] = "<b>$_POST[judul]</b> was rejected before!";
+	// 				}else{
+	// 					$ret['status'] = "false";
+	// 					//$m = "<b>$_POST[judul]</b> has been used, use another Band!";
+    //                     $m = "Halo, Band kamu sudah terdaftar! Saat ini team kami sedang melakakukan approval dari data-datamu, mohon ditunggu 1x24 jam dan akan kami info kembali melalui Email jika lagumu sudah dapat didengarkan di playlist Soundroom!";
+	// 					$ret['message'] = $m;
+	// 					echo json_encode($ret);
+	// 					return;
+
+	// 				}
+	// 			}else{
+	// 				//$cek3 = $this->model_global->get_data(array('data' => 'row','table' => 'soundroom_2026', 'where' => array('created_by' => $this->datamember['id'])));
+	// 				//sengaja dibuat biar selalu data ga ketemu
+	// 				$cek3 = $this->model_global->get_data(array('data' => 'row','table' => 'soundroom_2026', 'where' => array('slug' => $this->datamember['id'])));
+	// 				if(!empty($cek3)){
+	// 					$pending = $this->model_global->get_data(array('data' => 'row','table' => 'soundroom_2026', 'where' => array('approve'=>'0','created_by' => $this->datamember['id'])));
+	// 					$sudah = $this->model_global->get_data(array('data' => 'row','table' => 'soundroom_2026', 'where' => array('approve'=>'1','created_by' => $this->datamember['id'])));
+	// 					if(!empty($pending)){
+	// 						//$m =  "Sorry, You have uploaded a song that has not been approved";
+	// 						$m =  "Mohon maaf atas kendalanya, ini dikarenakan kamu sudah submit sebelumnya. Saat ini team kami sedang melakukan investigasi terhadapat data-datamu, mohon tunggu";
+	// 						$ret['status'] = "false";
+	// 						$ret['message'] = $m;
+	// 						echo json_encode($ret);
+	// 						return;
+	// 					}else{
+	// 						if(!empty($sudah)){
+	// 							$m =  "Sorry, You have uploaded a song before";
+	// 							$ret['status'] = "false";
+	// 							$ret['message'] = $m;
+	// 							echo json_encode($ret);
+	// 							return;
+	// 						}else{
+	// 							$sound = "true";
+	// 						}
+	// 					}
+
+	// 				}else{
+	// 					$sound = "true";
+	// 				}
+	// 				if($sound=="true"){
+	// 					if(empty($_FILES['image']['name'])){
+	// 						unset($_POST['image']);
+	// 					}else{
+	// 						if($_FILES['image']['size'] > 1048576){
+	// 							// $m =  "Sorry, Max. upload image 1mb";
+	// 							$m =  "Pastikan ukuran file fotonya sesuai! (Max. 1MB)";
+	// 							$ret['status'] = "false";
+	// 							$ret['message'] = $m;
+	// 							echo json_encode($ret);
+	// 							return;
+	// 						}else{
+	// 							$next = "true";
+	// 							$_POST['image'] = $this->upload_foto($_FILES['image'],"soundroom",FALSE,"");
+	// 						}
+	// 					}
+	// 					if(empty($_FILES['thumbnail']['name'])){
+	// 						unset($_POST['thumbnail']);
+	// 					}else{
+	// 						if($_FILES['thumbnail']['size'] > 1048576){
+	// 							$m = "Sorry, Max. upload sound cover 1mb";
+	// 							$ret['status'] = "false";
+	// 							$ret['message'] = $m;
+	// 							echo json_encode($ret);
+	// 							return;
+	// 						}else{
+	// 							$next = "true";
+	// 							$_POST['thumbnail'] = $this->upload_foto($_FILES['thumbnail'],"soundroom",FALSE,"");
+	// 						}
+	// 					}
+	// 					if(empty($_FILES['sound']['name'])){
+	// 						unset($_POST['sound']);
+
+    //                         $m =  "Pastikan file musik udah lo pilih!";
+    //                         $ret['status'] = "false";
+    //                         $ret['message'] = $m;
+    //                         echo json_encode($ret);
+    //                         return;
+	// 					}else{
+	// 						if($_FILES['sound']['size'] > 6291456){
+	// 							// $m = "Sorry, Max. upload mp3 6mb";
+	// 							$m = "Pastikan ukuran file musik lo sesuai! (Max. 6MB)";
+	// 							$ret['status'] = "false";
+	// 							$ret['message'] = $m;
+	// 							echo json_encode($ret);
+	// 							return;
+	// 						}else{
+	// 							$next = "true";
+	// 							$_POST['sound'] = $this->upload_mp3($_FILES['sound'],"soundroom");
+    //                             $cek4 = false;
+
+    //                             if ($cek4) {
+    //                                 // cek metadata sound
+    //                                 $this->load->library('mp3info');
+    //                                 $this->mp3info->resetMetadata();
+    //                                 $sound = 'uploads/soundroom/'.$_POST['sound'];
+    //                                 $stats = $this->mp3info->getMetadata(FCPATH.$sound, true);
+
+    //                                 if (!$stats) {
+    //                                     unlink(FCPATH.$sound);
+
+    //                                     $m = "File musik lo ga valid! Upload ulang gih";
+    //                                     $ret['status'] = "false";
+    //                                     $ret['message'] = $m;
+    //                                     echo json_encode($ret);
+    //                                     return;
+    //                                 }
+    //                             }
+	// 						}
+	// 					}
+	// 				}
+	// 			}
+	// 			if($next=="true"){
+    //                 if (isset($_POST['tnc'])) {
+    //                     unset($_POST['tnc']);
+    //                 }
+	// 				$_POST['thumbnail'] = $_POST['image'];
+	// 				$gendre = $_POST['gendre'];
+	// 				if($gendre == ''){
+	// 					$ret['status'] = "false";
+	// 					$ret['message'] = "Silahkan pilih gendre lagu terlebih dahulu !";
+	// 					echo json_encode($ret);
+	// 					return;
+	// 				}
+	// 				$insert_id = $this->model_global->insertId($_POST, 'soundroom_2026');
+	// 				if($insert_id){
+	// 					$cek = $this->model_global->get_data(array('data' => 'row','table' => 'member', 'where' => array('id_member' => $this->datamember['id'])));
+	// 					$ret['status'] = "true";
+	// 					$ret['message'] = "Your sound has been sent successfully. Please check your email for the shared data";
+	// 					//send email share
+	// 					$to_email = $cek['email'];
+	// 					$this->load->library('email');
+	// 					$config['protocol'] = 'smtp';
+	// 					$config['mailpath'] = '/usr/sbin/sendmail';
+	// 					// new smtp google
+	// 					$config['smtp_host'] = 'smtp.gmail.com';
+	// 					$config['smtp_port'] = '465'; // 8025, 587 and 25 can also be used. Use Port 465 for SSL.
+	// 					$config['smtp_timeout'] = '7';
+	// 					$config['smtp_user'] = 'gridsf@gramedia-majalah.com';
+	// 					$config['smtp_pass'] = 'zcup oxoy yfug waqs';
+	// 					$config['charset'] = 'utf-8';
+	// 					$config['mailtype'] = 'html';
+	// 					$config['newline'] = "\r\n";
+	// 					$config['smtp_crypto'] = 'ssl';
+	// 					$this->email->initialize($config);
+	// 					$this->email->from("gridsf@gramedia-majalah.com", 'Authenticity');
+	// 					//$this->email->from("noreply@simplyauthentic.id", 'Simply Authentic');
+	// 					$this->email->to($to_email);
+	// 					$this->email->subject('Submission Aproved');
+
+	// 					$em['data'] ="Hi <b>".ucwords($cek['fullname'])."</b>, <br><br>
+	// 					Selamat, karya lo sudah masuk ke Soundroom.<br />
+	// 					Semoga lo berkesempatan manggung di Pestapora ya.<br />
+	// 					Biar banyak yang dukung, 
+	// 					<a href='".base_url('soundroom/share/'.$insert_id.'?year=2025&utm_source=sroom25&utm_medium=sroom25submitter&utm_campaign=sr25'.urlencode($_POST['judul']).'&utm_id=sroom25visitor&utm_term=sroom25visitor')."' target='blank'> download dan share konten ini </a> ke story lo ya. 
+	// 					<br /><br />
+	// 					".base_url('soundroom/share/'.$insert_id.'?year=2025&utm_source=sroom25&utm_medium=sroom25submitter&utm_campaign=sr25'.urlencode($_POST['judul']).'&utm_id=sroom25visitor&utm_term=sroom25visitor')."";
+	// 					//echo $em['data']; exit;
+	// 					$pesan = $this->load->view('front/email-template-rejected',$em,TRUE);
+	// 					$this->email->message($pesan);
+	// 					@$se = $this->email->send();
+	// 					//end share email
+	// 				}
+	// 				else{
+	// 					$ret['status'] = "false";
+	// 					$ret['message'] = "Error upload sound!";
+	// 				}
+	// 			} else {
+    //                 $ret['status'] = "false";
+    //                 $ret['message'] = "Submission error";
+    //             }
+
+	// 		}else{
+	// 			$ret['status'] = "false";
+	// 			$ret['message'] = "ERROR";
+	// 		}
+	// 		echo json_encode($ret);
+	// 	}
+	// }
+
+	public function submitsound2026() {
 		$this->load->library('form_validation');
-		// $limit_date = '2025-07-04 00';
+		
+		// 1. Setting Limit Date untuk Season 2026
 		$limit_date = '2026-12-31 00';
-
 		$valid_date = date('Y-m-d H');
-		if($valid_date >= $limit_date){
-			redirect(base_url()."soundroom");
+		
+		if ($valid_date >= $limit_date) {
+			$ret['status'] = "false";
+			$ret['message'] = "Periode pendaftaran Soundroom 2026 sudah berakhir!";
+			echo json_encode($ret);
+			return;
 		}
 
-		//manual validasi jika required field tidak terisi
+		// 2. Validasi Form
 		$this->form_validation->set_rules('judul', 'Judul', 'required');
 		$this->form_validation->set_rules('gendre', 'Genre', 'required');
 		$this->form_validation->set_rules('id_provinsi', 'Provinsi', 'required');
 		$this->form_validation->set_rules('id_kota', 'Kota', 'required');
 		$this->form_validation->set_rules('pic', 'Nama PIC', 'required');
 		$this->form_validation->set_rules('contact', 'Contact', 'required');
-		if ($this->form_validation->run() == FALSE)
-		{
 
-			$m =  "Pastikan data lo udah lengkap!";
+		if ($this->form_validation->run() == FALSE) {
 			$ret['status'] = "false";
-			$ret['message'] = $m;
+			$ret['message'] = "Pastikan data lo udah lengkap!";
 			echo json_encode($ret);
 			return;
 		}
 
-		if (!isset($_FILES['sound']) || (isset($_FILES['sound']) && empty($_FILES['sound']['name']))) {
-            $m =  "Pastikan file musik udah lo pilih!";
+		// 3. Validasi File Musik (Wajib)
+		if (!isset($_FILES['sound']) || empty($_FILES['sound']['name'])) {
 			$ret['status'] = "false";
-			$ret['message'] = $m;
+			$ret['message'] = "Pastikan file musik udah lo pilih!";
 			echo json_encode($ret);
 			return;
 		}
-		// cek duplicate data
-		/*
-		$cek = $this->db
-			->from('soundroom_2026')
-			->where('contact', $_POST['contact'])
-			->or_where('spotify', $_POST['spotify'])
-			->or_where('instagram', $_POST['instagram'])
-			->get()
-			->row_array();
 
-		if ($cek) {
-			$m = "Halo, Band kamu sudah terdaftar!";
-			$ret['status'] = "false";
-			$ret['message'] = $m;
-			echo json_encode($ret);
-			return;
-		}
-		*/
-
-
-		// switch ($variable) {
-		// 	case 'value':
-		// 		# code...
-		// 		break;
-
-		// 	default:
-		// 		# code...
-		// 		break;
-		// }
-        $tnc = isset($_POST['tnc']) ? $_POST['tnc'] : '0';
-
-        if ((int) $tnc !== 1) {
-            // echo json_encode(array('status' => 'false', 'message' => 'harap cek syarat yang ada!'));
+		$tnc = isset($_POST['tnc']) ? $_POST['tnc'] : '0';
+		if ((int) $tnc !== 1) {
 			echo json_encode(array('status' => 'false', 'message' => 'OPPS! Ceklis dulu syarat dan ketentuannya :)'));
-            return;
-        }
+			return;
+		}
 
-		/*$ret['status'] = "true";
-		$ret['message'] = "cek tags";
-		echo json_encode($ret);
-		die();*/
-		if(empty($this->datamember)){
-			redirect(base_url()."login");
-		}else{
-			if(isset($_POST['submit'])){
+		// 4. Cek Login
+		if (empty($this->datamember)) {
+			$ret['status'] = "false";
+			$ret['message'] = "Sesi berakhir, silahkan login kembali.";
+			echo json_encode($ret);
+			return;
+		} else {
+			if (isset($_POST['submit'])) {
 				unset($_POST['id_provinsi']);
 				unset($_POST['submit']);
-				//print_r($_POST);
-				$pno=0;
-				/*
-				$personil = "";
-				foreach($_POST['personil'] as $key){
-					$personil.= $key."-".$_POST['position'][$pno].",";
-					$pno++;
-				}
-				unset($_POST['personil']);unset($_POST['position']);
-				$personil = rtrim($personil,",");
-				$_POST['personil'] = $personil ;
-				*/
-				$ret['status'] = "false";
+				unset($_POST['tnc']);
+
+				// Data Tambahan
 				$_POST['created_by'] = $this->datamember['id'];
-				$_POST['approve'] = "1";
+				$_POST['approve'] = "1"; // Set default approve jika perlu (atau 0 untuk pending)
 				$_POST['status'] = "1";
 				$_POST["created_date"] = date('Y-m-d H:i:s');
-				// $cek2 = $this->model_global->get_data(array('data' => 'row','table' => 'soundroom', 'where' => array('slug' => $_POST['slug'])));
-				//$cek2 = $this->model_global->get_data(array('data' => 'row','table' => 'soundroom_2026', 'where' => array('slug' => $_POST['slug'], 'approve !='=>'2')));
-                //sengaja dibuat biar selalu data ga ketemu
-				$cek2 = $this->model_global->get_data(array('data' => 'row','table' => 'soundroom', 'where' => array('approve' => $_POST['slug'])));
-				$next = "false";
-                $sound = "false";
-				if(!empty($cek2)){
-					if($cek2["approve"]=="2"){
-						$ret['status'] = "false";
-						$ret['message'] = "<b>$_POST[judul]</b> was rejected before!";
-					}else{
-						$ret['status'] = "false";
-						//$m = "<b>$_POST[judul]</b> has been used, use another Band!";
-                        $m = "Halo, Band kamu sudah terdaftar! Saat ini team kami sedang melakakukan approval dari data-datamu, mohon ditunggu 1x24 jam dan akan kami info kembali melalui Email jika lagumu sudah dapat didengarkan di playlist Soundroom!";
-						$ret['message'] = $m;
-						echo json_encode($ret);
-						return;
 
-					}
-				}else{
-					//$cek3 = $this->model_global->get_data(array('data' => 'row','table' => 'soundroom_2026', 'where' => array('created_by' => $this->datamember['id'])));
-					//sengaja dibuat biar selalu data ga ketemu
-					$cek3 = $this->model_global->get_data(array('data' => 'row','table' => 'soundroom_2026', 'where' => array('slug' => $this->datamember['id'])));
-					if(!empty($cek3)){
-						$pending = $this->model_global->get_data(array('data' => 'row','table' => 'soundroom_2026', 'where' => array('approve'=>'0','created_by' => $this->datamember['id'])));
-						$sudah = $this->model_global->get_data(array('data' => 'row','table' => 'soundroom_2026', 'where' => array('approve'=>'1','created_by' => $this->datamember['id'])));
-						if(!empty($pending)){
-							//$m =  "Sorry, You have uploaded a song that has not been approved";
-							$m =  "Mohon maaf atas kendalanya, ini dikarenakan kamu sudah submit sebelumnya. Saat ini team kami sedang melakukan investigasi terhadapat data-datamu, mohon tunggu";
-							$ret['status'] = "false";
-							$ret['message'] = $m;
-							echo json_encode($ret);
-							return;
-						}else{
-							if(!empty($sudah)){
-								$m =  "Sorry, You have uploaded a song before";
-								$ret['status'] = "false";
-								$ret['message'] = $m;
-								echo json_encode($ret);
-								return;
-							}else{
-								$sound = "true";
-							}
-						}
+				// 5. Logika Pengecekan Duplikat (Agar user tidak submit berkali-kali di 2026)
+				$cek_existing = $this->model_global->get_data([
+					'data'  => 'row',
+					'table' => 'soundroom_2026',
+					'where' => ['created_by' => $this->datamember['id']]
+				]);
 
-					}else{
-						$sound = "true";
-					}
-					if($sound=="true"){
-						if(empty($_FILES['image']['name'])){
-							unset($_POST['image']);
-						}else{
-							if($_FILES['image']['size'] > 1048576){
-								// $m =  "Sorry, Max. upload image 1mb";
-								$m =  "Pastikan ukuran file fotonya sesuai! (Max. 1MB)";
-								$ret['status'] = "false";
-								$ret['message'] = $m;
-								echo json_encode($ret);
-								return;
-							}else{
-								$next = "true";
-								$_POST['image'] = $this->upload_foto($_FILES['image'],"soundroom",FALSE,"");
-							}
-						}
-						if(empty($_FILES['thumbnail']['name'])){
-							unset($_POST['thumbnail']);
-						}else{
-							if($_FILES['thumbnail']['size'] > 1048576){
-								$m = "Sorry, Max. upload sound cover 1mb";
-								$ret['status'] = "false";
-								$ret['message'] = $m;
-								echo json_encode($ret);
-								return;
-							}else{
-								$next = "true";
-								$_POST['thumbnail'] = $this->upload_foto($_FILES['thumbnail'],"soundroom",FALSE,"");
-							}
-						}
-						if(empty($_FILES['sound']['name'])){
-							unset($_POST['sound']);
-
-                            $m =  "Pastikan file musik udah lo pilih!";
-                            $ret['status'] = "false";
-                            $ret['message'] = $m;
-                            echo json_encode($ret);
-                            return;
-						}else{
-							if($_FILES['sound']['size'] > 6291456){
-								// $m = "Sorry, Max. upload mp3 6mb";
-								$m = "Pastikan ukuran file musik lo sesuai! (Max. 6MB)";
-								$ret['status'] = "false";
-								$ret['message'] = $m;
-								echo json_encode($ret);
-								return;
-							}else{
-								$next = "true";
-								$_POST['sound'] = $this->upload_mp3($_FILES['sound'],"soundroom");
-                                $cek4 = false;
-
-                                if ($cek4) {
-                                    // cek metadata sound
-                                    $this->load->library('mp3info');
-                                    $this->mp3info->resetMetadata();
-                                    $sound = 'uploads/soundroom/'.$_POST['sound'];
-                                    $stats = $this->mp3info->getMetadata(FCPATH.$sound, true);
-
-                                    if (!$stats) {
-                                        unlink(FCPATH.$sound);
-
-                                        $m = "File musik lo ga valid! Upload ulang gih";
-                                        $ret['status'] = "false";
-                                        $ret['message'] = $m;
-                                        echo json_encode($ret);
-                                        return;
-                                    }
-                                }
-							}
-						}
-					}
+				if (!empty($cek_existing)) {
+					$ret['status'] = "false";
+					$ret['message'] = "Halo, Band kamu sudah terdaftar di Soundroom 2026!";
+					echo json_encode($ret);
+					return;
 				}
-				if($next=="true"){
-                    if (isset($_POST['tnc'])) {
-                        unset($_POST['tnc']);
-                    }
-					$_POST['thumbnail'] = $_POST['image'];
-					$gendre = $_POST['gendre'];
-					if($gendre == ''){
+
+				$next = "false";
+
+				// 6. Handling Upload Foto & Thumbnail
+				if (!empty($_FILES['image']['name'])) {
+					if ($_FILES['image']['size'] > 1048576) {
 						$ret['status'] = "false";
-						$ret['message'] = "Silahkan pilih gendre lagu terlebih dahulu !";
+						$ret['message'] = "Pastikan ukuran file foto sesuai! (Max. 1MB)";
 						echo json_encode($ret);
 						return;
 					}
+					$_POST['image'] = $this->upload_foto($_FILES['image'], "soundroom", FALSE, "");
+					$_POST['thumbnail'] = $_POST['image']; // Menyamakan thumbnail dengan image
+					$next = "true";
+				}
+
+				// 7. Handling Upload MP3
+				if (!empty($_FILES['sound']['name'])) {
+					if ($_FILES['sound']['size'] > 6291456) {
+						$ret['status'] = "false";
+						$ret['message'] = "Pastikan ukuran file musik lo sesuai! (Max. 6MB)";
+						echo json_encode($ret);
+						return;
+					}
+					$_POST['sound'] = $this->upload_mp3($_FILES['sound'], "soundroom");
+					$next = "true";
+				}
+
+				// 8. Eksekusi Insert ke Table soundroom_2026
+				if ($next == "true") {
 					$insert_id = $this->model_global->insertId($_POST, 'soundroom_2026');
-					if($insert_id){
-						$cek = $this->model_global->get_data(array('data' => 'row','table' => 'member', 'where' => array('id_member' => $this->datamember['id'])));
-						$ret['status'] = "true";
-						$ret['message'] = "Your sound has been sent successfully. Please check your email for the shared data";
-						//send email share
-						$to_email = $cek['email'];
+					
+					if ($insert_id) {
+						$member = $this->model_global->get_data([
+							'data' => 'row',
+							'table' => 'member', 
+							'where' => ['id_member' => $this->datamember['id']]
+						]);
+
+						// 9. Email Blast dengan UTM 2026
 						$this->load->library('email');
-						$config['protocol'] = 'smtp';
-						$config['mailpath'] = '/usr/sbin/sendmail';
-						// new smtp google
-						$config['smtp_host'] = 'smtp.gmail.com';
-						$config['smtp_port'] = '465'; // 8025, 587 and 25 can also be used. Use Port 465 for SSL.
-						$config['smtp_timeout'] = '7';
-						$config['smtp_user'] = 'gridsf@gramedia-majalah.com';
-						$config['smtp_pass'] = 'zcup oxoy yfug waqs';
-						$config['charset'] = 'utf-8';
-						$config['mailtype'] = 'html';
-						$config['newline'] = "\r\n";
-						$config['smtp_crypto'] = 'ssl';
+						$config = array(
+							'protocol'    => 'smtp',
+							'smtp_host'   => 'smtp.gmail.com',
+							'smtp_port'   => '465',
+							'smtp_user'   => 'gridsf@gramedia-majalah.com',
+							'smtp_pass'   => 'zcup oxoy yfug waqs',
+							'smtp_crypto' => 'ssl',
+							'mailtype'    => 'html',
+							'charset'     => 'utf-8',
+							'newline'     => "\r\n"
+						);
+
 						$this->email->initialize($config);
 						$this->email->from("gridsf@gramedia-majalah.com", 'Authenticity');
-						//$this->email->from("noreply@simplyauthentic.id", 'Simply Authentic');
-						$this->email->to($to_email);
-						$this->email->subject('Submission Aproved');
+						$this->email->to($member['email']);
+						$this->email->subject('Submission Approved - Soundroom 2026');
 
-						$em['data'] ="Hi <b>".ucwords($cek['fullname'])."</b>, <br><br>
-						Selamat, karya lo sudah masuk ke Soundroom.<br />
-						Semoga lo berkesempatan manggung di Pestapora ya.<br />
-						Biar banyak yang dukung, 
-						<a href='".base_url('soundroom/share/'.$insert_id.'?year=2025&utm_source=sroom25&utm_medium=sroom25submitter&utm_campaign=sr25'.urlencode($_POST['judul']).'&utm_id=sroom25visitor&utm_term=sroom25visitor')."' target='blank'> download dan share konten ini </a> ke story lo ya. 
-						<br /><br />
-						".base_url('soundroom/share/'.$insert_id.'?year=2025&utm_source=sroom25&utm_medium=sroom25submitter&utm_campaign=sr25'.urlencode($_POST['judul']).'&utm_id=sroom25visitor&utm_term=sroom25visitor')."";
-						//echo $em['data']; exit;
-						$pesan = $this->load->view('front/email-template-rejected',$em,TRUE);
+						// Link diubah ke year=2026 dan utm_source=sroom26
+						$share_url = base_url('soundroom/share/'.$insert_id.'?year=2026&utm_source=sroom26&utm_medium=sroom26submitter&utm_campaign=sr26'.urlencode($_POST['judul']));
+						
+						$em['data'] = "Hi <b>".ucwords($member['fullname'])."</b>, <br><br>
+									Selamat, karya lo sudah masuk ke <b>Soundroom 2026</b>.<br />
+									Semoga lo berkesempatan manggung di Pestapora ya.<br />
+									Biar banyak yang dukung, <a href='".$share_url."' target='blank'>download dan share konten ini</a> ke story lo ya.<br /><br />
+									".$share_url;
+
+						$pesan = $this->load->view('front/email-template-rejected', $em, TRUE);
 						$this->email->message($pesan);
-						@$se = $this->email->send();
-						//end share email
-					}
-					else{
+						@$this->email->send();
+
+						$ret['status'] = "true";
+						$ret['message'] = "Your sound has been sent successfully. Please check your email.";
+					} else {
 						$ret['status'] = "false";
-						$ret['message'] = "Error upload sound!";
+						$ret['message'] = "Error saat menyimpan data ke database.";
 					}
 				} else {
-                    $ret['status'] = "false";
-                    $ret['message'] = "Submission error";
-                }
-
-			}else{
+					$ret['status'] = "false";
+					$ret['message'] = "Submission error: File tidak terproses.";
+				}
+			} else {
 				$ret['status'] = "false";
-				$ret['message'] = "ERROR";
+				$ret['message'] = "ERROR: Invalid Request";
 			}
 			echo json_encode($ret);
 		}

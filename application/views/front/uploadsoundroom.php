@@ -293,13 +293,14 @@
 			dataform.append('sound', sound[0].files[0]);
 			dataform.append('submit', "1");
 			dataform.append('<?php echo $this->security->get_csrf_token_name(); ?>', '<?php echo $this->security->get_csrf_hash(); ?>');
+			
 			$.ajax({
 				type: "POST",
 				data: dataform,
 				dataType: "json",
 				contentType: false,
 				processData: false,
-				url: "<?php echo base_url(); ?>profile/submitsound",
+				url: "<?php echo base_url(); ?>profile/submitsound2026",
 				beforeSend: function() {
 					$('.overlay-all').show();
 					$('#btnWrite').prop("disabled", true);

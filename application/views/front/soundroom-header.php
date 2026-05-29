@@ -270,40 +270,39 @@ function cur2($ini, $now)
 					<i class="fa fa-search"></i>
 				</button>
 				<div class="navbar-brand">
-				<a href='<?= base_url('soundroom'); ?>'>
-					<?php
-						// 1. Prioritaskan variabel dari Controller, jika tidak ada, baru cek $_GET
-						$season = isset($page_season) ? $page_season : (isset($_GET['year']) ? $_GET['year'] : '');
-						
-						// 2. Logika pengecekan URL (tetap dipertahankan untuk backup)
-						$current_uri = $this->uri->uri_string(); 
-						$is_route_2026 = (strpos($current_uri, 'soundroom-2026') !== false);
-						
-						// 3. Menentukan apakah 2026
-						$is_2026 = ($season == '2026' || $is_route_2026);
-					?>
-
-					<?php if ($is_2026): ?>
-						<!-- MASUKAN ASSET SOUNDROOM 2026 JIKA NANTI ADA -->
-						<img src="assets/front/soundroom/SOUNDROOM-B-Regular.png" alt="Soundroom 2026" style="max-height: 80px;">
-					<?php else: ?>
+					<a href='<?= base_url('soundroom'); ?>'>
 						<?php
-							// Logika logo untuk tahun lainnya
-							$logo_img = 'assets/front/img/soundroom/logo.png';
-							if ($season == '2024') {
-								$logo_img = 'assets/front/soundroom/logo-pestapora-2024.png';
-							} elseif ($season == '2019') {
-								$logo_img = 'assets/front/img/AUTHENTICITY_SOUNDROOM_2019.png';
-							} elseif ($season == '2022') {
-								$logo_img = 'assets/front/img/soundroom-pestapora-x.png';
-							}elseif ($season == '2026') {
-								$logo_img = 'assets/front/soundroom/SOUNDROOM-B-Regular.png';
-							}
+							// 1. Prioritaskan variabel dari Controller, jika tidak ada, baru cek $_GET
+							$season = isset($page_season) ? $page_season : (isset($_GET['year']) ? $_GET['year'] : '');
+							
+							// 2. Logika pengecekan URL (tetap dipertahankan untuk backup)
+							$current_uri = $this->uri->uri_string(); 
+							$is_route_2026 = (strpos($current_uri, 'soundroom-2026') !== false);
+							
+							// 3. Menentukan apakah 2026
+							$is_2026 = ($season == '2026' || $is_route_2026);
 						?>
-						<img src="<?= base_url($logo_img); ?>">
-					<?php endif; ?>
-				</a>
-			</div>
+
+							<?php if ($is_2026): ?>
+								<img src="<?= base_url('assets/front/soundroom/SOUNDROOM-B-Regular.png'); ?>" alt="Soundroom 2026" style="max-height: 80px;">
+							<?php else: ?>
+							<?php
+								// Logika logo untuk tahun lainnya
+								$logo_img = 'assets/front/img/soundroom/logo.png';
+								if ($season == '2024') {
+									$logo_img = 'assets/front/soundroom/logo-pestapora-2024.png';
+								} elseif ($season == '2019') {
+									$logo_img = 'assets/front/img/AUTHENTICITY_SOUNDROOM_2019.png';
+								} elseif ($season == '2022') {
+									$logo_img = 'assets/front/img/soundroom-pestapora-x.png';
+								}elseif ($season == '2026') {
+									$logo_img = 'assets/front/soundroom/SOUNDROOM-B-Regular.png';
+								}
+							?>
+							<img src="<?= base_url($logo_img); ?>">
+						<?php endif; ?>
+					</a>
+				</div>
 			</div>
 
 			<div id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height: 1px;">

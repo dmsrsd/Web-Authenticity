@@ -196,11 +196,12 @@
 																<label for="youtube">Youtube Channel Link <i>(optional)</i></label>
 																<input type="text" class="form-control " id="youtube" maxlength="150" placeholder="Youtube link" name="youtube" value='<?=(isset($data['youtube']) ? $data['youtube'] : '')?>' >
 															</div>
-																<div class="form-group">
+
+															<!-- <div class="form-group">
 																<label for="manggung">Tempat Manggung*</label>
 																<input type="text" class="form-control" id="manggung" name="manggung" required 
 																	value="<?= $band['manggung'] ?? '' ?>">
-															</div>
+															</div> -->
 	
 															<!--
 															<div class="form-group">

@@ -124,16 +124,12 @@ class Profile extends MY_Controller {
     }
 
     public function upload_mp3($file,$folder){
-
     	// $upload_dir ="uploads/";
-		$upload_dir = FCPATH . "uploads/"; // Tambahkan FCPATH!
+		$upload_dir = FCPATH . "uploads/";
 		if (!is_dir($upload_dir . $folder)) {
         mkdir($upload_dir . $folder, 0777, true);
     }
     	$file_image = "";
-
-		// $FILE_MIMES = array('audio/mpeg');
-		// $FILE_EXTS  = array('.mp3');
 		$FILE_MIMES = array('audio/mpeg', 'audio/mp3', 'audio/x-wav', 'audio/wav');
 		$FILE_EXTS  = array('.mp3', '.wav');
 
@@ -1452,7 +1448,7 @@ class Profile extends MY_Controller {
 					$next = "true";
 				}
 
-				// 7. Handling Upload MP3
+				// 7. Handling Upload MP3 (Versi Lebih Aman)
 				if (!empty($_FILES['sound']['name'])) {
 					if ($_FILES['sound']['size'] > 6291456) {
 						$ret['status'] = "false";
@@ -1460,8 +1456,19 @@ class Profile extends MY_Controller {
 						echo json_encode($ret);
 						return;
 					}
-					$_POST['sound'] = $this->upload_mp3($_FILES['sound'], "soundroom");
-					$next = "true";
+
+					$file_name = $this->upload_mp3($_FILES['sound'], "soundroom");
+
+					if ($file_name) {
+						$_POST['sound'] = $file_name;
+						$next = "true";
+					} else {
+						// Jika fungsi upload_mp3 gagal (folder error/permission)
+						$ret['status'] = "false";
+						$ret['message'] = "Gagal mengunggah file ke server. Cek folder permission!";
+						echo json_encode($ret);
+						return;
+					}
 				}
 
 				// 8. Eksekusi Insert ke Table soundroom_2026

@@ -208,7 +208,7 @@ class Login extends MY_Controller {
 				$ac['password'] = $this->encrypt->encode($_POST['password']);
 				$update = $this->model_global->update($ac, 'member', array('id_member' => $cek['id_member']));
 				$this->response = $this->session->flashdata('response');
-				$this->session->set_flashdata('response', array('status' => 'success', 'message' => "Silahkan <a href='".base_url()."login'><b>Login</b></a> dengan Password yang telah password baru Anda<br>"));
+				$this->session->set_flashdata('response', array('status' => 'success', 'message' => "Silahkan <a href='".base_url()."login'><b>Login</b></a> dengan Password baru Anda<br>"));
 				redirect(base_url().'reset-password?ver='.$ver);
 			}
 		}else{

@@ -11,14 +11,28 @@ class Profile extends MY_Controller {
 
 	}
 
+	private function _ensure_upload_dir($folder) {
+		$base = FCPATH . 'uploads/';
+		$dir = $base . $folder;
+		if (!is_dir($dir)) {
+			@mkdir($dir, 0777, true);
+		}
+		if (!is_dir($dir) || !is_writable($dir)) {
+			if (is_dir($base)) {
+				@chmod($base, 0777);
+			}
+			@chmod($dir, 0777);
+		}
+		return is_dir($dir) && is_writable($dir);
+	}
+
     public function upload_foto($file,$folder,$thumb=FALSE,$thumb_width){
 		
 		//$upload_dir = $this->config->item('upload_path');
     	// $upload_dir = "uploads/";
 		$upload_dir = FCPATH . "uploads/"; // Tambahkan FCPATH!
-		// Pastikan folder tujuan ada
-		if (!is_dir($upload_dir . $folder)) {
-			mkdir($upload_dir . $folder, 0777, true);
+		if (!$this->_ensure_upload_dir($folder)) {
+			return "";
 		}
 		
     	$file_image = "";
@@ -126,11 +140,14 @@ class Profile extends MY_Controller {
     public function upload_mp3($file,$folder){
     	// $upload_dir ="uploads/";
 		$upload_dir = FCPATH . "uploads/";
-		if (!is_dir($upload_dir . $folder)) {
-        mkdir($upload_dir . $folder, 0777, true);
-    }
+		if (!$this->_ensure_upload_dir($folder)) {
+			return "";
+		}
     	$file_image = "";
-		$FILE_MIMES = array('audio/mpeg', 'audio/mp3', 'audio/x-wav', 'audio/wav');
+		$FILE_MIMES = array(
+			'audio/mpeg', 'audio/mp3', 'audio/x-mpeg', 'audio/x-mp3',
+			'audio/x-wav', 'audio/wav', 'audio/wave', 'application/octet-stream'
+		);
 		$FILE_EXTS  = array('.mp3', '.wav');
 
 		if (isset($file) && $file['name'] != "") {
@@ -1444,6 +1461,12 @@ class Profile extends MY_Controller {
 						return;
 					}
 					$_POST['image'] = $this->upload_foto($_FILES['image'], "soundroom", FALSE, "");
+					if (empty($_POST['image'])) {
+						$ret['status'] = "false";
+						$ret['message'] = "Gagal mengunggah foto. Pastikan folder uploads/soundroom bisa ditulis (permission server).";
+						echo json_encode($ret);
+						return;
+					}
 					$_POST['thumbnail'] = $_POST['image']; // Menyamakan thumbnail dengan image
 					$next = "true";
 				}
@@ -1463,9 +1486,8 @@ class Profile extends MY_Controller {
 						$_POST['sound'] = $file_name;
 						$next = "true";
 					} else {
-						// Jika fungsi upload_mp3 gagal (folder error/permission)
 						$ret['status'] = "false";
-						$ret['message'] = "Gagal mengunggah file ke server. Cek folder permission!";
+						$ret['message'] = "Gagal mengunggah file musik. Pastikan folder uploads/soundroom bisa ditulis (permission server).";
 						echo json_encode($ret);
 						return;
 					}

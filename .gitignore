@@ -20,7 +20,14 @@ application/logs/*
 .htaccess
 application/config/config.php
 application/config/database.php
-uploads
+# Isi uploads di-ignore; struktur folder soundroom ikut repo (.gitkeep)
+uploads/*
+!uploads/soundroom/
+uploads/soundroom/*
+!uploads/soundroom/.gitkeep
+!uploads/soundroom/thumb/
+uploads/soundroom/thumb/*
+!uploads/soundroom/thumb/.gitkeep
 database/*.sql
 database/*.sql.gz
 .env

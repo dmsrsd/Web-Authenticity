@@ -27,6 +27,7 @@ services:
       DB_PASSWORD: ${DB_PASSWORD:-admin123}
     volumes:
       - .:/var/www/html
+      - ./docker-php-uploads.ini:/usr/local/etc/php/conf.d/uploads.ini:ro
     networks:
       - authenticity-network
 

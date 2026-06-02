@@ -32,6 +32,9 @@ COPY . .
 RUN chown -R www-data:www-data application/cache application/logs application/config \
     && chmod -R 775 application/cache application/logs
 
+# Batas upload (Soundroom: foto + mp3)
+COPY docker-php-uploads.ini /usr/local/etc/php/conf.d/uploads.ini
+
 # PHP production optimizations (OPcache)
 RUN echo "opcache.enable=1" >> /usr/local/etc/php/conf.d/opcache.ini \
     && echo "opcache.memory_consumption=128" >> /usr/local/etc/php/conf.d/opcache.ini \

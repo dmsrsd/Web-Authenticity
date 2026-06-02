@@ -2,6 +2,9 @@
 @session_start();
 
 class Profile extends MY_Controller {
+
+	private $_last_upload_error = '';
+
 	function __construct() {
         parent::__construct();
         $this->load->helper('url');
@@ -26,13 +29,37 @@ class Profile extends MY_Controller {
 		return is_dir($dir) && is_writable($dir);
 	}
 
+	private function _file_upload_error($file) {
+		if (!isset($file['error']) || $file['error'] === UPLOAD_ERR_OK) {
+			return '';
+		}
+		$messages = array(
+			UPLOAD_ERR_INI_SIZE   => 'File melebihi batas upload_max_filesize di server PHP.',
+			UPLOAD_ERR_FORM_SIZE  => 'File melebihi batas ukuran form.',
+			UPLOAD_ERR_PARTIAL    => 'File hanya ter-upload sebagian. Coba lagi.',
+			UPLOAD_ERR_NO_FILE    => 'Tidak ada file yang di-upload.',
+			UPLOAD_ERR_NO_TMP_DIR => 'Folder temporary PHP tidak tersedia.',
+			UPLOAD_ERR_CANT_WRITE => 'Gagal menulis file ke disk server.',
+			UPLOAD_ERR_EXTENSION  => 'Upload dihentikan oleh ekstensi PHP.',
+		);
+		return isset($messages[$file['error']])
+			? $messages[$file['error']]
+			: 'Upload gagal (kode error ' . $file['error'] . ').';
+	}
+
+	private function _set_upload_error($message) {
+		$this->_last_upload_error = $message;
+		return '';
+	}
+
     public function upload_foto($file,$folder,$thumb=FALSE,$thumb_width){
 		
 		//$upload_dir = $this->config->item('upload_path');
     	// $upload_dir = "uploads/";
 		$upload_dir = FCPATH . "uploads/"; // Tambahkan FCPATH!
+		$this->_last_upload_error = '';
 		if (!$this->_ensure_upload_dir($folder)) {
-			return "";
+			return $this->_set_upload_error('Folder upload tidak bisa ditulis.');
 		}
 		
     	$file_image = "";
@@ -40,13 +67,20 @@ class Profile extends MY_Controller {
 		$FILE_EXTS  = array('.jpeg','.jpg','.png','.ico','.gif');
 
 		if (isset($file) && $file['name'] != "") {
+			$upload_err = $this->_file_upload_error($file);
+			if ($upload_err !== '') {
+				return $this->_set_upload_error($upload_err);
+			}
 			$file_type 	= $file['type'];
 			$file_image = $file['name'];
 			$file_size 	= $file['size'];
 			if($file_size > 1048576){
 				die(json_encode(array('status'=>'error', 'message' => "Sorry, Max. image 1mb")));
 			}
-			$file_ext 	= strtolower(substr($file_image,strrpos($file_image,".")));
+			$file_ext 	= '.' . strtolower(pathinfo($file_image, PATHINFO_EXTENSION));
+			if ($file_ext === '.') {
+				return $this->_set_upload_error('Format foto tidak dikenali. Gunakan JPEG atau PNG.');
+			}
 
 			$temp_name 	= $file['tmp_name'];
 			$file_image = str_replace("\\","",$file_image);
@@ -59,11 +93,15 @@ class Profile extends MY_Controller {
 			$file_path 	= $upload_dir.$folder.'/'.$file_image;
 
 			if (!in_array($file_type, $FILE_MIMES) && !in_array($file_ext, $FILE_EXTS) ) {
-				die(json_encode(array('status'=>'error', 'message' => "Sorry, $file_image($file_type) is not allowed to be uploaded")));
+				return $this->_set_upload_error('Format foto tidak diizinkan. Gunakan JPEG atau PNG.');
+			}
+
+			if (!is_uploaded_file($temp_name)) {
+				return $this->_set_upload_error('File foto tidak valid atau melebihi batas server (post_max_size).');
 			}
 
 			//addafterdeface--------------
-			$size = getimagesize($temp_name);
+			$size = @getimagesize($temp_name);
 			if(!$size) {
 				die(json_encode(array('status'=>'error', 'message' => "Sorry, $file_image($file_type) is not allowed to be uploaded")));
 			}
@@ -75,7 +113,7 @@ class Profile extends MY_Controller {
 				die(json_encode(array('status'=>'error', 'message' => "Sorry, $file_image($file_type) is not allowed to be uploaded")));
 			}
 			//------------------
-			$result = move_uploaded_file($temp_name, $file_path);
+			$result = @move_uploaded_file($temp_name, $file_path);
 
 			if ($result) {
 				if($thumb==TRUE){
@@ -132,7 +170,7 @@ class Profile extends MY_Controller {
 				return $file_image;
 			}
 			else{
-				return "";
+				return $this->_set_upload_error('Gagal menyimpan foto ke ' . $folder . '.');
 			}
 		}
     }
@@ -140,17 +178,23 @@ class Profile extends MY_Controller {
     public function upload_mp3($file,$folder){
     	// $upload_dir ="uploads/";
 		$upload_dir = FCPATH . "uploads/";
+		$this->_last_upload_error = '';
 		if (!$this->_ensure_upload_dir($folder)) {
-			return "";
+			return $this->_set_upload_error('Folder upload tidak bisa ditulis.');
 		}
     	$file_image = "";
 		$FILE_MIMES = array(
 			'audio/mpeg', 'audio/mp3', 'audio/x-mpeg', 'audio/x-mp3',
-			'audio/x-wav', 'audio/wav', 'audio/wave', 'application/octet-stream'
+			'audio/x-wav', 'audio/wav', 'audio/wave', 'application/octet-stream',
+			'audio/mp4', 'audio/x-m4a', 'video/mp4'
 		);
-		$FILE_EXTS  = array('.mp3', '.wav');
+		$FILE_EXTS  = array('.mp3', '.wav', '.m4a');
 
 		if (isset($file) && $file['name'] != "") {
+			$upload_err = $this->_file_upload_error($file);
+			if ($upload_err !== '') {
+				return $this->_set_upload_error($upload_err);
+			}
 			$file_type 	= $file['type'];
 			$file_image = $file['name'];
 			$file_size 	= $file['size'];
@@ -158,7 +202,10 @@ class Profile extends MY_Controller {
 				die(json_encode(array('status'=>'error', 'message' => "Sorry, Max. mp3 6mb")));
 			}
 
-			$file_ext 	= strtolower(substr($file_image,strrpos($file_image,".")));
+			$file_ext 	= '.' . strtolower(pathinfo($file_image, PATHINFO_EXTENSION));
+			if ($file_ext === '.') {
+				return $this->_set_upload_error('Format musik tidak dikenali. Gunakan MP3 atau WAV.');
+			}
 			$temp_name 	= $file['tmp_name'];
 			$file_image = str_replace("\\","",$file_image);
 			$file_image = str_replace("'","",$file_image);
@@ -170,15 +217,19 @@ class Profile extends MY_Controller {
 			$file_path 	= $upload_dir.$folder.'/'.$file_image;
 
 			if (!in_array($file_type, $FILE_MIMES) && !in_array($file_ext, $FILE_EXTS) ) {
-				die(json_encode(array('status'=>'error', 'message' => "Sorry, $file_image($file_type) is not allowed to be uploaded")));
+				return $this->_set_upload_error('Format musik tidak diizinkan (' . $file_ext . '). Gunakan MP3 atau WAV.');
 			}
 
-			$result = move_uploaded_file($temp_name, $file_path);
+			if (!is_uploaded_file($temp_name)) {
+				return $this->_set_upload_error('File musik tidak valid atau melebihi batas server (upload_max_filesize / post_max_size).');
+			}
+
+			$result = @move_uploaded_file($temp_name, $file_path);
 			if ($result) {
 				return $file_image;
 			}
 			else{
-				return "";
+				return $this->_set_upload_error('Gagal menyimpan musik ke ' . $folder . '. Cek permission atau ruang disk.');
 			}
 
 			//-- new upload-method
@@ -1377,6 +1428,20 @@ class Profile extends MY_Controller {
 
 	public function submitsound2026() {
 		$this->load->library('form_validation');
+		$this->_last_upload_error = '';
+
+		// Jika seluruh POST kosong padahal ada body, biasanya post_max_size kebesaran
+		if (
+			empty($_POST) && empty($_FILES)
+			&& isset($_SERVER['CONTENT_LENGTH'])
+			&& (int) $_SERVER['CONTENT_LENGTH'] > 0
+		) {
+			echo json_encode(array(
+				'status'  => 'false',
+				'message' => 'Ukuran upload melebihi post_max_size server. Hubungi admin atau kurangi ukuran file.',
+			));
+			return;
+		}
 		
 		// 1. Setting Limit Date untuk Season 2026
 		$limit_date = '2026-12-31 00';
@@ -1409,6 +1474,11 @@ class Profile extends MY_Controller {
 			$ret['status'] = "false";
 			$ret['message'] = "Pastikan file musik udah lo pilih!";
 			echo json_encode($ret);
+			return;
+		}
+		$sound_upload_err = $this->_file_upload_error($_FILES['sound']);
+		if ($sound_upload_err !== '') {
+			echo json_encode(array('status' => 'false', 'message' => $sound_upload_err));
 			return;
 		}
 
@@ -1463,7 +1533,7 @@ class Profile extends MY_Controller {
 					$_POST['image'] = $this->upload_foto($_FILES['image'], "soundroom", FALSE, "");
 					if (empty($_POST['image'])) {
 						$ret['status'] = "false";
-						$ret['message'] = "Gagal mengunggah foto. Pastikan folder uploads/soundroom bisa ditulis (permission server).";
+						$ret['message'] = $this->_last_upload_error ?: "Gagal mengunggah foto.";
 						echo json_encode($ret);
 						return;
 					}
@@ -1487,7 +1557,7 @@ class Profile extends MY_Controller {
 						$next = "true";
 					} else {
 						$ret['status'] = "false";
-						$ret['message'] = "Gagal mengunggah file musik. Pastikan folder uploads/soundroom bisa ditulis (permission server).";
+						$ret['message'] = $this->_last_upload_error ?: "Gagal mengunggah file musik.";
 						echo json_encode($ret);
 						return;
 					}

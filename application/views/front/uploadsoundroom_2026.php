@@ -288,8 +288,16 @@
 			var img = $('#image');
 			var sound = $('#sound');
 			// dataform.append('thumbnail', thumb[0].files[0]);
-			dataform.append('image', img[0].files[0]);
-			dataform.append('sound', sound[0].files[0]);
+			if (img[0].files[0]) {
+				dataform.append('image', img[0].files[0], img[0].files[0].name);
+			}
+			if (!sound[0].files[0]) {
+				$('#lblStatusLogin').html("<div class='alert alert-danger'>Pilih file musik (MP3/WAV) terlebih dahulu.</div>");
+				$('#btnWrite').prop("disabled", false);
+				$('.overlay-all').hide();
+				return false;
+			}
+			dataform.append('sound', sound[0].files[0], sound[0].files[0].name);
 			dataform.append('submit', "1");
 			dataform.append('<?php echo $this->security->get_csrf_token_name(); ?>', '<?php echo $this->security->get_csrf_hash(); ?>');
 			$.ajax({

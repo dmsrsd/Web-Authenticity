@@ -331,7 +331,7 @@ Jangan sampe ketinggalan! Ini langkah penting biar band lo makin dilirik!</p>
             </div>
         <div class="container" id="screnshoot">
             <div class="logo_ig">
-                <img src="<?php echo base_url('assets/front/img/soundroom/logo.png') ?>" class="img-fluid">
+                <img src="<?php echo base_url('assets/front/img/soundroom/SOUNDROOM-B-Regular.png') ?>" class="img-fluid">
             </div>
             <div class="cont_photo">
                 <div class="place_photo"></div>

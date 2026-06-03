@@ -32,14 +32,10 @@
 			<div class="col-lg-8 banner-left">
 			<div class="page-soundroom__banner" style="margin: 100px 10px 20px 10px;">
 				<?php
-					// Mengambil tahun dari URL
-					// $season = isset($_GET['year']) ? $_GET['year'] : '2026';
-
 					$season = $year;
 
 					if ($season == '2026') {
-						// Menggunakan URL gambar dari internet untuk 2026
-						echo "<img src='https://images.pexels.com/photos/15865135/pexels-photo-15865135.jpeg?_gl=1*idm940*_ga*MTY4OTc4NTI0Mi4xNzc5Njc2NjQ4*_ga_8JE65Q40S6*czE3Nzk5MzYxMDMkbzIkZzEkdDE3Nzk5MzYxMjAkajQzJGwwJGgw' alt='Soundroom 2026'>";
+						echo "<img src='" . base_url() . "assets/front/soundroom/Soundroom2026-big.jpg' alt='Soundroom 2026'>";
 					} 
 					else if ($season == '2025') {
 						echo "<img src='" . base_url() . "assets/front/img/soundroom/bg-soundroom-new-2025.png' alt='Soundroom 2025'>";

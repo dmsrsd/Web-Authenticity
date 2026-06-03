@@ -1515,7 +1515,8 @@ class Profile extends MY_Controller {
 
 				if (!empty($cek_existing)) {
 					$ret['status'] = "false";
-					$ret['message'] = "Halo, Band kamu sudah terdaftar di Soundroom 2026!";
+					$ret['message'] = "BAND KAMU SUDAH TERDAFTAR DI SOUNDROOM 2026,
+									Satu akun hanya dapat melakukan satu kali pendaftaran.";
 					echo json_encode($ret);
 					return;
 				}

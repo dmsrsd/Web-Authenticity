@@ -153,6 +153,7 @@
 									</div>
 									<em>* Maksimal file size 1MB. 180px x 180px. Format file : jpeg, png, atau tiff</em>
 								</div>
+								
 								<div class="form-group">
 									<label>Upload Sound Demo*</label>
 									<div class="form-group--upload">

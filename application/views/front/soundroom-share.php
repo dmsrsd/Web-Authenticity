@@ -331,13 +331,13 @@ Jangan sampe ketinggalan! Ini langkah penting biar band lo makin dilirik!</p>
             </div>
         <div class="container" id="screnshoot">
             <div class="logo_ig">
-                <img src="<?php echo base_url('assets/front/img/soundroom/SOUNDROOM-B-Regular.png') ?>" class="img-fluid">
+                <img src="<?php echo base_url('assets/front/img/soundroom/logo-soundroom2026.png') ?>" class="img-fluid">
             </div>
             <div class="cont_photo">
                 <div class="place_photo"></div>
                 <div class="label-gambar">
-                    <h1 class="title-items exetegue"><?php echo $soundroom['judul'] ?></h1>
-                    <p><?php echo $soundroom['provinsi'] ?></p>
+                    <!-- <h1 class="title-items exetegue"><?php echo $soundroom['judul'] ?></h1>
+                    <p><?php echo $soundroom['provinsi'] ?></p> -->
                 </div>
             </div>
             
@@ -362,8 +362,8 @@ Jangan sampe ketinggalan! Ini langkah penting biar band lo makin dilirik!</p>
                             <tbody><tr>
                                 <td><img class="img-soundbar" height="70" src="<?php echo base_url();?>uploads/soundroom/<?php echo $soundroom['thumbnail'];?>"></td>
                                 <td width="100%">
-                                    <div class="namaband-soundbar"><?php echo $soundroom['judul'] ?></div>
-                                    <div class="kota-soundbar"><?php echo $soundroom['provinsi'] ?></div>
+                                    <!-- <div class="namaband-soundbar"><?php echo $soundroom['judul'] ?></div>
+                                    <div class="kota-soundbar"><?php echo $soundroom['provinsi'] ?></div> -->
                                 </td>
                             </tr>
                         </tbody></table>

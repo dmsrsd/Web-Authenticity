@@ -21,9 +21,24 @@
 		color: #FF0020;
 	}
 
-	/* .footerbg, .footer1{
-	display: none;
-} */
+	.btn-soundroom {
+		margin-bottom: 40px;
+		padding: 18px 45px;
+		background-color: #dc3545;
+		color: white;
+		border: none;
+		text-decoration: none;
+		display: inline-block;
+		font-size: 30px;
+		font-weight: bold;
+		transition: 0.3s;
+	}
+
+	.btn-soundroom:hover {
+		background-color: #bb2d3b;
+		color: white;
+	}
+
 </style>
 
 <div class="page-soundroom page-soundroom--winner new-bs" style="padding-top: initial;">
@@ -51,7 +66,7 @@
 			</div>
 				<div class="row justify-content-center">
 					<div class="col-md-11">
-						<div class="page-soundroom__cta">
+						<div class="page-soundroom__cta text-center">
 							<!--<h2>
 								<?php
 								if ($season == '2019'){
@@ -94,8 +109,9 @@
 												<img src="<?= base_url() ?>assets/front/img/soundroom/btn-cta.png">
 											</a>
 										<?php else: ?>
-											<a href="<?= base_url('profile/soundroom' . $season) ?>" class="btn btn-primary btn-lg" style="margin-top: 20px; border-radius: 50px; padding: 12px 30px;">
-												Ikutan Soundroom <?= $season ?> Sekarang !
+											<a href="<?= base_url('profile/soundroom' . $season) ?>" 
+												class="btn-soundroom">
+												Ikutan Soundroom 2026 Sekarang !
 											</a>
 										<?php endif; ?>
 
@@ -149,28 +165,6 @@
 							</tr>
 						</table>
 						<div class='divtbody' id='divtbody'>
-							<!-- <table width="100%" cellpadding="0" cellspacing="0" class="tbody">
-								<tbody>
-									<tr class="trbody">
-										<td width="150" align="center">
-											<div class="noindex noindex-soloist">1</div>
-											<div class="playno playno-soloist hide">
-												<a href="javascript:void(0);" onclick="currentplaytop(this)" class="icon  pl-2 idpl-3" data-now="2" data-audio1="a1-3" data-audio="http://authenticity.local/uploads/soundroom/soundroom_8735_wahyusaputro_-_Epilog_Senja.mp3" data-band="soloist" data-progress="prog-3" data-progress1="prog1-3"><i class="fa fa-play"></i></a>
-											</div>
-										</td>
-										<td>
-											<div class="playlist-artist">
-												<img src='<?= base_url() ?>assets/front/img/soundroom/bg-soundroom-new.png'>
-												<div class="playlist-artist__caption">
-													<h6>Sunwich</h6>
-													<p>Jakarta Utara</p>
-												</div>
-											</div>
-										</td>
-										<td width="50" align="center">04:27</td>
-									</tr>
-								</tbody>
-							</table> -->
 							<div id='listtableplay' align='center'>Please Wait ...</div>
 						</div>
 					</div>

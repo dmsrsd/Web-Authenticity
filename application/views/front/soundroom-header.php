@@ -270,7 +270,7 @@ function cur2($ini, $now)
 					<i class="fa fa-search"></i>
 				</button>
 				<div class="navbar-brand">
-					<a href='<?= base_url('soundroom'); ?>'>
+					<a href='<?= base_url('soundroom'); ?>' style="outline: none !important; outline-width: 0 !important; box-shadow: none !important; border: none !important; display: inline-block;">
 						<?php
 							$season = isset($page_season) ? $page_season : (isset($_GET['year']) ? $_GET['year'] : '');
 							$current_uri = $this->uri->uri_string(); 

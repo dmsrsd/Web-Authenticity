@@ -136,21 +136,56 @@
 .tbody{
 	background:#F1F1F1;
 }
+
 .divtbody .trbody:hover{
 	background:#FAFAFA;
 	cursor:pointer;
 }
+
 .divtbody .active td{
 	color:#FD1C3B;
 	background:#FAFAFA;
 }
-.divtbody .curractive .playno{
-	border:1px solid #FD1C3B;
+
+.divtbody .curractive .playno {
+    border: 1px solid #FFFFFF !important; 
+    box-shadow: inset 0 0 0 1px #FD1C3B !important;
+    color: #FFFFFF !important;
+    padding: 1 !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
 }
+
+/* KHUSUS: Menghapus "Putih Tebal" pada icon/link */
+.divtbody .playno a, 
+.divtbody .curractive .playno a {
+    background: transparent !important; 
+    border: none !important;            
+    outline: none !important;
+    box-shadow: none !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    text-decoration: none !important;
+}
+
+/* Reset Icon agar tajam */
+.divtbody .curractive .playno i {
+    text-shadow: none !important;
+    -webkit-text-stroke: 0px !important;
+    background: transparent !important;
+    color: #FD1C3B !important; 
+    font-size: 13px;
+}
+
 .divtbody .curractive td{
 	color:#FD1C3B;
 	background:#FAFAFA;
 }
+
 .divtbody{
 	max-height:322px;
 	overflow-y:scroll;
@@ -159,6 +194,7 @@
 	border-right:1px solid #CECECE;
 
 }
+
 .divtbody .playno{
 	-webkit-border-radius: 100% ;
 	-moz-border-radius: 100% ;
@@ -171,6 +207,8 @@
     text-align: center;
     padding-left: 2px;
     padding-top: 2px;
+	box-shadow: none !important; 
+    outline: none !important;
 }
 
 .soundbar .namaband-soundbar{

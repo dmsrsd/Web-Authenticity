@@ -201,7 +201,7 @@
 				<h3>Selamat!</h3>
 				<img src='<?= base_url(); ?>assets/front/img/soundroom/line.png' class="separator">
 				<p>
-					Musik lo berhasil di-submit!<br />
+					Congrats, band lo udah terdaftar di Authenticity Soundroom 2026! Jangan lupa cek email dari Authenticity ya!<br />
 					<a href="<?= base_url(); ?>soundroom">Klik di sini buat dengerin playlistnya</a>
 				</p>
 

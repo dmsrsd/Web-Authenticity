@@ -36,3 +36,4 @@ database/*.sql.gz
 nginx/
 DEPLOY-EC2.md
 README-ubuntu-nginx.md
+.cursor/

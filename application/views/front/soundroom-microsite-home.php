@@ -256,7 +256,7 @@
 					"<div class='col-lg-2 col-md-4 col-sm-4'>
 						<div class='box-soundroom'>";
 
-					if ($row['top3'] == 1 && isset($row['rank'])) {
+					if (isset($row['top3']) && $row['top3'] == 1 && isset($row['rank'])) {
 						if (in_array($row['rank'], $top15)) {
 							echo "<div class='badge-winner'><img src='". base_url() ."assets/front/img/soundroom/badge-15.svg'></div>";
 						} elseif (in_array($row['rank'], $top7)) {
@@ -266,7 +266,7 @@
 						}
 					}
 
-					if ($row['top10'] == 1) {
+					if (isset($row['top10']) && $row['top10'] == 1) {
 						if ($row['rank'] < 7) {
 							echo "<div class='badge-winner'><img src='". base_url() ."assets/front/img/soundroom/badge-6.png'></div>";
 						}else{
@@ -313,7 +313,7 @@
 											<h2 >$row[kota]</h2>";
 					}
 
-					if ($row['top3'] == 1 && isset($row['rank']) && in_array($row['rank'], $top15)) {
+					if (isset($row['top3']) && $row['top3'] == 1 && isset($row['rank']) && in_array($row['rank'], $top15)) {
 						echo "<p class='badge-winner-text'>Top 15</p>";
 					}
 

@@ -382,23 +382,7 @@ function cur2($ini, $now)
         $('.sound-season').on('click', function(e) {
             e.preventDefault();
             var year = $(this).data('year');
-            
-            // Debugging: lihat di console
-            console.log("Season diklik: " + year); 
-
-            if (year == '2026') {
-                // Gunakan path absolut yang bersih\
-				// LANDING PAGE CUSTOM
-                // window.location.href = base + 'soundroom-2026';
-				// MICROSITE EXISTING
-				window.location.href = base + 'soundroom?year=' + year;
-            } else {
-                if (typeof loadSeasonData === 'function') {
-                    loadSeasonData(year);
-                } else {
-                    console.error("Fungsi loadSeasonData tidak ditemukan!");
-                }
-            }
+            window.location.href = base + 'soundroom?year=' + year;
         });
     });
 </script>

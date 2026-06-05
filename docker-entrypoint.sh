@@ -5,6 +5,9 @@ set -e
 if [ -d /var/www/html ]; then
     chmod o+x /var/www/html 2>/dev/null || true
     chmod -R o+rX /var/www/html 2>/dev/null || true
+    # View/controller must be world-readable when bind-mount owner is host user (www-data ≠ owner)
+    chmod -R a+rX /var/www/html/application/views /var/www/html/application/controllers 2>/dev/null || true
+    chmod a+r /var/www/html/index.php /var/www/html/.htaccess 2>/dev/null || true
     chown -R www-data:www-data /var/www/html/application/cache /var/www/html/application/logs 2>/dev/null || true
     chmod -R 775 /var/www/html/application/cache /var/www/html/application/logs 2>/dev/null || true
 

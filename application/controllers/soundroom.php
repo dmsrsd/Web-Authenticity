@@ -397,7 +397,7 @@ class Soundroom extends MY_Controller {
                     "<div class='col-lg-2 col-md-4 col-sm-4'>
 				<div class='box-soundroom'>";
 
-				if ($row['top3'] == 1 && isset($row['rank'])) {
+				if (isset($row['top3']) && $row['top3'] == 1 && isset($row['rank'])) {
 					if (in_array($row['rank'], $top15)) {
 						$html .= "<div class='badge-winner'><img src='". base_url() ."assets/front/img/soundroom/badge-15.svg'></div>";
 					} elseif (in_array($row['rank'], $top7)) {
@@ -856,7 +856,7 @@ class Soundroom extends MY_Controller {
 							<div class='d-flex align-items-center'>
 								$row[judul]";
 					if ($year >= '2024') { //buat if jika 2024 ke atas
-						if ($row['top3'] == 1 && isset($row['rank'])) {
+						if (isset($row['top3']) && $row['top3'] == 1 && isset($row['rank'])) {
 							if ($row['rank'] == 1) {
 								$html .= "<div class='badge-winner badge-winner--table'><img class='golden' src='". base_url() ."assets/front/img/soundroom/badge-12.png'></div>";
 							}else{
@@ -864,7 +864,7 @@ class Soundroom extends MY_Controller {
 							}
 						}
 					}else{
-						if ($row['top3'] == 1 && isset($row['rank'])) {
+						if (isset($row['top3']) && $row['top3'] == 1 && isset($row['rank'])) {
 							if (in_array($row['rank'], $top15)) {
 								$html .= "<div class='badge-winner badge-winner--table'><img src='". base_url() ."assets/front/img/soundroom/badge-15.svg'></div>";
 							} elseif (in_array($row['rank'], $top7)) { //dimatikan sementara

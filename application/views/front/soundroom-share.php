@@ -316,7 +316,7 @@
                 $fullUrl = "Hey ".$soundroom['judul']." Gue dukung lo buat manggung di Soundroom. Cek di webnya Authenticity ya ".$scheme . '://' . $host . $requestUri;
             }else{    
                 $labelling = "Gas submit band lo di Authenticity Soundroom kayak gue.";
-                $fullUrl = "Gas submit band lo di Authenticity Soundroom kayak gue. Cek di webnya Authenticity ya ".$scheme . '://' . $host . $requestUri;
+                // $fullUrl = "Gas submit band lo di Authenticity Soundroom kayak gue. Cek di webnya Authenticity ya ".$scheme . '://' . $host . $requestUri;
             }
         ?>
         <div class="container tek-uk">
@@ -342,8 +342,8 @@ Jangan sampe ketinggalan! Ini langkah penting biar band lo makin dilirik!</p>
             </div>
             
             <div class="label-title">
-                <p class="exetegue"><?php echo $labelling; ?></p>
-                <p class="bg-black">authenticity.id/soundroom</p>
+                <!-- <p class="exetegue"><?php echo $labelling; ?></p> -->
+                <!-- <p class="bg-black">authenticity.id/soundroom</p> -->
                 <!-- <img src="<?php echo base_url('assets/front/img/soundroom/logo.png') ?>"> -->
             </div>
         </div>

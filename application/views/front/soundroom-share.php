@@ -315,7 +315,9 @@
                 $labelling = "Hey ".$soundroom['judul']." Gue dukung lo buat manggung di Soundroom.";
                 $fullUrl = "Hey ".$soundroom['judul']." Gue dukung lo buat manggung di Soundroom. Cek di webnya Authenticity ya ".$scheme . '://' . $host . $requestUri;
             }else{    
-                $labelling = "Gas submit band lo di Authenticity Soundroom kayak gue.";
+                // $labelling = "Gas submit band lo di Authenticity Soundroom kayak gue.";
+                $labelling = "";
+                $fullUrl = "";
                 // $fullUrl = "Gas submit band lo di Authenticity Soundroom kayak gue. Cek di webnya Authenticity ya ".$scheme . '://' . $host . $requestUri;
             }
         ?>

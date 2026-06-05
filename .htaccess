@@ -17,17 +17,15 @@
 	RewriteCond %{HTTP_HOST} ^staging\.authenticity\.id$ [NC]
 	RewriteRule ^ - [L]
 
-	# Production: plain HTTP → HTTPS www (skip when ALB already sent X-Forwarded-Proto: https)
+	# Production: plain HTTP → HTTPS apex (skip when ALB sent X-Forwarded-Proto: https)
 	RewriteCond %{HTTP_HOST} ^(www\.)?authenticity\.id$ [NC]
 	RewriteCond %{HTTPS} off
 	RewriteCond %{HTTP:X-Forwarded-Proto} !^https$ [NC]
-	RewriteRule ^ https://www.authenticity.id%{REQUEST_URI} [L,R=301]
+	RewriteRule ^ https://authenticity.id%{REQUEST_URI} [L,R=301]
 
-	# Production: apex → www (when already HTTPS via ALB)
-	RewriteCond %{HTTP_HOST} ^authenticity\.id$ [NC]
-	RewriteCond %{HTTP:X-Forwarded-Proto} ^https$ [NC,OR]
-	RewriteCond %{HTTPS} on
-	RewriteRule ^ https://www.authenticity.id%{REQUEST_URI} [L,R=301]
+	# Production: www → apex (canonical host, when already HTTPS via ALB)
+	RewriteCond %{HTTP_HOST} ^www\.authenticity\.id$ [NC]
+	RewriteRule ^ https://authenticity.id%{REQUEST_URI} [L,R=301]
 </IfModule>
 
 ErrorDocument 404 /

@@ -666,228 +666,420 @@ class Soundroom extends MY_Controller {
 
 	}
 
-	public function getPlayList(){
-        $year = isset($_POST['year']) ? $_POST['year'] : '2025';
+	// public function getPlayList(){
+    //     $year = isset($_POST['year']) ? $_POST['year'] : '2025';
 
-		if (!in_array($year, ['2026', '2025','2024','2023', '2022', '2019'])) {
+	// 	if (!in_array($year, ['2026', '2025','2024','2023', '2022', '2019'])) {
+	// 		$year = '2023';
+	// 	}
+
+    //     switch ($year) {
+	// 		case '2026':
+    //             $table = 'soundroom_2026';
+    //             break;
+	// 		case '2025':
+    //             $table = 'soundroom_2025';
+    //             break;
+	// 		case '2024':
+    //             $table = 'soundroom_2024';
+    //             break;
+    //         case '2022':
+    //             $table = 'soundroom';
+    //             break;
+    //         case '2019':
+    //             $table = 'soundroom_2019';
+    //             break;
+    //         default:
+    //             $table = 'soundroom_2023';
+    //             break;
+    //     }
+
+	// 	$ret['firstaudio'] = "";
+	// 	$ret['firstband'] = "";
+	// 	$ret['firstprogress'] = "";
+	// 	$ret['html'] = "";
+	// 	$ret['status'] = "false";
+
+	// 	// $where['a.status']=1;
+	// 	// $where['a.approve']=1;
+	// 	// $where['a.status']=1;
+	// 	// $where['a.approve']=1;
+
+	// 	$kota = isset($_POST['kota']) ? $_POST['kota'] : 'ALL';
+	// 	if($kota !== "ALL" && $kota !== ""){
+	// 		$where['b.id_kota'] = $kota;
+	// 	}
+	// 	$start = isset($_POST['start']) ? $_POST['start'] : 'ALL';
+	// 	$end = isset($_POST['end']) ? $_POST['end'] : 'ALL';
+	// 	if($start !== 'ALL'){
+	// 		$next = ($end === 'ALL') ? 1 : ((int) $end + 1);
+	// 		$paging = "12,".($next -1) * 12;
+	// 	}else{
+	// 		$next = 1;
+	// 		$paging = "12,0";
+	// 	}
+
+	// 	/*
+	// 	$soundroom = $this->model_global->get_data(array(
+	// 		'select' => 'a.*, b.kota,b.provinsi',
+	// 		'table' => 'soundroom a',
+	// 		'join' => array('kota b','b.id_kota = a.id_kota'),
+	// 		'where' => $where,
+	// 		'order_by' => 'a.votes desc',
+	// 	));
+	// 	*/
+
+	// 	$arr_kota = [];
+	// 	if(isset($_POST['search'])){
+	// 		$prov = $_POST['id'];
+
+	// 		$this->db->order_by('kota asc');
+	// 		$cari_kota = $this->db->get_where('kota', array('provinsi'=>$prov));
+	// 		if($cari_kota->num_rows()>0){
+	// 			foreach($cari_kota->result() as $key=>$dt){
+	// 				$arr_kota[] = $dt->id_kota;
+	// 			}
+	// 		}
+	// 	}
+
+	// 	if($kota !== "ALL" && $kota !== ""){
+	// 		$arr_kota[] = $kota;
+	// 	}
+
+	// 	$this->db->select('s.*, k.kota, k.provinsi');
+	// 	$this->db->from($table.' s');
+	// 	$this->db->join('kota k', 'k.id_kota = s.id_kota');
+	// 	if(count($arr_kota)>0){
+	// 		$this->db->where_in('s.id_kota', $arr_kota);
+	// 	}
+
+    //     if (isset($_POST['artist']) && $_POST['artist'] != '') {
+    //         $this->db->like('s.judul', $_POST['artist']);
+    //     }
+	// 	$this->db->where('s.approve', 1);
+	// 	$this->db->where('s.status', 1);
+
+	// 	if(isset($_POST['genre']) && $_POST['genre'] != '' && $year == '2023' ){
+	// 		$this->db->where('s.gendre', $_POST['genre']);
+	// 	}
+	// 	if(isset($_POST['genre']) && $_POST['genre'] != '' && $year == '2024' ){
+	// 		$this->db->where('s.gendre', $_POST['genre']);
+	// 	}
+
+	// 	if(isset($_POST['genre']) && $_POST['genre'] != '' && ($year == '2025' || $year == '2026')){
+	// 		$this->db->where('s.gendre', $_POST['genre']);
+	// 	}
+
+	// 	if ($year == '2023' || $year == '2024') {
+	// 		$this->db->order_by('s.top3 desc, s.rank asc');
+	// 	} elseif ($year == '2025' || $year == '2026') {
+	// 		$this->db->order_by('s.top3 desc, s.rank asc');
+	// 	} else {
+	// 		$this->db->order_by('s.top3 desc');
+	// 	}
+
+	// 	//tambahan karena ga kuat load semua data
+	// 	//$this->db->limit(500, 0); 
+	// 	$soundroom = $this->db->get()->result_array();
+
+	// 	$html="";
+	// 	$no=1;
+	// 	$pl=1;
+
+	// 	if(isset($soundroom) && count($soundroom) > 0){
+    //         $this->load->library('mp3file');
+    //         $this->load->library('mp3info');
+    //         $lib_version = 1;
+	// 		//$lib_version = 2;
+	// 		$ret['status'] = "true";
+	// 		// $top15 = range(9, 15);
+	// 		// $top7 = range(2, 8);
+	// 		$top15 = range(14, 16);
+	// 		$top12 = range(2, 13);
+	// 		$top7 = range(2, 8);
+	// 		$html.="<table width='100%' cellpadding='0' cellspacing='0' class='tbody'>";
+	// 		foreach($soundroom as $row){
+	// 			$filename = isset($row['sound']) ? (string) $row['sound'] : '';
+	// 			$path = "uploads/soundroom/".$filename;
+	// 			$fullpath = FCPATH.$path;
+
+	// 			$duration = '-';
+	// 			if($filename !== '' && is_file($fullpath)){
+    //                 if ($lib_version == 1) {
+    //                     $stats = $this->mp3file->set_file(FCPATH.'uploads/soundroom/'.$row['sound'])->get_metadata();
+    //                     $duration = isset($stats['Length mm:ss']) ? $stats['Length mm:ss'] : '-';
+
+    //                     if ($duration == '-') {
+    //                         $length = (int) (isset($stats['Length']) ? $stats['Length'] : '0');
+
+    //                         if ($length > 0) {
+    //                             $menit = floor($length / 60);
+    //                             $detik = $length - ($menit * 60);
+
+    //                             if ($detik > 60) {
+    //                                 $menit = $menit + 1;
+    //                                 $detik = $detik - 60;
+    //                             }
+
+    //                             $duration = $menit.':'.$detik;
+    //                         }
+    //                     }
+    //                 } else {
+    //                     $this->mp3info->resetMetadata();
+    //                     $stats = $this->mp3info->getMetadata(FCPATH.'uploads/soundroom/'.$row['sound'], true);
+    //                     $duration = '-';
+
+    //                     if ($stats) {
+    //                     	$minutes = floor($stats->duration % 60);
+
+    //                     	if (strlen($minutes) == 1) {
+    //                     		$minutes = '0'.$minutes;
+    //                     	}
+
+    //                         $duration = floor($stats->duration / 60).':'.$minutes;
+    //                     }
+    //                 }
+
+	// 				$active="";
+	// 				$bp="";
+    //                 $slug = str_replace(array(' ', '.'), '-', $row['slug']);
+	// 				if($no==5){$active="active";}
+	// 				if($no==1){$bp="bp1";}
+	// 				$html.= "<tr class='trbody  play-$slug klikplaylist ' id='play-$slug' data-no='$no' data-band='$slug' data-slug='$row[slug]'>
+	// 					<td width='150' align='center'>
+	// 						<div class='noindex noindex-$slug'>$no</div>
+	// 						<div class='playno playno-$slug hide'>
+	// 							<a href='javascript:void(0);' onClick=\"currentplaytop(this)\" class='icon $bp pl-$no idpl-$row[id_soundroom]' data-now='$no' data-audio1='a1-$row[id_soundroom]' data-audio='".base_url()."uploads/soundroom/$row[sound]' data-band='$slug' data-slug='$row[slug]' data-progress='prog-$row[id_soundroom]' data-progress1='prog1-$row[id_soundroom]'><i class='fa fa-play'></i></a>
+	// 						</div>
+	// 					</td>
+	// 					<td>
+	// 						<div class='d-flex align-items-center'>
+	// 							$row[judul]";
+	// 				if ($year >= '2024') { //buat if jika 2024 ke atas
+	// 					if ($row['top3'] == 1 && isset($row['rank'])) {
+	// 						if ($row['rank'] == 1) {
+	// 							$html .= "<div class='badge-winner badge-winner--table'><img class='golden' src='". base_url() ."assets/front/img/soundroom/badge-12.png'></div>";
+	// 						}else{
+	// 							$html .= "<div class='badge-winner badge-winner--table'><img src='". base_url() ."assets/front/img/soundroom/badge-12.png'></div>";
+	// 						}
+	// 					}
+	// 				}else{
+	// 					if ($row['top3'] == 1 && isset($row['rank'])) {
+	// 						if (in_array($row['rank'], $top15)) {
+	// 							$html .= "<div class='badge-winner badge-winner--table'><img src='". base_url() ."assets/front/img/soundroom/badge-15.svg'></div>";
+	// 						} elseif (in_array($row['rank'], $top7)) { //dimatikan sementara
+	// 							$html .= "<div class='badge-winner badge-winner--table'><img src='". base_url() ."assets/front/img/soundroom/badge-7.png'></div>";
+	// 						} elseif ($row['rank'] == 1) {
+	// 							$html .= "<div class='badge-winner badge-winner--table'><img class='golden' src='". base_url() ."assets/front/img/soundroom/badge-golden.svg'></div>";
+	// 						}
+	// 					}
+	// 				}
+
+	// 						$html.= "</div>
+	// 					</td>
+	// 					<td width='200' align='center'>".$duration."</td>
+	// 				</tr>
+	// 				";
+	// 				$no++;
+	// 				$pl++;
+	// 			}
+	// 		}
+	// 		$html.="</table>";
+	// 	}
+	// 	$ret['pl'] = $pl-1;
+	// 	$ret['html'] = $html;
+	// 	echo json_encode($ret);
+	// }
+
+	public function getPlayList() {
+    // 1. Inisialisasi awal & Default validasi Tahun
+		$year = $this->input->post('year') ? $this->input->post('year') : '2025';
+		$valid_years = ['2026', '2025', '2024', '2023', '2022', '2019'];
+		
+		if (!in_array($year, $valid_years)) {
 			$year = '2023';
 		}
 
-        switch ($year) {
-			case '2026':
-                $table = 'soundroom_2026';
-                break;
-			case '2025':
-                $table = 'soundroom_2025';
-                break;
-			case '2024':
-                $table = 'soundroom_2024';
-                break;
-            case '2022':
-                $table = 'soundroom';
-                break;
-            case '2019':
-                $table = 'soundroom_2019';
-                break;
-            default:
-                $table = 'soundroom_2023';
-                break;
-        }
+		// Pemetaan tabel dinamis berdasarkan tahun
+		$table_map = [
+			'2026' => 'soundroom_2026',
+			'2025' => 'soundroom_2025',
+			'2024' => 'soundroom_2024',
+			'2022' => 'soundroom',
+			'2019' => 'soundroom_2019'
+		];
+		$table = isset($table_map[$year]) ? $table_map[$year] : 'soundroom_2023';
 
-		$ret['firstaudio'] = "";
-		$ret['firstband'] = "";
-		$ret['firstprogress'] = "";
-		$ret['html'] = "";
-		$ret['status'] = "false";
+		// Struktur response API
+		$ret = [
+			'firstaudio'    => "",
+			'firstband'     => "",
+			'firstprogress' => "",
+			'html'          => "",
+			'status'        => "false",
+			'pl'            => 0
+		];
 
-		// $where['a.status']=1;
-		// $where['a.approve']=1;
-		// $where['a.status']=1;
-		// $where['a.approve']=1;
-
-		$kota = isset($_POST['kota']) ? $_POST['kota'] : 'ALL';
-		if($kota !== "ALL" && $kota !== ""){
-			$where['b.id_kota'] = $kota;
-		}
-		$start = isset($_POST['start']) ? $_POST['start'] : 'ALL';
-		$end = isset($_POST['end']) ? $_POST['end'] : 'ALL';
-		if($start !== 'ALL'){
-			$next = ($end === 'ALL') ? 1 : ((int) $end + 1);
-			$paging = "12,".($next -1) * 12;
-		}else{
-			$next = 1;
-			$paging = "12,0";
-		}
-
-		/*
-		$soundroom = $this->model_global->get_data(array(
-			'select' => 'a.*, b.kota,b.provinsi',
-			'table' => 'soundroom a',
-			'join' => array('kota b','b.id_kota = a.id_kota'),
-			'where' => $where,
-			'order_by' => 'a.votes desc',
-		));
-		*/
-
+		// 2. Filter Wilayah / Kota (Dinamis & Menggunakan Array Stack)
 		$arr_kota = [];
-		if(isset($_POST['search'])){
-			$prov = $_POST['id'];
-
-			$this->db->order_by('kota asc');
-			$cari_kota = $this->db->get_where('kota', array('provinsi'=>$prov));
-			if($cari_kota->num_rows()>0){
-				foreach($cari_kota->result() as $key=>$dt){
+		$kota = $this->input->post('kota') ? $this->input->post('kota') : 'ALL';
+		
+		if (isset($_POST['search']) && $this->input->post('id')) {
+			$prov = $this->input->post('id');
+			$this->db->order_by('kota', 'ASC');
+			$cari_kota = $this->db->get_where('kota', ['provinsi' => $prov]);
+			if ($cari_kota->num_rows() > 0) {
+				foreach ($cari_kota->result() as $dt) {
 					$arr_kota[] = $dt->id_kota;
 				}
 			}
 		}
 
-		if($kota !== "ALL" && $kota !== ""){
+		if ($kota !== "ALL" && $kota !== "") {
 			$arr_kota[] = $kota;
 		}
 
+		// 3. Membangun Query Data Menggunakan Active Record CodeIgniter
 		$this->db->select('s.*, k.kota, k.provinsi');
-		$this->db->from($table.' s');
+		$this->db->from($table . ' s');
 		$this->db->join('kota k', 'k.id_kota = s.id_kota');
-		if(count($arr_kota)>0){
+		
+		if (count($arr_kota) > 0) {
 			$this->db->where_in('s.id_kota', $arr_kota);
 		}
 
-        if (isset($_POST['artist']) && $_POST['artist'] != '') {
-            $this->db->like('s.judul', $_POST['artist']);
-        }
+		if ($this->input->post('artist') != '') {
+			$this->db->like('s.judul', $this->input->post('artist'));
+		}
+		
 		$this->db->where('s.approve', 1);
 		$this->db->where('s.status', 1);
 
-		if(isset($_POST['genre']) && $_POST['genre'] != '' && $year == '2023' ){
-			$this->db->where('s.gendre', $_POST['genre']);
-		}
-		if(isset($_POST['genre']) && $_POST['genre'] != '' && $year == '2024' ){
-			$this->db->where('s.gendre', $_POST['genre']);
+		// Filter Genre (Berlaku untuk semua tahun yang menggunakan parameter genre)
+		if ($this->input->post('genre') != '') {
+			$this->db->where('s.gendre', $this->input->post('genre'));
 		}
 
-		if(isset($_POST['genre']) && $_POST['genre'] != '' && ($year == '2025' || $year == '2026')){
-			$this->db->where('s.gendre', $_POST['genre']);
-		}
-
-		if ($year == '2023' || $year == '2024') {
-			$this->db->order_by('s.top3 desc, s.rank asc');
-		} elseif ($year == '2025' || $year == '2026') {
-			$this->db->order_by('s.top3 desc, s.rank asc');
+		// Aturan Sorting Bisnis (Top 3 utama, disusul Rank Terkecil)
+		if (in_array($year, ['2023', '2024', '2025', '2026'])) {
+			$this->db->order_by('s.top3', 'DESC');
+			$this->db->order_by('s.rank', 'ASC');
 		} else {
-			$this->db->order_by('s.top3 desc');
+			$this->db->order_by('s.top3', 'DESC');
 		}
 
-		//tambahan karena ga kuat load semua data
-		//$this->db->limit(500, 0); 
 		$soundroom = $this->db->get()->result_array();
 
-		$html="";
-		$no=1;
-		$pl=1;
-
-		if(isset($soundroom) && count($soundroom) > 0){
-            $this->load->library('mp3file');
-            $this->load->library('mp3info');
-            $lib_version = 1;
-			//$lib_version = 2;
+		// 4. Proses data lagu & Penyusunan HTML Template
+		if (isset($soundroom) && count($soundroom) > 0) {
+			$this->load->library('mp3file');
+			$this->load->library('mp3info');
+			
+			$lib_version = 1; 
 			$ret['status'] = "true";
-			// $top15 = range(9, 15);
-			// $top7 = range(2, 8);
+			
 			$top15 = range(14, 16);
-			$top12 = range(2, 13);
-			$top7 = range(2, 8);
-			$html.="<table width='100%' cellpadding='0' cellspacing='0' class='tbody'>";
-			foreach($soundroom as $row){
-				$filename = isset($row['sound']) ? (string) $row['sound'] : '';
-				$path = "uploads/soundroom/".$filename;
-				$fullpath = FCPATH.$path;
+			$top7  = range(2, 8);
 
-				$duration = '-';
-				if($filename !== '' && is_file($fullpath)){
-                    if ($lib_version == 1) {
-                        $stats = $this->mp3file->set_file(FCPATH.'uploads/soundroom/'.$row['sound'])->get_metadata();
-                        $duration = isset($stats['Length mm:ss']) ? $stats['Length mm:ss'] : '-';
+			$html = "<table width='100%' cellpadding='0' cellspacing='0' class='tbody'>";
+			$no = 1;
+			$pl = 1;
 
-                        if ($duration == '-') {
-                            $length = (int) (isset($stats['Length']) ? $stats['Length'] : '0');
+		foreach ($soundroom as $row) {
+            $filename = isset($row['sound']) ? (string) $row['sound'] : '';
+            $fullpath = FCPATH . "uploads/soundroom/" . $filename;
 
-                            if ($length > 0) {
-                                $menit = floor($length / 60);
-                                $detik = $length - ($menit * 60);
+			if ($filename === '' || !is_file($fullpath)) {
+				continue; 
+			}
+			
+			$duration = '-';
 
-                                if ($detik > 60) {
-                                    $menit = $menit + 1;
-                                    $detik = $detik - 60;
-                                }
-
-                                $duration = $menit.':'.$detik;
-                            }
-                        }
-                    } else {
-                        $this->mp3info->resetMetadata();
-                        $stats = $this->mp3info->getMetadata(FCPATH.'uploads/soundroom/'.$row['sound'], true);
-                        $duration = '-';
-
-                        if ($stats) {
-                        	$minutes = floor($stats->duration % 60);
-
-                        	if (strlen($minutes) == 1) {
-                        		$minutes = '0'.$minutes;
-                        	}
-
-                            $duration = floor($stats->duration / 60).':'.$minutes;
-                        }
-                    }
-
-					$active="";
-					$bp="";
-                    $slug = str_replace(array(' ', '.'), '-', $row['slug']);
-					if($no==5){$active="active";}
-					if($no==1){$bp="bp1";}
-					$html.= "<tr class='trbody  play-$slug klikplaylist ' id='play-$slug' data-no='$no' data-band='$slug' data-slug='$row[slug]'>
-						<td width='150' align='center'>
-							<div class='noindex noindex-$slug'>$no</div>
-							<div class='playno playno-$slug hide'>
-								<a href='javascript:void(0);' onClick=\"currentplaytop(this)\" class='icon $bp pl-$no idpl-$row[id_soundroom]' data-now='$no' data-audio1='a1-$row[id_soundroom]' data-audio='".base_url()."uploads/soundroom/$row[sound]' data-band='$slug' data-slug='$row[slug]' data-progress='prog-$row[id_soundroom]' data-progress1='prog1-$row[id_soundroom]'><i class='fa fa-play'></i></a>
-							</div>
-						</td>
-						<td>
-							<div class='d-flex align-items-center'>
-								$row[judul]";
-					if ($year >= '2024') { //buat if jika 2024 ke atas
-						if ($row['top3'] == 1 && isset($row['rank'])) {
-							if ($row['rank'] == 1) {
-								$html .= "<div class='badge-winner badge-winner--table'><img class='golden' src='". base_url() ."assets/front/img/soundroom/badge-12.png'></div>";
-							}else{
-								$html .= "<div class='badge-winner badge-winner--table'><img src='". base_url() ."assets/front/img/soundroom/badge-12.png'></div>";
-							}
+			// --- HANDLING DETEKSI DURASI DINAMIS & KONSISTEN (FIXED VBR BUG) ---
+			// if ($filename !== '' && is_file($fullpath)) {
+			if ($lib_version == 1) {
+				if ($lib_version == 1) {
+					$stats = $this->mp3file->set_file($fullpath)->get_metadata();
+					
+					// Ambil total detik murni (biasanya nilai ini lebih akurat di library mp3file untuk kasus VBR tertentu)
+					$length = (int) (isset($stats['Length']) ? $stats['Length'] : '0');
+					
+					if ($length > 0) {
+						// Hitung manual dari total detik untuk menghindari bug string "Length mm:ss" bawaan library
+						$menit = floor($length / 60);
+						$detik = $length % 60;
+						$duration = sprintf('%02d', $menit) . ':' . sprintf('%02d', $detik);
+						
+						// Jaga-jaga jika hitungan detik murni pun masih mendeteksi > 7 menit akibat header file rusak dari konverter YouTube
+						if ($menit > 6) { 
+							$duration = '-';
 						}
-					}else{
-						if ($row['top3'] == 1 && isset($row['rank'])) {
-							if (in_array($row['rank'], $top15)) {
-								$html .= "<div class='badge-winner badge-winner--table'><img src='". base_url() ."assets/front/img/soundroom/badge-15.svg'></div>";
-							} elseif (in_array($row['rank'], $top7)) { //dimatikan sementara
-								$html .= "<div class='badge-winner badge-winner--table'><img src='". base_url() ."assets/front/img/soundroom/badge-7.png'></div>";
-							} elseif ($row['rank'] == 1) {
-								$html .= "<div class='badge-winner badge-winner--table'><img class='golden' src='". base_url() ."assets/front/img/soundroom/badge-golden.svg'></div>";
-							}
+					} else {
+						// Fallback jika Length tidak terbaca
+						$raw_duration = isset($stats['Length mm:ss']) ? $stats['Length mm:ss'] : '-';
+						$cek_menit = explode(':', $raw_duration);
+						if (count($cek_menit) == 2) {
+							$duration = sprintf('%02d', $cek_menit[0]) . ':' . sprintf('%02d', $cek_menit[1]);
 						}
 					}
-
-							$html.= "</div>
-						</td>
-						<td width='200' align='center'>".$duration."</td>
-					</tr>
-					";
-					$no++;
-					$pl++;
+				} else {
+					// Blok versi 2 kamu sudah aman menggunakan kalkulasi stat murni
+					$this->mp3info->resetMetadata();
+					$stats = $this->mp3info->getMetadata($fullpath, true);
+					if ($stats) {
+						$minutes = floor($stats->duration % 60);
+						$hours_or_minutes = floor($stats->duration / 60);
+						$duration = sprintf('%02d', $hours_or_minutes) . ':' . sprintf('%02d', $minutes);
+					}
 				}
 			}
-			$html.="</table>";
+
+            // --- ESCAPING VARIABLE AGAR AMAN DI ATRIBUT HTML ---
+            $safe_slug  = htmlspecialchars($row['slug'], ENT_QUOTES, 'UTF-8');
+            $safe_judul = htmlspecialchars($row['judul'], ENT_QUOTES, 'UTF-8');
+            $safe_sound = htmlspecialchars($row['sound'], ENT_QUOTES, 'UTF-8');
+
+            $bp = ($no == 1) ? "bp1" : "";
+            $slug_class = str_replace([' ', '.'], '-', $safe_slug);
+
+            // Penggunaan variabel aman ($safe_...) di dalam atribut HTML
+            $html .= "<tr class='trbody play-$slug_class klikplaylist' id='play-$slug_class' data-no='$no' data-band='$slug_class' data-slug='{$safe_slug}'>
+                        <td width='150' align='center'>
+                            <div class='noindex noindex-$slug_class'>$no</div>
+                            <div class='playno playno-$slug_class hide'>
+                                <a href='javascript:void(0);' onClick=\"currentplaytop(this)\" class='icon $bp pl-$no idpl-{$row['id_soundroom']}' data-now='$no' data-audio1='a1-{$row['id_soundroom']}' data-audio='" . base_url() . "uploads/soundroom/{$safe_sound}' data-band='$slug_class' data-slug='{$safe_slug}' data-progress='prog-{$row['id_soundroom']}' data-progress1='prog1-{$row['id_soundroom']}'><i class='fa fa-play'></i></a>
+                            </div>
+                        </td>
+                        <td>
+                            <div class='d-flex align-items-center'>
+                                " . $safe_judul . "";
+
+            if ($row['top3'] == 1 && isset($row['rank'])) {
+                if ($year >= '2024') {
+                    $html .= "<div class='badge-winner badge-winner--table'><img src='" . base_url() . "assets/front/img/soundroom/badge-12.png'></div>";
+                } else {
+                    if (in_array($row['rank'], $top15)) {
+                        $html .= "<div class='badge-winner badge-winner--table'><img src='" . base_url() . "assets/front/img/soundroom/badge-15.svg'></div>";
+                    } elseif (in_array($row['rank'], $top7)) {
+                        $html .= "<div class='badge-winner badge-winner--table'><img src='" . base_url() . "assets/front/img/soundroom/badge-7.png'></div>";
+                    } elseif ($row['rank'] == 1) {
+                        $html .= "<div class='badge-winner badge-winner--table'><img class='golden' src='" . base_url() . "assets/front/img/soundroom/badge-golden.svg'></div>";
+                    }
+                }
+            }
+
+            $html .= "      </div>
+                        </td>
+                        <td width='200' align='center'>{$duration}</td>
+                      </tr>";
+            $no++;
+            $pl++;
+        }
+			$html .= "</table>";
+			$ret['html'] = $html;
 		}
-		$ret['pl'] = $pl-1;
-		$ret['html'] = $html;
+
+		$ret['pl'] = $pl - 1;
 		echo json_encode($ret);
 	}
 

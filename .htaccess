@@ -1,24 +1,31 @@
+# ALB/nginx terminate TLS; Apache only sees plain HTTP on port 80.
+# SetEnvIf sets HTTPS for PHP ($_SERVER['HTTPS']); mod_rewrite %{HTTPS} ignores SetEnvIf.
+<IfModule mod_setenvif.c>
+	SetEnvIf X-Forwarded-Proto "https" HTTPS=on
+</IfModule>
+
 <IfModule mod_rewrite.c>
 	RewriteEngine On
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteRule ^(.*)$ index.php/$1 [L] 
+	RewriteRule ^(.*)$ index.php/$1 [L]
 	RewriteRule ^(.+).(d+).(js|css)$ $1.$3 [L]
-	#RewriteCond %{HTTP_HOST} !=""
-	#RewriteCond %{HTTP_HOST} !^www\. [NC]
-	#RewriteCond %{HTTPS}s ^on(s)|
-	#RewriteRule ^ https%1://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
-# Skip redirect untuk localhost dan staging (development)
-RewriteCond %{HTTP_HOST} ^localhost(:\d+)?$ [NC,OR]
-RewriteCond %{HTTP_HOST} ^127\.0\.0\.1(:\d+)?$ [NC,OR]
-RewriteCond %{HTTP_HOST} ^staging\.authenticity\.id$ [NC]
-RewriteRule ^ - [L]
 
-# Production: force HTTPS + www.authenticity.id (hanya untuk host production)
-RewriteCond %{HTTP_HOST} ^(www\.)?authenticity\.id$ [NC]
-RewriteCond %{HTTPS} off [OR]
-RewriteCond %{HTTP_HOST} !^www\.authenticity\.id$ [NC]
-RewriteRule ^(.*)$ https://www.authenticity.id/$1 [L,R=301]	 
+	# Skip redirect for local / staging
+	RewriteCond %{HTTP_HOST} ^localhost(:\d+)?$ [NC,OR]
+	RewriteCond %{HTTP_HOST} ^127\.0\.0\.1(:\d+)?$ [NC,OR]
+	RewriteCond %{HTTP_HOST} ^staging\.authenticity\.id$ [NC]
+	RewriteRule ^ - [L]
+
+	# Production: plain HTTP → HTTPS apex (skip when ALB sent X-Forwarded-Proto: https)
+	RewriteCond %{HTTP_HOST} ^(www\.)?authenticity\.id$ [NC]
+	RewriteCond %{HTTPS} off
+	RewriteCond %{HTTP:X-Forwarded-Proto} !^https$ [NC]
+	RewriteRule ^ https://authenticity.id%{REQUEST_URI} [L,R=301]
+
+	# Production: www → apex (canonical host, when already HTTPS via ALB)
+	RewriteCond %{HTTP_HOST} ^www\.authenticity\.id$ [NC]
+	RewriteRule ^ https://authenticity.id%{REQUEST_URI} [L,R=301]
 </IfModule>
 
 ErrorDocument 404 /

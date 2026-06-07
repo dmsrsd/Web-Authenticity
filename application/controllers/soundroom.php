@@ -397,7 +397,7 @@ class Soundroom extends MY_Controller {
                     "<div class='col-lg-2 col-md-4 col-sm-4'>
 				<div class='box-soundroom'>";
 
-				if ($row['top3'] == 1 && isset($row['rank'])) {
+				if (isset($row['top3']) && $row['top3'] == 1 && isset($row['rank'])) {
 					if (in_array($row['rank'], $top15)) {
 						$html .= "<div class='badge-winner'><img src='". base_url() ."assets/front/img/soundroom/badge-15.svg'></div>";
 					} elseif (in_array($row['rank'], $top7)) {

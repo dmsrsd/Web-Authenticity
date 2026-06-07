@@ -996,7 +996,6 @@ class Soundroom extends MY_Controller {
 			$duration = '-';
 
 			// --- HANDLING DETEKSI DURASI DINAMIS & KONSISTEN (FIXED VBR BUG) ---
-			// if ($filename !== '' && is_file($fullpath)) {
 			if ($lib_version == 1) {
 				if ($lib_version == 1) {
 					$stats = $this->mp3file->set_file($fullpath)->get_metadata();
@@ -1307,7 +1306,9 @@ class Soundroom extends MY_Controller {
 			if( $nv % 12 ==0){
 				$page++;
 			}
-			$thumb = base_url()."uploads/soundroom/".$r['thumbnail'];
+			// $thumb = base_url()."uploads/soundroom/".$r['thumbnail'];
+			// Jika thumbnail kosong, gunakan gambar default agar grid tetap rapi
+			$thumb = (!empty($row['thumbnail'])) ? base_url()."uploads/soundroom/".$row['thumbnail'] : base_url()."assets/front/img/default-thumb.jpg";
 			$img = base_url()."uploads/soundroom/".$r['thumbnail'];
 
 			$html = "<article class='col-sm-3 lazyItem'><div class='lazyContent'>";

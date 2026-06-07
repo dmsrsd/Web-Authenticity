@@ -1101,9 +1101,8 @@
 			}
 		});
 	}
-	$(document).ready(function() {
 
-		//$('.soundbar').hide();
+	$(document).ready(function() {
 
 		$(".sb-playpause").click(function() {
 			var idaudio = $('#audio');
@@ -1128,6 +1127,7 @@
 			}
 
 		});
+
 		$('.sb-forward').click(function() {
 			var idaudio = $('#audio');
 			var plnow = $('#pl-now').val();
@@ -1194,6 +1194,7 @@
 			klik(band);
 			currentplay(slug);
 		});
+
 		$(document).ready(function() {
 			function filterInit(filterID = null) {
 				//
@@ -1213,11 +1214,13 @@
 						$(`#kota${filterID}`).show();
 					}
 				});
+
 				$(`#kota${filterID}`).change(function() {
 					var next = 'ALL';
 					var kota = $(this).val();
-					load("0", kota, '12', next);
+					load("0", kota, '0', next);
 				});
+
 				$(`#provinsi${filterID}`).change(function() {
 					var prov = $(this).val();
 					var dataform = new FormData();
@@ -1310,11 +1313,13 @@
 						$(`#kota${filterID}`).show();
 					}
 				});
+
 				$(`#kota${filterID}`).change(function() {
 					var next = 'ALL';
 					var kota = $(this).val();
 					loadGallery("0", kota, "0", next);
 				});
+
 				$(`#provinsi${filterID}`).change(function() {
 					var prov = $(this).val();
 					var dataform = new FormData();
@@ -1385,7 +1390,10 @@
 				});
 			}
 			filterGallery(2);
+
+			loadGallery("0", '', "0", 'ALL');
 		});
+
 		$('.tes').click(function() {
 			var myElement = document.getElementById('play-30');
 			var topPos = myElement.offsetTop - 100;

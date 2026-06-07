@@ -1007,7 +1007,7 @@
 								
 							} else {
 								// Jika nama file memang kosong dari database
-								durationTd.html('<span style="font-size: 12px; color: #ffb3b3;">Kosong</span>');
+								durationTd.html('<span style="font-size: 12px; color: #ffb3b3;">-</span>');
 								row.find('.icon').removeClass('klikplaylist')
 												.css({'opacity': '0.3', 'cursor': 'not-allowed'})
 												.removeAttr('onClick');

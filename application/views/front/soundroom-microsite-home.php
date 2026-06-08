@@ -849,12 +849,29 @@
 			document.getElementById("pl-done").value = '1';
 		});
 
+		// var cur = document.querySelector('#timecur'),
+		// 	dur = document.querySelector('#timedur');
+
+		// audio.addEventListener('timeupdate', function(e) {
+		// 	cur.textContent = sToTime(e.target.currentTime);
+		// 	dur.textContent = sToTime(e.target.duration);
+		// });
+
+		// Cari bagian ini di fungsi togglePlay
 		var cur = document.querySelector('#timecur'),
 			dur = document.querySelector('#timedur');
+
+		// SIMPAN DURASI SECARA STATIS SETELAH LOADEDMETADATA
+		audio.addEventListener('loadedmetadata', function() {
+			dur.textContent = sToTime(audio.duration); // Set durasi sekali di sini
+		});
+
+		// Update hanya untuk currentTime saja
 		audio.addEventListener('timeupdate', function(e) {
 			cur.textContent = sToTime(e.target.currentTime);
-			dur.textContent = sToTime(e.target.duration);
+			// Hapus dur.textContent di sini agar tidak berubah-ubah
 		});
+
 		var advance = function(duration, element) {
 			var progress = document.getElementById(dataprogress);
 			increment = 10 / duration;
@@ -968,53 +985,79 @@
 				if (e.status == "true") {
 					$('#listtableplay').html(e.html);
 
-					// --- HANDLING FRONTEND SECARA DINAMIS ---
+					// // --- HANDLING FRONTEND SECARA DINAMIS ---
+					// $('#listtableplay tr.trbody').each(function() {
+					// 	var row = $(this);
+					// 	var durationTd = row.find('td').eq(2);
+					// 	var currentText = durationTd.text().trim();
+						
+					// 	// Logika Dinamis: Cek apakah menitnya > 8 menit (indikasi bug library backend)
+					// 	var timeParts = currentText.split(':');
+					// 	var isBuggyDuration = (timeParts.length > 0 && parseInt(timeParts[0]) > 8);
+
+					// 	if (currentText === '-' || currentText === 'loading..' || currentText === '00:00' || isBuggyDuration) {
+							
+					// 		durationTd.text('loading..'); 
+
+					// 		var audioUrl = row.find('.icon').attr('data-audio'); 
+							
+					// 		// Pengecekan validasi: pastikan URL tidak berakhiran dengan / (artinya nama file kosong)
+					// 		if (audioUrl && !audioUrl.endsWith('/')) {
+					// 			var tempAudio = new Audio(audioUrl);
+								
+					// 			// 1. KONDISI SUKSES: File berhasil dibaca
+					// 			tempAudio.addEventListener('loadedmetadata', function() {
+					// 				var durationText = sToTime(tempAudio.duration); 
+					// 				durationTd.text(durationText); 
+					// 			});
+
+					// 			// 2. KONDISI GAGAL/ERROR: File hilang, 404, atau format rusak
+					// 			tempAudio.addEventListener('error', function() {
+					// 				// Tampilkan info yang jelas, misal: "N/A" atau "Tak Tersedia"
+					// 				durationTd.html('<span style="font-size: 10px; color: #ffb3b3;">-</span>');
+									
+					// 				// Matikan tombol play agar tidak bisa diklik dan buat terlihat transparan/disabled
+					// 				row.find('.icon').removeClass('klikplaylist')
+					// 								.css({'opacity': '0.3', 'cursor': 'not-allowed'})
+					// 								.removeAttr('onClick');
+					// 			});
+								
+					// 		} else {
+					// 			// Jika nama file memang kosong dari database
+					// 			durationTd.html('<span style="font-size: 12px; color: #ffb3b3;">-</span>');
+					// 			row.find('.icon').removeClass('klikplaylist')
+					// 							.css({'opacity': '0.3', 'cursor': 'not-allowed'})
+					// 							.removeAttr('onClick');
+					// 		}
+					// 	}
+					// });
+					// // ----------------------------------------
+
 					$('#listtableplay tr.trbody').each(function() {
 						var row = $(this);
 						var durationTd = row.find('td').eq(2);
-						var currentText = durationTd.text().trim();
 						
-						// Logika Dinamis: Cek apakah menitnya > 8 menit (indikasi bug library backend)
-						var timeParts = currentText.split(':');
-						var isBuggyDuration = (timeParts.length > 0 && parseInt(timeParts[0]) > 8);
-
-						if (currentText === '-' || currentText === 'loading..' || currentText === '00:00' || isBuggyDuration) {
+						// LANGSUNG TEMBAK KE AUDIO URL TANPA CEK DATABASE
+						var audioUrl = row.find('.icon').attr('data-audio'); 
+						
+						if (audioUrl && !audioUrl.endsWith('/')) {
+							durationTd.text('loading..'); // Tampilkan loading sementara
+							var tempAudio = new Audio(audioUrl);
 							
-							durationTd.text('loading..'); 
+							tempAudio.addEventListener('loadedmetadata', function() {
+								// Langsung update dengan durasi asli dari file
+								durationTd.text(sToTime(tempAudio.duration)); 
+							});
 
-							var audioUrl = row.find('.icon').attr('data-audio'); 
-							
-							// Pengecekan validasi: pastikan URL tidak berakhiran dengan / (artinya nama file kosong)
-							if (audioUrl && !audioUrl.endsWith('/')) {
-								var tempAudio = new Audio(audioUrl);
-								
-								// 1. KONDISI SUKSES: File berhasil dibaca
-								tempAudio.addEventListener('loadedmetadata', function() {
-									var durationText = sToTime(tempAudio.duration); 
-									durationTd.text(durationText); 
-								});
-
-								// 2. KONDISI GAGAL/ERROR: File hilang, 404, atau format rusak
-								tempAudio.addEventListener('error', function() {
-									// Tampilkan info yang jelas, misal: "N/A" atau "Tak Tersedia"
-									durationTd.html('<span style="font-size: 10px; color: #ffb3b3;">-</span>');
-									
-									// Matikan tombol play agar tidak bisa diklik dan buat terlihat transparan/disabled
-									row.find('.icon').removeClass('klikplaylist')
-													.css({'opacity': '0.3', 'cursor': 'not-allowed'})
-													.removeAttr('onClick');
-								});
-								
-							} else {
-								// Jika nama file memang kosong dari database
-								durationTd.html('<span style="font-size: 12px; color: #ffb3b3;">-</span>');
-								row.find('.icon').removeClass('klikplaylist')
-												.css({'opacity': '0.3', 'cursor': 'not-allowed'})
-												.removeAttr('onClick');
-							}
+							tempAudio.addEventListener('error', function() {
+								durationTd.text('-');
+								row.find('.icon').css({'opacity': '0.3', 'cursor': 'not-allowed'}).removeAttr('onClick');
+							});
+						} else {
+							durationTd.text('-');
 						}
 					});
-					// ----------------------------------------
+
 
 					if (ke != '0') {
 						$('.idpl-' + ke).trigger('click');
@@ -1031,28 +1074,6 @@
 				}
 			}
 
-		
-			// success: function(e) {
-			// 	// console.log("Data dari server:", e);
-			// 	if (e.status == "true") {
-			// 		$('#listtableplay').html(e.html);
-			// 		if (ke != '0') {
-			// 			$('.idpl-' + ke).trigger('click');
-			// 		} else {
-			// 			$('.bp1').trigger('click');
-			// 		}
-			// 		$('#pl-list').val(e.pl);
-			// 		$('#pl-now').val('1');
-			// 		$('#pl-done').val('0');
-			// 		//$('.soundbar').hide();
-			// 		pauseAll();
-			// 	} else {
-			// 		// $('#listtableplay').html('No data..!!');
-			// 		$('#listtableplay').html('Oops! Musik yang lo cari ngga ditemukan!');
-			// 		$('#currentPlay').html('');
-			// 	}
-			// }
-			
 		});
 	}
 

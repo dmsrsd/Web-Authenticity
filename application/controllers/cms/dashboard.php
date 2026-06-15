@@ -1303,7 +1303,7 @@ class Dashboard extends AdminController {
         
         // Mengambil semua data soundroom 2026
         $this->template['data'] = $this->model_global->get_data(array(
-            'select' => 'a.*, b.fullname as member',
+            'select' => 'a.*, b.fullname as member, b.email',
             'table' => 'soundroom_2026 a',
             'join' => array('member b', 'b.id_member = a.created_by'),
             'where' => array('a.status !=' => -1, 'a.created_by !=' => "1"),
@@ -1312,7 +1312,7 @@ class Dashboard extends AdminController {
         
         // Mengambil data top 10 soundroom 2026
         $this->template['data3'] = $this->model_global->get_data(array(
-            'select' => 'a.*, b.fullname as member',
+            'select' => 'a.*, b.fullname as member, b.email',
             'table' => 'soundroom_2026 a',
             'join' => array('member b', 'b.id_member = a.created_by'),
             'where' => array('a.status !=' => -1, 'a.created_by !=' => "1", "a.top10" => "1"),

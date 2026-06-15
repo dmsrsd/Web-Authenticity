@@ -74,11 +74,12 @@
 				<thead>
 					<tr>
 						<th width='35'>No</th>
-						<th width=''>Member Band</th>
-						<th width=''>Nama Band</th>
+						<th width='150'>Member Band</th>
+						<th width='100'>Email</th>
+						<th width='150'>Nama Band</th>
 						<th width='100'>Sosmed</th>
 						<th width='100'>Image</th>
-						<th width='100'>Sound</th>
+						<th width='200'>Sound</th>
 						<th width='100'>Submit Date</th>
 						<th width='130'>Approve</th>
 						<th width='70'>Status</th>
@@ -93,6 +94,7 @@
 					<tr>
 						<td align='center'><?=$no;?></td>
 						<td><?=isset($row['member']) ? $row['member'] : ''?></td>
+						<td><?=isset($row['email']) ? $row['email'] : ''?></td>
 						<td><?=isset($row['judul']) ? $row['judul'] : ''?></td>
 						<td>
 							<?php
